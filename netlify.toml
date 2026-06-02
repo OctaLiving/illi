@@ -1,15 +1,20 @@
 # Netlify build for the Nuxt app.
 #
 # Unlike Vercel (which auto-runs a `vercel-build` npm script), Netlify only runs the
-# command configured here — so we point it at the `netlify-build` script, which runs
-# `prisma generate && prisma migrate deploy && nuxt build` (mirrors vercel-build).
+# command configured here. The base command (used by deploy previews + branch deploys)
+# runs `prisma generate && nuxt build` — it does NOT touch the database.
+#
+# Only the production context additionally runs `prisma migrate deploy`, so a pull
+# request's preview build can never apply that PR's migrations to the production DB
+# before it's merged. (For full isolation later, give the deploy-preview context its
+# own DATABASE_URL instead.)
 #
 # Nuxt selects the Nitro `netlify` preset (pinned below for determinism); it emits the
 # SSR function to .netlify/functions-internal (auto-detected by Netlify) and the static
 # assets to `dist`, which is therefore the publish directory.
 #
-# Required build-time env vars (set in the Netlify dashboard, NOT here):
-#   DATABASE_URL        — needed by `prisma migrate deploy` and at runtime
+# Required env vars (set in the Netlify dashboard, NOT here):
+#   DATABASE_URL        — needed by `prisma migrate deploy` (production) and at runtime
 #   BETTER_AUTH_SECRET  — auth signing secret
 #   BETTER_AUTH_URL     — the deployed site URL
 [build]
@@ -18,3 +23,7 @@
 
 [build.environment]
   NITRO_PRESET = "netlify"
+
+# Production deploys apply pending migrations before building; previews/branches do not.
+[context.production]
+  command = "prisma migrate deploy && pnpm run netlify-build"
