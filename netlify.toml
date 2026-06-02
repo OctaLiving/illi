@@ -1,0 +1,20 @@
+# Netlify build for the Nuxt app.
+#
+# Unlike Vercel (which auto-runs a `vercel-build` npm script), Netlify only runs the
+# command configured here — so we point it at the `netlify-build` script, which runs
+# `prisma generate && prisma migrate deploy && nuxt build` (mirrors vercel-build).
+#
+# Nuxt selects the Nitro `netlify` preset (pinned below for determinism); it emits the
+# SSR function to .netlify/functions-internal (auto-detected by Netlify) and the static
+# assets to `dist`, which is therefore the publish directory.
+#
+# Required build-time env vars (set in the Netlify dashboard, NOT here):
+#   DATABASE_URL        — needed by `prisma migrate deploy` and at runtime
+#   BETTER_AUTH_SECRET  — auth signing secret
+#   BETTER_AUTH_URL     — the deployed site URL
+[build]
+  command = "pnpm run netlify-build"
+  publish = "dist"
+
+[build.environment]
+  NITRO_PRESET = "netlify"

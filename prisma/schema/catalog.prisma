@@ -1,0 +1,68 @@
+// The product catalog, previously a JSON file store. Each model maps to a shape
+// the storefront already consumes (CatalogProduct / ProductCategory /
+// SubscriptionPlan); the query layer in server/utils/catalog-store.ts reassembles
+// rows back into those shapes. Postgres scalar arrays carry ingredients/tags/
+// eligibility directly — they have no SQLite equivalent, which is why this domain
+// stayed on the file store until now.
+
+model Category {
+  slug      String @id
+  name      String
+  blurb     String
+  sortOrder Int    @default(0)
+}
+
+model Product {
+  id                String   @id
+  slug              String   @unique
+  name              String
+  subtitle          String
+  description       String
+  // Denormalised category display name (kept to preserve the CatalogProduct contract).
+  category          String
+  ingredients       String[]
+  tags              String[]
+  imageSrc          String
+  imageAlt          String
+  defaultUnitLabel  String
+  storage           String
+  shelfLifeDays     Int
+  // Nutrition is a small fixed shape — flattened into columns rather than JSON.
+  proteins          Int
+  fats              Int
+  carbs             Int
+  nutritionSummary  String
+  isAvailable       Boolean  @default(true)
+  // Category slugs this product can fill. Currently always its own category.
+  eligibleSlotTypes String[]
+  sortOrder         Int      @default(0)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Plan {
+  id            String     @id
+  slug          String     @unique
+  name          String
+  cadence       String
+  summary       String
+  priceAmount   Int
+  priceCurrency String     @default("USDT")
+  sortOrder     Int        @default(0)
+  includedSlots PlanSlot[]
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+}
+
+model PlanSlot {
+  id          String  @id
+  planId      String
+  plan        Plan    @relation(fields: [planId], references: [id], onDelete: Cascade)
+  slotType    String
+  label       String
+  description String
+  minQuantity Int
+  maxQuantity Int
+  required    Boolean
+  sortOrder   Int     @default(0)
+}

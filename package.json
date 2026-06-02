@@ -1,0 +1,57 @@
+{
+  "name": "illi",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "vercel-build": "prisma generate && prisma migrate deploy && nuxt build",
+    "netlify-build": "prisma generate && prisma migrate deploy && nuxt build",
+    "dev": "nuxt dev",
+    "preview": "nuxt preview",
+    "postinstall": "prisma generate && nuxt prepare",
+    "lint": "eslint .",
+    "typecheck": "nuxt typecheck",
+    "test": "vitest run",
+    "import:catalog": "node scripts/import-catalog.mjs",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:migrate:deploy": "prisma migrate deploy",
+    "db:seed": "tsx prisma/seed.ts",
+    "db:studio": "prisma studio",
+    "set-role": "node scripts/set-role.mjs"
+  },
+  "dependencies": {
+    "@iconify-json/lucide": "^1.2.100",
+    "@iconify-json/simple-icons": "^1.2.75",
+    "@nuxt/ui": "^4.6.0",
+    "@prisma/adapter-pg": "^7.8.0",
+    "@prisma/client": "^7.8.0",
+    "@vercel/functions": "^3.6.1",
+    "better-auth": "^1.6.13",
+    "nodemailer": "^8.0.10",
+    "nuxt": "^4.4.2",
+    "pg": "^8.21.0",
+    "prisma": "^7.8.0",
+    "tailwindcss": "^4.2.2"
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "^1.15.2",
+    "@types/node": "^25.9.1",
+    "@types/nodemailer": "^8.0.0",
+    "@types/pg": "^8.20.0",
+    "dotenv": "^17.4.2",
+    "eslint": "^10.1.0",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.2",
+    "vitest": "^4.1.8",
+    "vue-tsc": "^3.2.6"
+  },
+  "packageManager": "pnpm@10.33.0",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@prisma/client",
+      "@prisma/engines",
+      "prisma"
+    ]
+  }
+}

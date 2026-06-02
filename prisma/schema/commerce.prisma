@@ -1,0 +1,61 @@
+/// A member's standing order. Crypto can't auto-charge, so a subscription is
+/// re-invoiced each cycle (invoice-per-cycle); the snapshot is the bundle at
+/// purchase time so later catalog edits never alter it.
+model Subscription {
+  id               String    @id @default(cuid())
+  userId           String
+  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  planId           String
+  planName         String
+  cadence          String
+  currency         String    @default("USDT")
+  amount           Float
+  status           String    @default("pending") // pending | active | past_due | paused | canceled
+  snapshot         String // JSON checkout-handoff payload
+  currentPeriodEnd DateTime?
+  nextInvoiceAt    DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  orders           Order[]
+
+  @@index([userId])
+  @@index([status])
+}
+
+model Order {
+  id             String        @id @default(cuid())
+  userId         String
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  subscriptionId String?
+  subscription   Subscription? @relation(fields: [subscriptionId], references: [id])
+  status         String        @default("pending") // pending | paid | expired | failed
+  currency       String        @default("USDT")
+  amount         Float
+  snapshot       String // JSON bundle snapshot, server-priced
+  provider       String?
+  providerRef    String?
+  payUrl         String?
+  paidAt         DateTime?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  payments       Payment[]
+
+  @@index([userId])
+  @@index([providerRef])
+}
+
+model Payment {
+  id          String   @id @default(cuid())
+  orderId     String
+  order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  provider    String
+  providerRef String?
+  status      String   @default("pending")
+  amount      Float
+  currency    String   @default("USDT")
+  rawEvent    String? // last webhook payload (JSON)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([providerRef])
+}

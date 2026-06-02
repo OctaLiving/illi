@@ -1,0 +1,153 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+@theme static {
+  --font-sans: 'Public Sans', system-ui, sans-serif;
+  --font-serif: 'Fraunces', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  /* Warm clay scale — used by Nuxt UI `primary` and as the surface tone. */
+  --color-amber-50: #fffbf4;
+  --color-amber-100: #f7eddc;
+  --color-amber-200: #ecd6b0;
+  --color-amber-300: #ddb883;
+  --color-amber-400: #c69a6c;
+  --color-amber-500: #af7d4f;
+  --color-amber-600: #8d623e;
+  --color-amber-700: #6c4b32;
+  --color-amber-800: #4b3425;
+  --color-amber-900: #2f2118;
+  --color-amber-950: #18110d;
+
+  /* Bone / taupe neutral — used by Nuxt UI `neutral`. */
+  --color-stone-50: #faf7f2;
+  --color-stone-100: #efe7dc;
+  --color-stone-200: #ddd1c1;
+  --color-stone-300: #c7b7a0;
+  --color-stone-400: #a8957c;
+  --color-stone-500: #8a7761;
+  --color-stone-600: #6e5e4c;
+  --color-stone-700: #554739;
+  --color-stone-800: #3c3228;
+  --color-stone-900: #261f18;
+  --color-stone-950: #15110d;
+
+  /* Terracotta — the bright warm accent (headline emphasis, wax seal). */
+  --color-terra-50: #fdf3ee;
+  --color-terra-100: #f9e0d2;
+  --color-terra-200: #f0bda3;
+  --color-terra-300: #e6926a;
+  --color-terra-400: #d96a3c;
+  --color-terra-500: #d4542a;
+  --color-terra-600: #c2410c;
+  --color-terra-700: #9a3309;
+  --color-terra-800: #74270b;
+  --color-terra-900: #4f1c0b;
+
+  /* Indigo — the sharp secondary (buttons, rules, tags). Maghreb blue. */
+  --color-indigo-50: #eef2f7;
+  --color-indigo-100: #d6e0eb;
+  --color-indigo-200: #aec5dc;
+  --color-indigo-300: #7f9fc0;
+  --color-indigo-400: #4f76a0;
+  --color-indigo-500: #2f567f;
+  --color-indigo-600: #1e3a5f;
+  --color-indigo-700: #18304e;
+  --color-indigo-800: #13253c;
+  --color-indigo-900: #0e1a2b;
+  --color-indigo-950: #08101b;
+}
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  background: #f4ecdd;
+}
+
+/* ============================================================= */
+/* Maghreb Modern motifs                                         */
+/* ============================================================= */
+
+/* Subtle woven lattice — terracotta + indigo hairlines on a 45° grid. */
+.maghreb-lattice {
+  background-image:
+    repeating-linear-gradient(45deg, transparent 0 26px, rgba(194, 65, 12, 0.05) 26px 27px),
+    repeating-linear-gradient(-45deg, transparent 0 26px, rgba(30, 58, 95, 0.055) 26px 27px);
+}
+
+/* Warm atmospheric wash for full-page backgrounds. */
+.maghreb-wash {
+  background-image:
+    radial-gradient(120% 80% at 88% -10%, rgba(194, 65, 12, 0.14), transparent 46%),
+    radial-gradient(90% 70% at 0% 110%, rgba(30, 58, 95, 0.08), transparent 50%);
+}
+
+/* Horseshoe arch — the recurring Maghreb frame shape. */
+.arch {
+  border-radius: 50% 50% 0.5rem 0.5rem / 42% 42% 0.5rem 0.5rem;
+}
+.arch-inner {
+  border-radius: 50% 50% 0.35rem 0.35rem / 42% 42% 0.35rem 0.35rem;
+}
+
+/* The wax seal — illi's "by invitation" stamp, borrowed from Larder Ledger. */
+.wax-seal {
+  --seal-size: 7.25rem;
+  position: relative;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  width: var(--seal-size);
+  height: var(--seal-size);
+  border-radius: 50%;
+  border: 2px solid var(--color-terra-600);
+  color: var(--color-terra-700);
+  background:
+    radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.55), transparent 60%),
+    var(--color-terra-50);
+  box-shadow:
+    0 12px 24px -12px rgba(154, 51, 9, 0.55),
+    inset 0 0 0 1px rgba(194, 65, 12, 0.18);
+}
+.wax-seal::before {
+  content: "";
+  position: absolute;
+  inset: 0.45rem;
+  border: 1px solid var(--color-terra-600);
+  border-radius: 50%;
+  opacity: 0.7;
+}
+.wax-seal span {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  line-height: 1.6;
+}
+
+/* Load-in motion (staggered via inline animation-delay on each element). */
+@keyframes mg-rise {
+  from { opacity: 0; transform: translateY(26px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes mg-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes mg-stamp {
+  0%   { opacity: 0; transform: scale(1.5) rotate(-16deg); }
+  60%  { opacity: 1; transform: scale(0.93) rotate(4deg); }
+  100% { opacity: 1; transform: scale(1) rotate(-6deg); }
+}
+.reveal   { animation: mg-rise 0.8s both; }
+.reveal-f { animation: mg-fade 1.2s both; }
+.stamp-in { animation: mg-stamp 1s both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-f, .stamp-in {
+    animation: none !important;
+  }
+}

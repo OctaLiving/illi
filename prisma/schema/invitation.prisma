@@ -1,0 +1,16 @@
+/// An invitation to join illi. An operator issues a code; a customer redeems it
+/// at sign-up. (The relation to the Better Auth `User` is added once auth lands.)
+model Invitation {
+  id               String    @id @default(cuid())
+  code             String    @unique
+  email            String?
+  status           String    @default("pending") // pending | redeemed | revoked | expired
+  issuedByUserId   String?
+  redeemedByUserId String?
+  redeemedAt       DateTime?
+  expiresAt        DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  @@index([status])
+}

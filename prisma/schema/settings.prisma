@@ -1,0 +1,19 @@
+/// Operator-editable configuration (single row, id = "global"). Replaces the
+/// payment + email env vars at runtime; env is used only to seed this on first run.
+/// NOTE: holds plaintext secrets — encrypt at rest / use a secret manager for prod.
+model Settings {
+  id                       String   @id @default("global")
+  paymentMode              String   @default("simulated") // simulated | test | live
+  nowpaymentsTestApiKey    String?
+  nowpaymentsLiveApiKey    String?
+  nowpaymentsTestIpnSecret String?
+  nowpaymentsLiveIpnSecret String?
+  payCurrency              String   @default("usdttrc20")
+  smtpHost                 String?
+  smtpPort                 Int?
+  smtpSecure               Boolean  @default(false)
+  smtpUser                 String?
+  smtpPass                 String?
+  mailFrom                 String?
+  updatedAt                DateTime @updatedAt
+}
