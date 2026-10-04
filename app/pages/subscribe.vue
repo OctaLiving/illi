@@ -393,7 +393,7 @@ useSeoMeta({
                   />
                 </button>
                 <p class="text-center font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.12em] text-stone-400">
-                  Members only · USDT checkout is the next phase
+                  Members only · crypto checkout is the next phase
                 </p>
               </div>
             </div>

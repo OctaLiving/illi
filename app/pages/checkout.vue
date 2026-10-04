@@ -50,7 +50,7 @@ useSeoMeta({ title: 'Checkout · illi', robots: 'noindex' })
           Your subscription is ready.
         </h1>
         <p class="mx-auto mt-4 max-w-md text-base leading-7 text-stone-600">
-          Payment in USDT is the next phase. Your bundle is captured below — it's the exact
+          Crypto payment is the next phase. Your bundle is captured below — it's the exact
           shape checkout will charge once the gateway is live.
         </p>
       </div>
@@ -100,7 +100,7 @@ useSeoMeta({ title: 'Checkout · illi', robots: 'noindex' })
               name="i-lucide-wallet"
               class="size-4"
             />
-            {{ paying ? 'Starting checkout…' : 'Pay with USDT' }}
+            {{ paying ? 'Starting checkout…' : 'Pay with crypto' }}
           </button>
           <NuxtLink
             to="/subscribe"

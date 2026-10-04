@@ -42,14 +42,14 @@ useSeoMeta({ title: 'Pay · illi', robots: 'noindex' })
       />
       <div class="w-full rounded-md border border-amber-600/25 bg-[#f4ecdd] p-7 text-center">
         <p class="font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.2em] text-terra-600">
-          Simulated USDT payment
+          Simulated crypto payment
         </p>
         <h1 class="mt-3 font-[family:var(--font-serif)] text-4xl text-stone-900">
           {{ order ? `${order.amount} ${order.currency}` : 'Order' }}
         </h1>
         <p class="mt-3 text-sm leading-7 text-stone-600">
           This is a stand-in for the NOWPayments hosted page. In production you'd be redirected to
-          NOWPayments to send USDT; here, confirm to simulate a completed payment.
+          NOWPayments to pay in crypto; here, confirm to simulate a completed payment.
         </p>
 
         <p

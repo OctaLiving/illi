@@ -95,7 +95,7 @@ async function signOut() {
 
         <div class="space-y-2 font-[family:var(--font-mono)] text-[0.7rem] uppercase tracking-[0.16em] text-stone-500 md:text-right">
           <p>Invitation-only storefront</p>
-          <p>USDT checkout · catalog first</p>
+          <p>Crypto checkout · catalog first</p>
           <p>© {{ new Date().getFullYear() }} illi</p>
         </div>
       </div>

@@ -13,7 +13,7 @@ export type BundleSlotType = typeof bundleSlotTypes[number]
 export const subscriptionCadences = ['weekly', 'biweekly', 'monthly'] as const
 export type SubscriptionCadence = typeof subscriptionCadences[number]
 
-// Prices are set in Moroccan dirhams; customers still pay in USDT via the gateway.
+// Prices are set in Moroccan dirhams; customers pay in crypto via the gateway.
 export type PaymentCurrency = 'MAD'
 
 export interface ProductImage {

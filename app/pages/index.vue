@@ -136,10 +136,10 @@ useSeoMeta({
             № 03 · Payment
           </p>
           <p class="mt-3 font-[family:var(--font-serif)] text-4xl text-stone-900">
-            USDT
+            Crypto
           </p>
           <p class="mt-2 text-sm leading-6 text-stone-600">
-            Crypto checkout, members only. Access is by invitation.
+            Priced in dirhams, paid in crypto. Members only — access is by invitation.
           </p>
         </div>
       </div>
@@ -285,7 +285,7 @@ useSeoMeta({
             </h2>
             <p class="max-w-xl text-base leading-8 text-indigo-100">
               Browse the collection, shape a subscription, then let the next phase bring invitation access
-              and USDT checkout into the same experience.
+              and crypto checkout into the same experience.
             </p>
             <div class="flex flex-wrap gap-3 pt-1">
               <NuxtLink

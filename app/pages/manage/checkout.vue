@@ -18,7 +18,7 @@ const { data: settings } = await useFetch<SettingsView>('/api/admin/settings', {
 const gateway = computed(() => {
   const mode = settings.value?.paymentMode ?? 'simulated'
   if (mode === 'simulated') {
-    return { label: 'Simulated (dev)', ready: true, dot: 'bg-amber-500', note: 'Orders are marked paid instantly — no real USDT moves.' }
+    return { label: 'Simulated (dev)', ready: true, dot: 'bg-amber-500', note: 'Orders are marked paid instantly — no real crypto moves.' }
   }
   const keyed = mode === 'live' ? settings.value?.hasLiveApiKey : settings.value?.hasTestApiKey
   if (keyed) {
@@ -48,7 +48,7 @@ useSeoMeta({ title: 'Checkout · illi ops', robots: 'noindex, nofollow' })
     <div class="flex flex-wrap items-end justify-between gap-3 border-b border-amber-600/20 pb-4">
       <div>
         <p class="font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.24em] text-terra-600">
-          USDT · NOWPayments
+          Crypto · NOWPayments
         </p>
         <h1 class="mt-1 font-[family:var(--font-serif)] text-3xl text-stone-900">
           Checkout
@@ -70,7 +70,7 @@ useSeoMeta({ title: 'Checkout · illi ops', robots: 'noindex, nofollow' })
       <div class="space-y-4">
         <div class="rounded-md border border-amber-600/25 bg-[#f4ecdd] p-6">
           <p class="font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.16em] text-stone-500">
-            USDT gateway
+            Crypto gateway
           </p>
           <p class="mt-3 flex items-center gap-2 font-[family:var(--font-serif)] text-2xl text-stone-900">
             <span
