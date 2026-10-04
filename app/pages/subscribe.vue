@@ -394,7 +394,7 @@ useSeoMeta({
                   />
                 </button>
                 <p class="text-center font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.12em] text-stone-400">
-                  Secure payment in crypto · Prices in MAD
+                  Cash on delivery or online payment · Prices in MAD
                 </p>
               </div>
             </div>

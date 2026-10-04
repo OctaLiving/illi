@@ -6,6 +6,7 @@ export default defineEventHandler(async (event) => {
   return {
     paymentMode: s.paymentMode,
     payCurrency: s.payCurrency,
+    codEnabled: s.codEnabled,
     hasTestApiKey: !!s.nowpaymentsTestApiKey,
     hasLiveApiKey: !!s.nowpaymentsLiveApiKey,
     hasTestIpnSecret: !!s.nowpaymentsTestIpnSecret,

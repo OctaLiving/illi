@@ -22,7 +22,7 @@ async function confirm() {
   error.value = ''
   try {
     await $fetch(`/api/payments/${orderId.value}/simulate`, { method: 'POST' })
-    await navigateTo('/account')
+    await navigateTo(`/orders/${orderId.value}`)
   } catch (err) {
     const e = err as { data?: { statusMessage?: string } }
     error.value = e?.data?.statusMessage ?? 'Could not confirm the payment.'

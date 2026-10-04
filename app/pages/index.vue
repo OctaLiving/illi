@@ -350,7 +350,7 @@ useSeoMeta({
         <li
           v-for="(step, i) in [
             { title: 'Pick what you love', body: 'Add single jars to your cart, or build a box you can repeat.' },
-            { title: 'Pay securely', body: 'Prices are in dirhams; you pay in crypto through a secure checkout.' },
+            { title: 'Pay your way', body: 'Cash on delivery in Morocco, or pay online with crypto — card payments are coming soon.' },
             { title: 'We prepare your order', body: 'Your jars are made in small batches in Casablanca, then packed for you.' }
           ]"
           :key="step.title"

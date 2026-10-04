@@ -12,6 +12,7 @@ export const statusBadge: Record<string, string> = {
   active: 'bg-olive-600/10 text-olive-700',
   paid: 'bg-olive-600/10 text-olive-700',
   pending: 'bg-saffron-600/10 text-saffron-700',
+  cod_pending: 'bg-saffron-600/10 text-saffron-700',
   past_due: 'bg-saffron-600/10 text-saffron-700',
   paused: 'bg-stone-400/15 text-stone-500',
   canceled: 'bg-stone-400/15 text-stone-500',

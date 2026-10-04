@@ -20,6 +20,8 @@ interface AdminOrder {
   amount: number
   currency: string
   status: string
+  paymentMethod: string
+  shipping: { name: string, phone: string, city: string } | null
   createdAt: string
   user: AdminUser
 }
@@ -30,6 +32,19 @@ const { data: commerce } = await useFetch<{ subscriptions: AdminSubscription[], 
 })
 const activeSubscribers = computed(() => commerce.value.subscriptions.filter(s => s.status === 'active').length)
 const revenueCollected = computed(() => commerce.value.orders.filter(o => o.status === 'paid' && o.currency === 'MAD').reduce((sum, o) => sum + o.amount, 0))
+
+const collecting = ref('')
+async function markCollected(id: string) {
+  collecting.value = id
+  try {
+    await $fetch(`/api/admin/orders/${id}/collect`, { method: 'POST' })
+    await refreshNuxtData('admin-commerce')
+  } finally {
+    collecting.value = ''
+  }
+}
+
+const methodLabel: Record<string, string> = { cod: 'Cash on delivery', card: 'Card', crypto: 'Crypto' }
 
 const runningRenewals = ref(false)
 async function runRenewalsNow() {
@@ -148,7 +163,10 @@ useSeoMeta({ title: 'Subscriptions · illi ops', robots: 'noindex, nofollow' })
       <table class="w-full border-collapse text-left">
         <tbody>
           <tr v-if="commerce.orders.length === 0">
-            <td class="px-5 py-6 text-center font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.14em] text-stone-400">
+            <td
+              colspan="5"
+              class="px-5 py-6 text-center font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.14em] text-stone-400"
+            >
               No orders yet.
             </td>
           </tr>
@@ -162,6 +180,13 @@ useSeoMeta({ title: 'Subscriptions · illi ops', robots: 'noindex, nofollow' })
             </td>
             <td class="px-5 py-3 text-sm text-stone-700">
               {{ o.user.email }}
+              <span
+                v-if="o.shipping"
+                class="block text-xs text-stone-500"
+              >{{ o.shipping.name }} · {{ o.shipping.phone }} · {{ o.shipping.city }}</span>
+            </td>
+            <td class="px-5 py-3 text-sm text-stone-600">
+              {{ methodLabel[o.paymentMethod] ?? o.paymentMethod }}
             </td>
             <td class="px-5 py-3 text-right font-[family:var(--font-serif)] text-lg text-stone-900">
               {{ o.amount }} {{ o.currency }}
@@ -171,8 +196,17 @@ useSeoMeta({ title: 'Subscriptions · illi ops', robots: 'noindex, nofollow' })
                 class="rounded-sm px-2 py-0.5 font-[family:var(--font-mono)] text-[0.56rem] uppercase tracking-[0.1em]"
                 :class="statusBadge[o.status]"
               >
-                {{ o.status }}
+                {{ o.status === 'cod_pending' ? 'cash to collect' : o.status }}
               </span>
+              <button
+                v-if="o.status === 'cod_pending'"
+                type="button"
+                class="ml-2 rounded-full bg-olive-700 px-3 py-1 text-xs font-semibold text-sand-50 transition hover:bg-olive-800 disabled:opacity-50"
+                :disabled="collecting === o.id"
+                @click="markCollected(o.id)"
+              >
+                {{ collecting === o.id ? 'Saving…' : 'Mark cash collected' }}
+              </button>
             </td>
           </tr>
         </tbody>

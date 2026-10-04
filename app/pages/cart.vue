@@ -1,15 +1,21 @@
 <script setup lang="ts">
+import type { CheckoutDetails } from '~/composables/useCart'
+
 const { lines, count, subtotal, items, clear } = useCart()
-const { checkout, pending, error } = useCheckout()
+const { submit, pending, error } = useCheckout('/api/checkout/cart')
 const { data: me } = useMe()
 
-useSeoMeta({ title: 'Your cart', robots: 'noindex' })
+function placeOrder(details: CheckoutDetails) {
+  submit({ items: items.value, ...details }, clear)
+}
+
+useSeoMeta({ title: 'Checkout', robots: 'noindex' })
 </script>
 
 <template>
-  <div class="mx-auto max-w-5xl px-5 py-12 sm:px-8 sm:py-16">
+  <div class="mx-auto max-w-6xl px-5 py-10 sm:px-8 sm:py-14">
     <h1 class="font-serif text-4xl text-stone-900 sm:text-5xl">
-      Your cart
+      Checkout
     </h1>
 
     <ClientOnly>
@@ -33,56 +39,63 @@ useSeoMeta({ title: 'Your cart', robots: 'noindex' })
 
       <div
         v-else
-        class="mt-10 grid gap-8 lg:grid-cols-[1.4fr_1fr] lg:items-start"
+        class="mt-8 grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:items-start"
       >
-        <div class="rounded-3xl bg-white px-6 ring-1 ring-sand-200">
+        <!-- Order summary -->
+        <section class="rounded-3xl bg-white px-6 pb-2 pt-5 ring-1 ring-sand-200 lg:sticky lg:top-28">
+          <div class="flex items-baseline justify-between">
+            <h2 class="font-serif text-2xl text-stone-900">
+              Your order
+            </h2>
+            <NuxtLink
+              to="/catalog"
+              class="text-sm font-semibold text-olive-700 hover:underline"
+            >
+              Add more
+            </NuxtLink>
+          </div>
           <CartLines />
-        </div>
-
-        <aside class="space-y-4 rounded-3xl bg-white p-6 ring-1 ring-sand-200 lg:sticky lg:top-28">
-          <div class="flex items-baseline justify-between text-stone-600">
-            <span>{{ count }} {{ count === 1 ? 'item' : 'items' }}</span>
+          <div class="flex items-baseline justify-between border-t border-sand-200 py-4">
+            <span class="text-stone-600">{{ count }} {{ count === 1 ? 'item' : 'items' }}</span>
             <span class="font-serif text-3xl text-stone-900">{{ subtotal }} MAD</span>
           </div>
-          <p
-            v-if="error"
-            class="rounded-xl bg-saffron-50 px-3 py-2 text-sm text-saffron-800"
+        </section>
+
+        <!-- Details + payment -->
+        <section class="rounded-3xl bg-sand-50 p-6 ring-1 ring-sand-200 sm:p-8">
+          <CheckoutForm
+            v-if="me?.user"
+            :total="subtotal"
+            :pending="pending"
+            :error="error"
+            @submit="placeOrder"
+          />
+          <div
+            v-else
+            class="space-y-4 text-center"
           >
-            {{ error }}
-          </p>
-          <button
-            type="button"
-            class="flex w-full items-center justify-center gap-2 rounded-full bg-olive-700 py-4 text-base font-semibold text-sand-50 transition hover:bg-olive-800 disabled:opacity-60"
-            :disabled="pending"
-            @click="checkout(items, clear)"
-          >
-            <UIcon
-              name="i-lucide-lock"
-              class="size-4"
-            />
-            {{ pending ? 'Starting checkout…' : me?.user ? 'Checkout' : 'Sign in to checkout' }}
-          </button>
-          <ul class="space-y-2 text-sm text-stone-600">
-            <li class="flex gap-2">
-              <UIcon
-                name="i-lucide-shield-check"
-                class="mt-0.5 size-4 text-olive-600"
-              />Secure payment in crypto
-            </li>
-            <li class="flex gap-2">
-              <UIcon
-                name="i-lucide-leaf"
-                class="mt-0.5 size-4 text-olive-600"
-              />Made in small batches in Casablanca
-            </li>
-          </ul>
-          <NuxtLink
-            to="/catalog"
-            class="block text-center text-sm font-semibold text-olive-700 hover:underline"
-          >
-            Continue shopping
-          </NuxtLink>
-        </aside>
+            <p class="font-serif text-2xl text-stone-900">
+              Sign in to check out
+            </p>
+            <p class="text-stone-600">
+              It takes a minute, and you can track your orders afterwards. Your cart is saved.
+            </p>
+            <div class="flex flex-wrap justify-center gap-3">
+              <NuxtLink
+                to="/join?next=/cart"
+                class="rounded-full bg-olive-700 px-6 py-3 font-semibold text-sand-50 transition hover:bg-olive-800"
+              >
+                Create an account
+              </NuxtLink>
+              <NuxtLink
+                to="/login?next=/cart"
+                class="rounded-full bg-white px-6 py-3 font-semibold text-olive-800 ring-1 ring-sand-300 transition hover:ring-olive-600"
+              >
+                Sign in
+              </NuxtLink>
+            </div>
+          </div>
+        </section>
       </div>
     </ClientOnly>
   </div>

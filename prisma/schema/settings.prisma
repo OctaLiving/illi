@@ -9,6 +9,7 @@ model Settings {
   nowpaymentsTestIpnSecret String?
   nowpaymentsLiveIpnSecret String?
   payCurrency              String   @default("usdttrc20")
+  codEnabled               Boolean  @default(true) // cash on delivery at checkout (Morocco)
   smtpHost                 String?
   smtpPort                 Int?
   smtpSecure               Boolean  @default(false)

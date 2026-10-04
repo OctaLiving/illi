@@ -33,13 +33,13 @@ watch(productSlug, () => {
 })
 
 const { add } = useCart()
-const { checkout, pending: buying, error: buyError } = useCheckout()
 
 function addToCart() {
   add(product.value.id, quantity.value)
 }
 function buyNow() {
-  checkout([{ productId: product.value.id, quantity: quantity.value }])
+  add(product.value.id, quantity.value, false)
+  navigateTo('/cart')
 }
 
 const cadenceLabel: Record<string, string> = { weekly: 'every week', biweekly: 'every two weeks', monthly: 'every month' }
@@ -134,17 +134,10 @@ useSeoMeta({
             v-if="canBuy"
             type="button"
             class="mt-3 w-full rounded-full bg-white px-7 py-3.5 text-base font-semibold text-olive-800 ring-1 ring-sand-300 transition hover:ring-olive-600 disabled:opacity-60 sm:w-auto"
-            :disabled="buying"
             @click="buyNow"
           >
-            {{ buying ? 'Starting checkout…' : 'Buy now' }}
+            Buy now
           </button>
-          <p
-            v-if="buyError"
-            class="mt-3 rounded-xl bg-saffron-50 px-3 py-2 text-sm text-saffron-800"
-          >
-            {{ buyError }}
-          </p>
 
           <ul class="mt-8 grid grid-cols-3 gap-3 text-sm">
             <li class="rounded-2xl bg-white p-4 ring-1 ring-sand-200">

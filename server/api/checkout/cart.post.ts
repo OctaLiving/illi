@@ -1,5 +1,4 @@
-import { prisma } from '~~/server/utils/db/client'
-import { getPaymentProvider } from '~~/server/utils/payments'
+import type { PaymentMethod, Shipping } from '~~/server/utils/checkout'
 
 const MAX_QUANTITY = 20
 
@@ -7,11 +6,19 @@ const MAX_QUANTITY = 20
 // price comes from the catalog server-side; client-sent prices are never used.
 export default defineEventHandler(async (event) => {
   const session = await requireAuth(event)
-  const { items } = await readBody<{ items?: { productId?: string, quantity?: number }[] }>(event)
+  const body = await readBody<{
+    items?: { productId?: string, quantity?: number }[]
+    method?: PaymentMethod
+    shipping?: Partial<Shipping>
+  }>(event)
+  const { items } = body
 
   if (!Array.isArray(items) || items.length === 0) {
     throw createError({ statusCode: 400, statusMessage: 'Your cart is empty.' })
   }
+
+  const shipping = normalizeShipping(body.shipping)
+  const method = await resolveMethod(body.method, shipping)
 
   const store = await getStore()
   // Merge duplicate lines, then price each from the catalog.
@@ -43,33 +50,16 @@ export default defineEventHandler(async (event) => {
 
   const amount = lines.reduce((sum, l) => sum + l.unitPrice * l.quantity, 0)
   const currency = 'MAD'
-  const snapshot = JSON.stringify({ kind: 'products', items: lines, amount, currency })
   const itemCount = lines.reduce((n, l) => n + l.quantity, 0)
-  const description = lines.length === 1 && itemCount === 1 ? `illi — ${lines[0]!.productName}` : `illi — ${itemCount} items`
 
-  const provider = await getPaymentProvider()
-  const order = await prisma.order.create({
-    data: { userId: session.user.id, currency, amount, snapshot, provider: provider.name }
-  })
-
-  const base = process.env.BETTER_AUTH_URL || getRequestURL(event).origin
-  const payment = await provider.createPayment({
-    orderId: order.id,
+  return placeOrder(event, {
+    userId: session.user.id,
     amount,
     currency,
-    description,
-    successUrl: `${base}/account`,
-    cancelUrl: `${base}/cart`,
-    ipnUrl: `${base}/api/webhooks/nowpayments`
+    snapshot: JSON.stringify({ kind: 'products', items: lines, amount, currency }),
+    method,
+    shipping,
+    description: lines.length === 1 && itemCount === 1 ? `illi — ${lines[0]!.productName}` : `illi — ${itemCount} items`,
+    cancelPath: '/cart'
   })
-
-  await prisma.payment.create({
-    data: { orderId: order.id, provider: provider.name, providerRef: payment.providerRef, amount, currency }
-  })
-  await prisma.order.update({
-    where: { id: order.id },
-    data: { providerRef: payment.providerRef, payUrl: payment.payUrl }
-  })
-
-  return { orderId: order.id, payUrl: payment.payUrl }
 })

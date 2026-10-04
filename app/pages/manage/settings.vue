@@ -6,6 +6,7 @@ definePageMeta({ layout: 'manage', middleware: 'operator' })
 interface SettingsView {
   paymentMode: string
   payCurrency: string
+  codEnabled: boolean
   hasTestApiKey: boolean
   hasLiveApiKey: boolean
   hasTestIpnSecret: boolean
@@ -25,6 +26,7 @@ const { data: settings, refresh: refreshSettings } = await useFetch<SettingsView
 const paymentForm = reactive({
   paymentMode: settings.value?.paymentMode ?? 'simulated',
   payCurrency: settings.value?.payCurrency ?? 'usdttrc20',
+  codEnabled: settings.value?.codEnabled ?? true,
   nowpaymentsTestApiKey: '',
   nowpaymentsLiveApiKey: '',
   nowpaymentsTestIpnSecret: '',
@@ -119,6 +121,17 @@ useSeoMeta({ title: 'Settings · illi ops', robots: 'noindex, nofollow' })
               Live
             </option>
           </select>
+        </div>
+        <div>
+          <label :class="labelText">Cash on delivery</label>
+          <label class="flex items-center gap-2 py-2 text-sm text-stone-700">
+            <input
+              v-model="paymentForm.codEnabled"
+              type="checkbox"
+              class="size-4 accent-olive-700"
+            >
+            Offer cash on delivery at checkout (Morocco)
+          </label>
         </div>
         <div>
           <label :class="labelText">Pay currency</label>

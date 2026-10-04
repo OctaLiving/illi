@@ -13,6 +13,7 @@ interface SettingsInput {
   smtpUser?: string
   smtpPass?: string
   mailFrom?: string
+  codEnabled?: boolean
 }
 
 const VALID_MODES = ['simulated', 'test', 'live']
@@ -34,6 +35,7 @@ export default defineEventHandler(async (event) => {
   const data: Record<string, unknown> = {}
   if (body.paymentMode) data.paymentMode = body.paymentMode
   if (body.payCurrency !== undefined) data.payCurrency = body.payCurrency.trim() || 'usdttrc20'
+  if (typeof body.codEnabled === 'boolean') data.codEnabled = body.codEnabled
 
   const testKey = secret(body.nowpaymentsTestApiKey)
   if (testKey) data.nowpaymentsTestApiKey = testKey

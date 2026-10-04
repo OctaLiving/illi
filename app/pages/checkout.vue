@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { CheckoutDetails } from '~/composables/useCart'
+
 definePageMeta({ middleware: 'auth' })
 
 const { data: me } = useMe()
@@ -6,27 +8,10 @@ const firstName = computed(() => me.value?.user?.name?.split(' ')[0] ?? '')
 const { data: catalog } = await useCatalog()
 const { bundleSummary, selection } = useSubscriptionBuilder(catalog.value.products, catalog.value.plans)
 
-const paying = ref(false)
-const payError = ref('')
+const { submit, pending, error } = useCheckout('/api/checkout')
 
-async function pay() {
-  paying.value = true
-  payError.value = ''
-  try {
-    const { payUrl } = await $fetch<{ payUrl: string }>('/api/checkout', {
-      method: 'POST',
-      body: { selection: selection.value }
-    })
-    if (/^https?:\/\//.test(payUrl)) {
-      window.location.href = payUrl // external hosted page (NOWPayments)
-    } else {
-      await navigateTo(payUrl) // internal simulated page
-    }
-  } catch (err) {
-    const e = err as { data?: { statusMessage?: string } }
-    payError.value = e?.data?.statusMessage ?? 'Could not start checkout.'
-    paying.value = false
-  }
+function placeOrder(details: CheckoutDetails) {
+  submit({ selection: selection.value, ...details })
 }
 
 useSeoMeta({ title: 'Checkout · illi', robots: 'noindex' })
@@ -51,8 +36,8 @@ useSeoMeta({ title: 'Checkout · illi', robots: 'noindex' })
           Your box is ready.
         </h1>
         <p class="mx-auto mt-4 max-w-md text-base leading-7 text-stone-600">
-          Check your picks below, then pay securely in crypto. We'll prepare your box and send you a
-          payment link before each renewal.
+          Check your picks, add your delivery details and choose how to pay — cash on delivery or online.
+          Each renewal is paid the same way.
         </p>
       </div>
 
@@ -90,33 +75,35 @@ useSeoMeta({ title: 'Checkout · illi', robots: 'noindex' })
           </li>
         </ul>
 
-        <div class="mt-6 flex flex-wrap gap-3">
-          <button
-            type="button"
-            class="inline-flex items-center gap-2 rounded-lg bg-saffron-600 px-5 py-3 text-sm font-semibold text-sand-50 transition hover:bg-saffron-700 disabled:cursor-not-allowed disabled:opacity-50"
-            :disabled="paying || !bundleSummary?.isReadyForCheckout"
-            @click="pay"
-          >
-            <UIcon
-              name="i-lucide-wallet"
-              class="size-4"
-            />
-            {{ paying ? 'Starting checkout…' : 'Pay with crypto' }}
-          </button>
-          <NuxtLink
-            to="/subscribe"
-            class="inline-flex items-center gap-2 rounded-full border border-olive-600 px-5 py-3 text-sm font-semibold text-olive-700 transition hover:bg-olive-600/8"
-          >
-            Adjust the bundle
-          </NuxtLink>
-        </div>
-        <p
-          v-if="payError"
-          class="mt-3 rounded-lg bg-saffron-600/10 px-3 py-2 text-sm text-saffron-700"
+        <NuxtLink
+          to="/subscribe"
+          class="mt-5 inline-flex text-sm font-semibold text-olive-700 hover:underline"
         >
-          {{ payError }}
-        </p>
+          Change your picks
+        </NuxtLink>
       </div>
+
+      <section
+        v-if="bundleSummary?.isReadyForCheckout"
+        class="reveal mt-8 rounded-3xl bg-sand-50 p-6 ring-1 ring-sand-200 sm:p-8"
+        style="animation-delay:.15s"
+      >
+        <CheckoutForm
+          :total="bundleSummary.basePriceAmount"
+          :pending="pending"
+          :error="error"
+          @submit="placeOrder"
+        />
+      </section>
+      <p
+        v-else
+        class="mt-8 rounded-2xl bg-saffron-50 p-5 text-center text-stone-700 ring-1 ring-saffron-200"
+      >
+        Your box isn't complete yet. <NuxtLink
+          to="/subscribe"
+          class="font-semibold text-olive-700 underline"
+        >Finish choosing</NuxtLink> to check out.
+      </p>
     </div>
   </div>
 </template>

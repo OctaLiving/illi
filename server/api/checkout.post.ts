@@ -1,13 +1,14 @@
 import { prisma } from '~~/server/utils/db/client'
-import { getPaymentProvider } from '~~/server/utils/payments'
+import type { PaymentMethod, Shipping } from '~~/server/utils/checkout'
 import type { BundleSelectionInput } from '~/types/catalog'
 import { createCheckoutHandoffPayload, createSubscriptionBundleSummary } from '~/utils/bundle'
 
-// Start checkout: re-price the bundle server-side, snapshot it, create the
-// order + (pending) subscription, and open a payment with the provider.
+// Start a box: re-price the bundle server-side, snapshot it, create the
+// subscription and its first order, then start payment (or confirm cash on delivery).
 export default defineEventHandler(async (event) => {
   const session = await requireAuth(event)
-  const { selection } = await readBody<{ selection: BundleSelectionInput }>(event)
+  const body = await readBody<{ selection: BundleSelectionInput, method?: PaymentMethod, shipping?: Partial<Shipping> }>(event)
+  const { selection } = body
 
   if (!selection?.planId) {
     throw createError({ statusCode: 400, statusMessage: 'No plan selected.' })
@@ -25,6 +26,9 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, statusMessage: 'Your bundle is missing required slots.' })
   }
 
+  const shipping = normalizeShipping(body.shipping)
+  const method = await resolveMethod(body.method, shipping)
+
   const snapshot = JSON.stringify(createCheckoutHandoffPayload(summary))
   const amount = plan.price.amount
   const currency = plan.price.currency
@@ -37,40 +41,21 @@ export default defineEventHandler(async (event) => {
       cadence: plan.cadence,
       currency,
       amount,
-      snapshot
-    }
-  })
-
-  const provider = await getPaymentProvider()
-  const order = await prisma.order.create({
-    data: {
-      userId: session.user.id,
-      subscriptionId: subscription.id,
-      currency,
-      amount,
       snapshot,
-      provider: provider.name
+      paymentMethod: method,
+      shipping: { ...shipping }
     }
   })
 
-  const base = process.env.BETTER_AUTH_URL || getRequestURL(event).origin
-  const payment = await provider.createPayment({
-    orderId: order.id,
+  return placeOrder(event, {
+    userId: session.user.id,
+    subscriptionId: subscription.id,
     amount,
     currency,
+    snapshot,
+    method,
+    shipping,
     description: `illi — ${plan.name}`,
-    successUrl: `${base}/account`,
-    cancelUrl: `${base}/checkout`,
-    ipnUrl: `${base}/api/webhooks/nowpayments`
+    cancelPath: '/checkout'
   })
-
-  await prisma.payment.create({
-    data: { orderId: order.id, provider: provider.name, providerRef: payment.providerRef, amount, currency }
-  })
-  await prisma.order.update({
-    where: { id: order.id },
-    data: { providerRef: payment.providerRef, payUrl: payment.payUrl }
-  })
-
-  return { orderId: order.id, payUrl: payment.payUrl }
 })
