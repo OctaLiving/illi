@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "illi — Small-batch Moroccan pantry",
+    "title": "Maison Illi — Small-batch Moroccan pantry",
     "description": "Ferments, nut butters, marinated fish and slow-cooked sauces, made in small batches in Casablanca. Buy a jar or build a box."
   },
   "common": {
@@ -19,7 +19,7 @@
     "cart": "Cart",
     "openCart": "Open cart",
     "menu": "Menu",
-    "home": "illi — home",
+    "home": "Maison Illi — home",
     "language": "Language"
   },
   "layout": {
@@ -33,7 +33,7 @@
     "yourAccount": "Your account",
     "createAccount": "Create an account",
     "yourCart": "Your cart",
-    "copyright": "© {year} illi · Made in Casablanca",
+    "copyright": "© {year} Maison Illi · Made in Casablanca",
     "payments": "Prices in Moroccan dirhams · Cash on delivery or secure online payment"
   },
   "product": {
@@ -116,7 +116,7 @@
     "monthly": "Every month"
   },
   "home": {
-    "eyebrow": "Small-batch Moroccan pantry",
+    "eyebrow": "Back to living food",
     "titleA": "A Moroccan kitchen,",
     "titleB": "kept in a jar.",
     "intro": "Amlou, live ferments, marinated sardines, slow-cooked sauces — made in small batches in Casablanca with nothing added that shouldn't be.",

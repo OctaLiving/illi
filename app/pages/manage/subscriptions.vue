@@ -64,16 +64,16 @@ useSeoMeta({ title: 'Subscriptions · illi ops', robots: 'noindex, nofollow' })
   <section>
     <div class="flex flex-wrap items-end justify-between gap-3 border-b border-sand-600/20 pb-4">
       <div>
-        <p class="font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.24em] text-saffron-600">
+        <p class="font-mono text-[0.62rem] uppercase tracking-[0.24em] text-sage-600">
           {{ activeSubscribers }} active · {{ revenueCollected }} MAD collected
         </p>
-        <h1 class="mt-1 font-[family:var(--font-serif)] text-3xl text-stone-900">
+        <h1 class="mt-1 font-serif text-3xl text-stone-900">
           Subscriptions
         </h1>
       </div>
       <button
         type="button"
-        class="inline-flex items-center gap-2 rounded-sm border border-olive-600 px-4 py-2.5 font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.14em] text-olive-700 transition hover:bg-olive-600/8 disabled:opacity-50"
+        class="inline-flex items-center gap-2 rounded-sm border border-terra-600 px-4 py-2.5 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-terra-700 transition hover:bg-terra-600/8 disabled:opacity-50"
         :disabled="runningRenewals"
         @click="runRenewalsNow"
       >
@@ -88,7 +88,7 @@ useSeoMeta({ title: 'Subscriptions · illi ops', robots: 'noindex, nofollow' })
     <div class="mt-6 overflow-x-auto rounded-md border border-sand-600/25 bg-sand-100">
       <table class="w-full border-collapse text-left">
         <thead>
-          <tr class="border-b border-sand-600/25 font-[family:var(--font-mono)] text-[0.56rem] uppercase tracking-[0.14em] text-stone-500">
+          <tr class="border-b border-sand-600/25 font-mono text-[0.56rem] uppercase tracking-[0.14em] text-stone-500">
             <th class="px-5 py-3 font-medium">
               Customer
             </th>
@@ -113,7 +113,7 @@ useSeoMeta({ title: 'Subscriptions · illi ops', robots: 'noindex, nofollow' })
           <tr v-if="commerce.subscriptions.length === 0">
             <td
               colspan="6"
-              class="px-5 py-8 text-center font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.14em] text-stone-400"
+              class="px-5 py-8 text-center font-mono text-[0.66rem] uppercase tracking-[0.14em] text-stone-400"
             >
               No subscriptions yet — they appear here after checkout.
             </td>
@@ -127,25 +127,25 @@ useSeoMeta({ title: 'Subscriptions · illi ops', robots: 'noindex, nofollow' })
               <p class="text-sm text-stone-900">
                 {{ sub.user.name }}
               </p>
-              <p class="font-[family:var(--font-mono)] text-[0.6rem] text-stone-500">
+              <p class="font-mono text-[0.6rem] text-stone-500">
                 {{ sub.user.email }}
               </p>
             </td>
-            <td class="px-5 py-3 font-[family:var(--font-serif)] text-lg text-stone-900">
+            <td class="px-5 py-3 font-serif text-lg text-stone-900">
               {{ sub.planName }}
             </td>
-            <td class="px-5 py-3 font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.1em] text-stone-500">
+            <td class="px-5 py-3 font-mono text-[0.62rem] uppercase tracking-[0.1em] text-stone-500">
               {{ sub.cadence }}
             </td>
-            <td class="px-5 py-3 text-right font-[family:var(--font-mono)] text-sm text-stone-700">
+            <td class="px-5 py-3 text-right font-mono text-sm text-stone-700">
               {{ sub.amount }} {{ sub.currency }}
             </td>
-            <td class="px-5 py-3 font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.1em] text-stone-500">
+            <td class="px-5 py-3 font-mono text-[0.66rem] uppercase tracking-[0.1em] text-stone-500">
               {{ sub.nextInvoiceAt ? fmtDate(sub.nextInvoiceAt) : '—' }}
             </td>
             <td class="px-5 py-3 text-right">
               <span
-                class="rounded-sm px-2 py-0.5 font-[family:var(--font-mono)] text-[0.56rem] uppercase tracking-[0.1em]"
+                class="rounded-sm px-2 py-0.5 font-mono text-[0.56rem] uppercase tracking-[0.1em]"
                 :class="statusBadge[sub.status]"
               >
                 {{ sub.status }}
@@ -156,7 +156,7 @@ useSeoMeta({ title: 'Subscriptions · illi ops', robots: 'noindex, nofollow' })
       </table>
     </div>
 
-    <h2 class="mt-8 font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.2em] text-stone-500">
+    <h2 class="mt-8 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-stone-500">
       Recent orders
     </h2>
     <div class="mt-3 overflow-x-auto rounded-md border border-sand-600/25 bg-sand-100">
@@ -165,7 +165,7 @@ useSeoMeta({ title: 'Subscriptions · illi ops', robots: 'noindex, nofollow' })
           <tr v-if="commerce.orders.length === 0">
             <td
               colspan="5"
-              class="px-5 py-6 text-center font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.14em] text-stone-400"
+              class="px-5 py-6 text-center font-mono text-[0.66rem] uppercase tracking-[0.14em] text-stone-400"
             >
               No orders yet.
             </td>
@@ -175,7 +175,7 @@ useSeoMeta({ title: 'Subscriptions · illi ops', robots: 'noindex, nofollow' })
             :key="o.id"
             class="border-b border-sand-600/10 last:border-0"
           >
-            <td class="px-5 py-3 font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.1em] text-stone-500">
+            <td class="px-5 py-3 font-mono text-[0.66rem] uppercase tracking-[0.1em] text-stone-500">
               {{ fmtDate(o.createdAt) }}
             </td>
             <td class="px-5 py-3 text-sm text-stone-700">
@@ -188,12 +188,12 @@ useSeoMeta({ title: 'Subscriptions · illi ops', robots: 'noindex, nofollow' })
             <td class="px-5 py-3 text-sm text-stone-600">
               {{ methodLabel[o.paymentMethod] ?? o.paymentMethod }}
             </td>
-            <td class="px-5 py-3 text-right font-[family:var(--font-serif)] text-lg text-stone-900">
+            <td class="px-5 py-3 text-right font-serif text-lg text-stone-900">
               {{ o.amount }} {{ o.currency }}
             </td>
             <td class="px-5 py-3 text-right">
               <span
-                class="rounded-sm px-2 py-0.5 font-[family:var(--font-mono)] text-[0.56rem] uppercase tracking-[0.1em]"
+                class="rounded-sm px-2 py-0.5 font-mono text-[0.56rem] uppercase tracking-[0.1em]"
                 :class="statusBadge[o.status]"
               >
                 {{ o.status === 'cod_pending' ? 'cash to collect' : o.status }}
@@ -201,7 +201,7 @@ useSeoMeta({ title: 'Subscriptions · illi ops', robots: 'noindex, nofollow' })
               <button
                 v-if="o.status === 'cod_pending'"
                 type="button"
-                class="ml-2 rounded-full bg-olive-700 px-3 py-1 text-xs font-semibold text-sand-50 transition hover:bg-olive-800 disabled:opacity-50"
+                class="ml-2 rounded-full bg-terra-700 px-3 py-1 text-xs font-semibold text-sand-50 transition hover:bg-terra-800 disabled:opacity-50"
                 :disabled="collecting === o.id"
                 @click="markCollected(o.id)"
               >

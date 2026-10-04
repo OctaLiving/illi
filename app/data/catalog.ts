@@ -117,7 +117,7 @@ export const catalogProducts: CatalogProduct[] = [
     storage: 'Refrigerated',
     shelfLifeDays: 180,
     nutrition: { proteins: 25, fats: 33, carbs: 2, summary: 'Energy: 400 kcal, Protein: 25 g, Carbohydrates: 2 g, Fat: 33 g, Calcium: 800 mg' },
-    isAvailable: true,
+    isAvailable: false,
     eligibleSlotTypes: ['dairy'],
     price: { amount: 170, currency: 'MAD' }
   },
@@ -279,7 +279,7 @@ export const catalogProducts: CatalogProduct[] = [
     storage: 'Room Temp',
     shelfLifeDays: 180,
     nutrition: { proteins: 20, fats: 70, carbs: 10, summary: 'Energy: 600 kcal, Protein: 18 g, Carbohydrates: 20 g, Fat: 52 g, Fiber: 8 g, Vitamin E: 6 mg' },
-    isAvailable: true,
+    isAvailable: false,
     eligibleSlotTypes: ['spreads'],
     price: { amount: 170, currency: 'MAD' }
   },
@@ -333,7 +333,7 @@ export const catalogProducts: CatalogProduct[] = [
     storage: 'Room Temp',
     shelfLifeDays: 365,
     nutrition: { proteins: 1, fats: 0, carbs: 99, summary: 'Energy: 260 kcal, Protein: 1 g, Carbohydrates: 65 g, Fat: 0 g, Fiber: 1 g, Potassium: 250 mg' },
-    isAvailable: true,
+    isAvailable: false,
     eligibleSlotTypes: ['jams'],
     price: { amount: 150, currency: 'MAD' }
   },
@@ -387,7 +387,7 @@ export const catalogProducts: CatalogProduct[] = [
     storage: 'Refrigerated',
     shelfLifeDays: 14,
     nutrition: { proteins: 25, fats: 10, carbs: 65, summary: 'Energy: 120 kcal, Protein: 16 g, Carbohydrates: 2 g, Fat: 5 g, Fiber: 0.5 g, Iron: 4 mg' },
-    isAvailable: true,
+    isAvailable: false,
     eligibleSlotTypes: ['seafood'],
     price: { amount: 280, currency: 'MAD' }
   },
@@ -405,7 +405,7 @@ export const catalogProducts: CatalogProduct[] = [
     storage: 'Refrigerated',
     shelfLifeDays: 14,
     nutrition: { proteins: 45, fats: 50, carbs: 5, summary: 'Energy: 210 kcal, Protein: 22 g, Carbohydrates: 0 g, Fat: 14 g, Fiber: 0 g, Calcium: 250 mg' },
-    isAvailable: true,
+    isAvailable: false,
     eligibleSlotTypes: ['seafood'],
     price: { amount: 280, currency: 'MAD' }
   },
@@ -423,7 +423,7 @@ export const catalogProducts: CatalogProduct[] = [
     storage: 'Refrigerated',
     shelfLifeDays: 14,
     nutrition: { proteins: 60, fats: 30, carbs: 10, summary: 'Energy: 180 kcal, Protein: 23 g, Carbohydrates: 1 g, Fat: 9 g, Fiber: 0.5 g, Iron: 1.2 mg' },
-    isAvailable: true,
+    isAvailable: false,
     eligibleSlotTypes: ['seafood'],
     price: { amount: 280, currency: 'MAD' }
   },

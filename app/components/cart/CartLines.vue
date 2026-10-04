@@ -28,7 +28,7 @@ const { tr, price } = useLocalized()
           <div class="min-w-0">
             <NuxtLinkLocale
               :to="`/catalog/${line.product.slug}`"
-              class="block truncate font-semibold text-stone-900 hover:text-olive-700"
+              class="block truncate font-semibold text-stone-900 hover:text-terra-700"
               @click="isOpen = false"
             >
               {{ tr(line.product, 'name') }}

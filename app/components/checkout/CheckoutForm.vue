@@ -82,7 +82,7 @@ function onSubmit() {
   emit('submit', { method: method.value, shipping: { ...shipping } })
 }
 
-const field = 'w-full rounded-xl border-0 bg-white px-4 py-3 text-stone-900 ring-1 ring-sand-300 transition placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-olive-600'
+const field = 'w-full rounded-xl border-0 bg-white px-4 py-3 text-stone-900 ring-1 ring-sand-300 transition placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-terra-600'
 const label = 'mb-1.5 block text-sm font-semibold text-stone-700'
 </script>
 
@@ -195,7 +195,7 @@ const label = 'mb-1.5 block text-sm font-semibold text-stone-700'
         v-for="m in methods"
         :key="m.id"
         class="flex items-start gap-4 rounded-2xl bg-white p-4 ring-1 transition"
-        :class="!m.available ? 'cursor-not-allowed opacity-55 ring-sand-200' : method === m.id ? 'cursor-pointer ring-2 ring-olive-600' : 'cursor-pointer ring-sand-300 hover:ring-olive-500'"
+        :class="!m.available ? 'cursor-not-allowed opacity-55 ring-sand-200' : method === m.id ? 'cursor-pointer ring-2 ring-terra-600' : 'cursor-pointer ring-sand-300 hover:ring-terra-500'"
       >
         <input
           v-model="method"
@@ -203,9 +203,9 @@ const label = 'mb-1.5 block text-sm font-semibold text-stone-700'
           name="payment-method"
           :value="m.id"
           :disabled="!m.available"
-          class="mt-1 size-4 accent-olive-700"
+          class="mt-1 size-4 accent-terra-700"
         >
-        <span class="grid size-10 shrink-0 place-items-center rounded-full bg-olive-50 text-olive-700">
+        <span class="grid size-10 shrink-0 place-items-center rounded-full bg-terra-50 text-terra-700">
           <UIcon
             :name="m.icon"
             class="size-5"
@@ -221,14 +221,14 @@ const label = 'mb-1.5 block text-sm font-semibold text-stone-700'
     <div class="space-y-3">
       <p
         v-if="error"
-        class="rounded-xl bg-saffron-50 px-4 py-3 text-sm text-saffron-800 ring-1 ring-saffron-200"
+        class="rounded-xl bg-sage-50 px-4 py-3 text-sm text-sage-800 ring-1 ring-sage-200"
         role="alert"
       >
         {{ error }}
       </p>
       <button
         type="submit"
-        class="flex w-full items-center justify-center gap-2 rounded-full bg-olive-700 py-4 text-base font-semibold text-sand-50 shadow-[0_14px_30px_-14px_rgba(47,74,41,0.8)] transition hover:bg-olive-800 disabled:opacity-60"
+        class="flex w-full items-center justify-center gap-2 rounded-full bg-terra-700 py-4 text-base font-semibold text-sand-50 shadow-[0_14px_30px_-14px_rgba(108,59,34,0.7)] transition hover:bg-terra-800 disabled:opacity-60"
         :disabled="pending || !method"
       >
         <UIcon

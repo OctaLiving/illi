@@ -30,7 +30,7 @@ function addToCart() {
       >
       <span
         v-if="product.storage === 'Refrigerated'"
-        class="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[0.7rem] font-semibold text-olive-800 shadow-sm backdrop-blur"
+        class="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[0.7rem] font-semibold text-terra-800 shadow-sm backdrop-blur"
       >{{ $t('product.fresh') }}</span>
       <span
         v-if="!product.isAvailable"
@@ -40,7 +40,7 @@ function addToCart() {
 
     <div class="flex flex-1 flex-col gap-3 p-3.5 sm:p-5">
       <div>
-        <p class="truncate text-[0.65rem] font-bold uppercase tracking-[0.12em] text-saffron-700 sm:text-[0.7rem]">
+        <p class="truncate text-[0.65rem] font-bold uppercase tracking-[0.12em] text-sage-700 sm:text-[0.7rem]">
           {{ tr(product, 'category') }}
         </p>
         <h3 class="mt-1 font-serif text-lg leading-tight text-stone-900 sm:text-2xl">
@@ -64,7 +64,7 @@ function addToCart() {
         <button
           type="button"
           class="relative z-10 inline-flex size-10 shrink-0 items-center justify-center gap-1.5 rounded-full text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-40 sm:size-auto sm:px-4 sm:py-2.5"
-          :class="justAdded ? 'bg-saffron-400 text-olive-950' : 'bg-olive-700 text-sand-50 hover:bg-olive-800'"
+          :class="justAdded ? 'bg-sage-400 text-terra-950' : 'bg-terra-700 text-sand-50 hover:bg-terra-800'"
           :disabled="!product.isAvailable || product.price.amount <= 0"
           :aria-label="$t('product.addAria', { name: tr(product, 'name') })"
           @click="addToCart"

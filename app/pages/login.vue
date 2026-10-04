@@ -11,7 +11,7 @@ const password = ref('')
 const error = ref('')
 const pending = ref(false)
 
-const field = 'w-full rounded-lg border border-sand-600/30 bg-sand-50/60 px-3.5 py-2.5 text-sm text-stone-900 transition focus:border-olive-600 focus:outline-none focus:ring-1 focus:ring-olive-600/30'
+const field = 'w-full rounded-lg border border-sand-600/30 bg-sand-50/60 px-3.5 py-2.5 text-sm text-stone-900 transition focus:border-terra-600 focus:outline-none focus:ring-1 focus:ring-terra-600/30'
 
 async function submit() {
   pending.value = true
@@ -37,7 +37,7 @@ useSeoMeta({ title: () => t('auth.signInTitle'), robots: 'noindex' })
           variant="mark"
           class="text-6xl"
         />
-        <h1 class="mt-3 font-[family:var(--font-serif)] text-4xl text-stone-900">
+        <h1 class="mt-3 font-serif text-4xl text-stone-900">
           {{ $t('auth.welcome') }}
         </h1>
       </div>
@@ -48,7 +48,7 @@ useSeoMeta({ title: () => t('auth.signInTitle'), robots: 'noindex' })
         @submit.prevent="submit"
       >
         <div>
-          <label class="mb-1 block font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.16em] text-stone-500">{{ $t('auth.email') }}</label>
+          <label class="mb-1 block font-mono text-[0.58rem] uppercase tracking-[0.16em] text-stone-500">{{ $t('auth.email') }}</label>
           <input
             v-model="email"
             type="email"
@@ -58,7 +58,7 @@ useSeoMeta({ title: () => t('auth.signInTitle'), robots: 'noindex' })
           >
         </div>
         <div>
-          <label class="mb-1 block font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.16em] text-stone-500">{{ $t('auth.password') }}</label>
+          <label class="mb-1 block font-mono text-[0.58rem] uppercase tracking-[0.16em] text-stone-500">{{ $t('auth.password') }}</label>
           <input
             v-model="password"
             type="password"
@@ -70,14 +70,14 @@ useSeoMeta({ title: () => t('auth.signInTitle'), robots: 'noindex' })
 
         <p
           v-if="error"
-          class="rounded-lg bg-saffron-600/10 px-3 py-2 text-sm text-saffron-700"
+          class="rounded-lg bg-sage-600/10 px-3 py-2 text-sm text-sage-700"
         >
           {{ error }}
         </p>
 
         <button
           type="submit"
-          class="w-full rounded-full bg-olive-700 py-3 text-sm font-semibold text-sand-50 transition hover:bg-olive-800 disabled:opacity-50"
+          class="w-full rounded-full bg-terra-700 py-3 text-sm font-semibold text-sand-50 transition hover:bg-terra-800 disabled:opacity-50"
           :disabled="pending"
         >
           {{ pending ? $t('auth.signingIn') : $t('auth.signIn') }}
@@ -88,7 +88,7 @@ useSeoMeta({ title: () => t('auth.signInTitle'), robots: 'noindex' })
         {{ $t('auth.newHere') }}
         <NuxtLinkLocale
           :to="{ path: '/join', query: route.query }"
-          class="font-[family:var(--font-mono)] text-[0.7rem] uppercase tracking-[0.14em] text-olive-700 underline decoration-saffron-600 decoration-2 underline-offset-4"
+          class="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-terra-700 underline decoration-sage-600 decoration-2 underline-offset-4"
         >
           {{ $t('auth.createAccount') }}
         </NuxtLinkLocale>

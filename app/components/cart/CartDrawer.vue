@@ -80,7 +80,7 @@ function startCheckout() {
           </p>
           <NuxtLinkLocale
             to="/catalog"
-            class="mt-2 rounded-full bg-olive-700 px-6 py-3 text-sm font-semibold text-sand-50 transition hover:bg-olive-800"
+            class="mt-2 rounded-full bg-terra-700 px-6 py-3 text-sm font-semibold text-sand-50 transition hover:bg-terra-800"
           >
             {{ $t('cart.shop') }}
           </NuxtLinkLocale>
@@ -98,7 +98,7 @@ function startCheckout() {
             </div>
             <button
               type="button"
-              class="flex w-full items-center justify-center gap-2 rounded-full bg-olive-700 py-4 text-base font-semibold text-sand-50 transition hover:bg-olive-800 disabled:opacity-60"
+              class="flex w-full items-center justify-center gap-2 rounded-full bg-terra-700 py-4 text-base font-semibold text-sand-50 transition hover:bg-terra-800 disabled:opacity-60"
               @click="startCheckout"
             >
               <UIcon

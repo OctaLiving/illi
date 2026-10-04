@@ -30,7 +30,11 @@ const productForm = reactive({
   summary: '',
   isAvailable: true,
   price: 150,
-  // Arabic storefront text (optional; English is used when blank).
+  // French and Arabic storefront text (optional; English is used when blank).
+  nameFr: '',
+  descriptionFr: '',
+  ingredientsFr: '',
+  summaryFr: '',
   nameAr: '',
   descriptionAr: '',
   ingredientsAr: '',
@@ -56,6 +60,10 @@ function newProduct() {
     summary: '',
     isAvailable: true,
     price: defaultProductPrice[categories.value[0]?.slug ?? 'jams'],
+    nameFr: '',
+    descriptionFr: '',
+    ingredientsFr: '',
+    summaryFr: '',
     nameAr: '',
     descriptionAr: '',
     ingredientsAr: '',
@@ -83,6 +91,10 @@ function editProduct(p: CatalogProduct) {
     summary: p.nutrition.summary,
     isAvailable: p.isAvailable,
     price: p.price.amount,
+    nameFr: String(p.translations?.fr?.name ?? ''),
+    descriptionFr: String(p.translations?.fr?.description ?? ''),
+    ingredientsFr: ([] as string[]).concat(p.translations?.fr?.ingredients ?? []).join(', '),
+    summaryFr: String(p.translations?.fr?.nutritionSummary ?? ''),
     nameAr: String(p.translations?.ar?.name ?? ''),
     descriptionAr: String(p.translations?.ar?.description ?? ''),
     ingredientsAr: ([] as string[]).concat(p.translations?.ar?.ingredients ?? []).join('، '),
@@ -114,6 +126,12 @@ async function submitProduct() {
       isAvailable: productForm.isAvailable,
       price: { amount: productForm.price },
       translations: {
+        fr: {
+          name: productForm.nameFr,
+          description: productForm.descriptionFr,
+          ingredients: productForm.ingredientsFr.split(',').map(s => s.trim()).filter(Boolean),
+          nutritionSummary: productForm.summaryFr
+        },
         ar: {
           name: productForm.nameAr,
           description: productForm.descriptionAr,
@@ -152,16 +170,16 @@ useSeoMeta({ title: 'Catalog · illi ops', robots: 'noindex, nofollow' })
     <section>
       <div class="flex flex-wrap items-end justify-between gap-3 border-b border-sand-600/20 pb-4">
         <div>
-          <p class="font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.24em] text-saffron-600">
+          <p class="font-mono text-[0.62rem] uppercase tracking-[0.24em] text-sage-600">
             {{ products.length }} products · {{ refrigeratedCount }} cold-chain
           </p>
-          <h1 class="mt-1 font-[family:var(--font-serif)] text-3xl text-stone-900">
+          <h1 class="mt-1 font-serif text-3xl text-stone-900">
             Catalog
           </h1>
         </div>
         <button
           type="button"
-          class="inline-flex items-center gap-2 rounded-sm bg-olive-600 px-4 py-2.5 font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.14em] text-sand-50 transition hover:bg-olive-700"
+          class="inline-flex items-center gap-2 rounded-sm bg-terra-600 px-4 py-2.5 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-sand-50 transition hover:bg-terra-700"
           @click="newProduct"
         >
           <UIcon
@@ -175,7 +193,7 @@ useSeoMeta({ title: 'Catalog · illi ops', robots: 'noindex, nofollow' })
       <div class="mt-6 overflow-x-auto rounded-md border border-sand-600/25 bg-sand-100">
         <table class="w-full border-collapse text-left">
           <thead>
-            <tr class="border-b border-sand-600/25 font-[family:var(--font-mono)] text-[0.56rem] uppercase tracking-[0.14em] text-stone-500">
+            <tr class="border-b border-sand-600/25 font-mono text-[0.56rem] uppercase tracking-[0.14em] text-stone-500">
               <th class="px-5 py-3 font-medium">
                 Product
               </th>
@@ -205,33 +223,33 @@ useSeoMeta({ title: 'Catalog · illi ops', robots: 'noindex, nofollow' })
               <td class="px-5 py-3">
                 <NuxtLink
                   :to="`/catalog/${product.slug}`"
-                  class="font-[family:var(--font-serif)] text-lg text-stone-900 transition hover:text-saffron-700"
+                  class="font-serif text-lg text-stone-900 transition hover:text-sage-700"
                 >
                   {{ product.name }}
                 </NuxtLink>
               </td>
-              <td class="px-5 py-3 font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.1em] text-stone-500">
+              <td class="px-5 py-3 font-mono text-[0.62rem] uppercase tracking-[0.1em] text-stone-500">
                 {{ product.category }}
               </td>
               <td class="px-5 py-3">
                 <span
-                  class="inline-flex items-center gap-1.5 font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.1em]"
-                  :class="product.storage === 'Refrigerated' ? 'text-olive-700' : 'text-stone-500'"
+                  class="inline-flex items-center gap-1.5 font-mono text-[0.6rem] uppercase tracking-[0.1em]"
+                  :class="product.storage === 'Refrigerated' ? 'text-terra-700' : 'text-stone-500'"
                 >
                   <span
                     class="size-1.5 rounded-full"
-                    :class="product.storage === 'Refrigerated' ? 'bg-olive-600' : 'bg-sand-500'"
+                    :class="product.storage === 'Refrigerated' ? 'bg-terra-600' : 'bg-sand-500'"
                   />
                   {{ product.storage }}
                 </span>
               </td>
-              <td class="px-5 py-3 text-right font-[family:var(--font-mono)] text-sm text-stone-700">
+              <td class="px-5 py-3 text-right font-mono text-sm text-stone-700">
                 {{ product.shelfLifeDays }}d
               </td>
               <td class="px-5 py-3 text-right">
                 <span
-                  class="rounded-sm px-2 py-0.5 font-[family:var(--font-mono)] text-[0.56rem] uppercase tracking-[0.1em]"
-                  :class="product.isAvailable ? 'bg-olive-600/10 text-olive-700' : 'bg-stone-400/15 text-stone-500'"
+                  class="rounded-sm px-2 py-0.5 font-mono text-[0.56rem] uppercase tracking-[0.1em]"
+                  :class="product.isAvailable ? 'bg-terra-600/10 text-terra-700' : 'bg-stone-400/15 text-stone-500'"
                 >
                   {{ product.isAvailable ? 'Live' : 'Hidden' }}
                 </span>
@@ -240,7 +258,7 @@ useSeoMeta({ title: 'Catalog · illi ops', robots: 'noindex, nofollow' })
                 <div class="flex items-center justify-end gap-1">
                   <button
                     type="button"
-                    class="rounded-sm p-1.5 text-stone-500 transition hover:bg-olive-600/10 hover:text-olive-700"
+                    class="rounded-sm p-1.5 text-stone-500 transition hover:bg-terra-600/10 hover:text-terra-700"
                     title="Edit"
                     @click="editProduct(product)"
                   >
@@ -251,7 +269,7 @@ useSeoMeta({ title: 'Catalog · illi ops', robots: 'noindex, nofollow' })
                   </button>
                   <button
                     type="button"
-                    class="rounded-sm p-1.5 text-stone-500 transition hover:bg-saffron-600/10 hover:text-saffron-700"
+                    class="rounded-sm p-1.5 text-stone-500 transition hover:bg-sage-600/10 hover:text-sage-700"
                     title="Delete"
                     @click="removeProduct(product)"
                   >
@@ -275,16 +293,16 @@ useSeoMeta({ title: 'Catalog · illi ops', robots: 'noindex, nofollow' })
         class="fixed inset-0 z-50"
       >
         <div
-          class="absolute inset-0 bg-olive-950/40 backdrop-blur-sm"
+          class="absolute inset-0 bg-terra-950/40 backdrop-blur-sm"
           @click="showProductForm = false"
         />
         <div class="absolute inset-y-0 right-0 flex w-full max-w-md flex-col bg-sand-100 shadow-2xl">
           <header class="flex items-center justify-between border-b border-sand-600/20 px-6 py-5">
             <div>
-              <p class="font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.2em] text-saffron-600">
+              <p class="font-mono text-[0.6rem] uppercase tracking-[0.2em] text-sage-600">
                 {{ editingProductId ? 'Edit product' : 'New product' }}
               </p>
-              <h3 class="mt-1 font-[family:var(--font-serif)] text-2xl text-stone-900">
+              <h3 class="mt-1 font-serif text-2xl text-stone-900">
                 {{ productForm.name || 'Untitled' }}
               </h3>
             </div>
@@ -394,6 +412,36 @@ useSeoMeta({ title: 'Catalog · illi ops', robots: 'noindex, nofollow' })
             </div>
             <div class="space-y-3 rounded-sm border border-sand-600/25 bg-sand-50/40 p-3">
               <p :class="labelText">
+                French — shown on /fr (blank = English)
+              </p>
+              <input
+                v-model="productForm.nameFr"
+                lang="fr"
+                :class="field"
+                placeholder="Nom"
+              >
+              <textarea
+                v-model="productForm.descriptionFr"
+                lang="fr"
+                rows="3"
+                :class="field"
+                placeholder="Description"
+              />
+              <input
+                v-model="productForm.ingredientsFr"
+                lang="fr"
+                :class="field"
+                placeholder="Ingrédients, séparés par des virgules"
+              >
+              <input
+                v-model="productForm.summaryFr"
+                lang="fr"
+                :class="field"
+                placeholder="Résumé nutritionnel"
+              >
+            </div>
+            <div class="space-y-3 rounded-sm border border-sand-600/25 bg-sand-50/40 p-3">
+              <p :class="labelText">
                 Arabic — shown on /ar (blank = English)
               </p>
               <input
@@ -452,23 +500,23 @@ useSeoMeta({ title: 'Catalog · illi ops', robots: 'noindex, nofollow' })
               <input
                 v-model="productForm.isAvailable"
                 type="checkbox"
-                class="size-4 accent-olive-600"
+                class="size-4 accent-terra-600"
               >
-              <span class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.14em] text-stone-600">Available on the storefront</span>
+              <span class="font-mono text-[0.66rem] uppercase tracking-[0.14em] text-stone-600">Available on the storefront</span>
             </label>
           </div>
 
           <footer class="space-y-3 border-t border-sand-600/20 px-6 py-5">
             <p
               v-if="productError"
-              class="rounded-sm bg-saffron-600/10 px-3 py-2 text-sm text-saffron-700"
+              class="rounded-sm bg-sage-600/10 px-3 py-2 text-sm text-sage-700"
             >
               {{ productError }}
             </p>
             <div class="flex gap-3">
               <button
                 type="button"
-                class="flex-1 rounded-sm bg-olive-600 py-3 font-[family:var(--font-mono)] text-[0.64rem] uppercase tracking-[0.16em] text-sand-50 transition hover:bg-olive-700 disabled:opacity-50"
+                class="flex-1 rounded-sm bg-terra-600 py-3 font-mono text-[0.64rem] uppercase tracking-[0.16em] text-sand-50 transition hover:bg-terra-700 disabled:opacity-50"
                 :disabled="savingProduct"
                 @click="submitProduct"
               >
@@ -476,7 +524,7 @@ useSeoMeta({ title: 'Catalog · illi ops', robots: 'noindex, nofollow' })
               </button>
               <button
                 type="button"
-                class="rounded-sm border border-sand-600/40 px-5 font-[family:var(--font-mono)] text-[0.64rem] uppercase tracking-[0.16em] text-stone-600 transition hover:bg-sand-600/8"
+                class="rounded-sm border border-sand-600/40 px-5 font-mono text-[0.64rem] uppercase tracking-[0.16em] text-stone-600 transition hover:bg-sand-600/8"
                 @click="showProductForm = false"
               >
                 Cancel

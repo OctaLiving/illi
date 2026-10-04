@@ -1,80 +1,72 @@
 <script setup lang="ts">
-// The illi logo. "illi" reads the same both ways, so the wordmark is four
-// symmetric strokes (short, tall, tall, short) with saffron i-dots; the mark
-// sets that wordmark inside a Moroccan arch. Strokes follow `currentColor`.
-const { variant = 'lockup', reversed = false } = defineProps<{
+// The Maison Illi logo: "Maison" in Gilda Display, a ginkgo leaf, and "Illi" in
+// Corinthia script, with the tagline "De notre cuisine à la vôtre" under the
+// lockup. The mark is the ginkgo leaf alone. Text and leaf colours come from the
+// brand palette; `reversed` switches to light colours for dark backgrounds.
+const { variant = 'wordmark', reversed = false } = defineProps<{
   variant?: 'wordmark' | 'mark' | 'lockup'
-  /** Light arch for dark backgrounds (mark/lockup only). */
+  /** Light colours for dark backgrounds. */
   reversed?: boolean
 }>()
+
+const ink = computed(() => (reversed ? 'var(--color-sand-50)' : 'var(--color-terra-700)'))
+const leaf = computed(() => (reversed ? 'var(--color-sage-200)' : 'var(--color-sage-500)'))
 </script>
 
 <template>
-  <span class="inline-flex items-center gap-[0.35em]">
-    <svg
-      v-if="variant !== 'wordmark'"
-      viewBox="0 0 120 150"
-      class="h-[1.25em] w-auto shrink-0"
+  <span
+    class="inline-flex flex-col items-center leading-none"
+    dir="ltr"
+    :style="{ color: ink }"
+    role="img"
+    aria-label="Maison Illi"
+  >
+    <span
+      class="inline-flex items-end"
       aria-hidden="true"
     >
-      <path
-        d="M0 150V60a60 60 0 0 1 120 0v90z"
-        :fill="reversed ? 'var(--color-sand-100)' : 'var(--color-olive-700)'"
-      />
-      <g
-        :stroke="reversed ? 'var(--color-olive-700)' : 'var(--color-sand-100)'"
-        stroke-width="9"
-        stroke-linecap="round"
+      <span
+        v-if="variant !== 'mark'"
+        class="text-[1em] tracking-[-0.01em]"
+        style="font-family: 'Gilda Display', Georgia, serif; font-weight: 400"
+      >Maison</span>
+      <svg
+        viewBox="0 0 100 120"
+        :class="variant === 'mark' ? 'h-[1.1em] w-auto' : 'relative top-[0.2em] -mx-[0.02em] h-[0.8em] w-auto shrink-0'"
         fill="none"
-      >
-        <path d="M30 88V124" />
-        <path d="M50 58V124" />
-        <path d="M70 58V124" />
-        <path d="M90 88V124" />
-      </g>
-      <circle
-        cx="30"
-        cy="69"
-        r="6.5"
-        fill="var(--color-saffron-400)"
-      />
-      <circle
-        cx="90"
-        cy="69"
-        r="6.5"
-        fill="var(--color-saffron-400)"
-      />
-    </svg>
-    <svg
-      v-if="variant !== 'mark'"
-      viewBox="0 0 132 100"
-      class="h-[0.8em] w-auto shrink-0"
-      role="img"
-      aria-label="illi"
-    >
-      <g
-        stroke="currentColor"
-        stroke-width="15"
+        :stroke="leaf"
         stroke-linecap="round"
-        fill="none"
+        stroke-linejoin="round"
       >
-        <path d="M14 46V88" />
-        <path d="M50 12V88" />
-        <path d="M82 12V88" />
-        <path d="M118 46V88" />
-      </g>
-      <circle
-        cx="14"
-        cy="17"
-        r="9.5"
-        fill="var(--color-saffron-400)"
-      />
-      <circle
-        cx="118"
-        cy="17"
-        r="9.5"
-        fill="var(--color-saffron-400)"
-      />
-    </svg>
+        <g transform="rotate(-14 50 70)">
+          <path
+            d="M50 70C38 60 16 48 6 34C10 18 24 6 38 7C44 8 48 14 50 24C52 14 56 8 62 7C76 6 90 18 94 34C84 48 62 60 50 70Z"
+            :fill="leaf"
+            fill-opacity="0.14"
+            stroke-width="3"
+          />
+          <path
+            d="M50 70L12 30M50 70L18 20M50 70L27 13M50 70L37 10M50 70L45 17M50 70L55 17M50 70L63 10M50 70L73 13M50 70L82 20M50 70L88 30"
+            stroke-width="1.4"
+            stroke-opacity="0.8"
+          />
+          <path
+            d="M50 70C50 86 48 102 44 116"
+            stroke-width="3"
+          />
+        </g>
+      </svg>
+      <span
+        v-if="variant !== 'mark'"
+        class="-ms-[0.04em] text-[1.6em] leading-[0.8]"
+        style="font-family: 'Corinthia', cursive; font-weight: 700"
+      >Illi</span>
+    </span>
+    <span
+      v-if="variant === 'lockup'"
+      class="mt-[0.9em] text-[0.2em] uppercase tracking-[0.14em]"
+      style="font-family: 'Questrial', sans-serif"
+      aria-hidden="true"
+    >De notre cuisine à la vôtre</span>
   </span>
 </template>

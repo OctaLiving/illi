@@ -9,7 +9,8 @@ const { data: catalog } = await useCatalog()
 const productSlug = computed(() => String(route.params.productSlug ?? ''))
 
 const product = computed(() => {
-  const foundProduct = catalog.value.products.find(item => item.slug === productSlug.value)
+  // Hidden (switched-off) products are not reachable from the shop.
+  const foundProduct = catalog.value.products.find(item => item.slug === productSlug.value && item.isAvailable)
 
   if (!foundProduct) {
     throw createError({
@@ -63,7 +64,7 @@ useSeoMeta({
       >
         <NuxtLinkLocale
           to="/catalog"
-          class="hover:text-olive-700"
+          class="hover:text-terra-700"
         >
           {{ $t('nav.shop') }}
         </NuxtLinkLocale>
@@ -73,7 +74,7 @@ useSeoMeta({
         />
         <NuxtLinkLocale
           :to="`/catalog?category=${categorySlug}`"
-          class="hover:text-olive-700"
+          class="hover:text-terra-700"
         >
           {{ tr(product, 'category') }}
         </NuxtLinkLocale>
@@ -95,7 +96,7 @@ useSeoMeta({
             >
             <span
               v-if="product.storage === 'Refrigerated'"
-              class="absolute start-4 top-4 rounded-full bg-white/90 px-3 py-1.5 text-xs font-semibold text-olive-800 shadow-sm"
+              class="absolute start-4 top-4 rounded-full bg-white/90 px-3 py-1.5 text-xs font-semibold text-terra-800 shadow-sm"
             >{{ $t('product.freshChilled') }}</span>
           </div>
         </div>
@@ -121,7 +122,7 @@ useSeoMeta({
             <QuantityStepper v-model="quantity" />
             <button
               type="button"
-              class="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-olive-700 px-7 py-3.5 text-base font-semibold text-sand-50 shadow-[0_14px_30px_-14px_rgba(47,74,41,0.8)] transition hover:bg-olive-800 disabled:cursor-not-allowed disabled:opacity-50 sm:flex-none"
+              class="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-terra-700 px-7 py-3.5 text-base font-semibold text-sand-50 shadow-[0_14px_30px_-14px_rgba(108,59,34,0.7)] transition hover:bg-terra-800 disabled:cursor-not-allowed disabled:opacity-50 sm:flex-none"
               :disabled="!canBuy"
               @click="addToCart"
             >
@@ -140,7 +141,7 @@ useSeoMeta({
           <button
             v-if="canBuy"
             type="button"
-            class="mt-3 w-full rounded-full bg-white px-7 py-3.5 text-base font-semibold text-olive-800 ring-1 ring-sand-300 transition hover:ring-olive-600 disabled:opacity-60 sm:w-auto"
+            class="mt-3 w-full rounded-full bg-white px-7 py-3.5 text-base font-semibold text-terra-800 ring-1 ring-sand-300 transition hover:ring-terra-600 disabled:opacity-60 sm:w-auto"
             @click="buyNow"
           >
             {{ $t('product.buyNow') }}
@@ -150,7 +151,7 @@ useSeoMeta({
             <li class="rounded-2xl bg-white p-4 ring-1 ring-sand-200">
               <UIcon
                 :name="product.storage === 'Refrigerated' ? 'i-lucide-snowflake' : 'i-lucide-sun'"
-                class="size-5 text-olive-600"
+                class="size-5 text-terra-600"
               />
               <p class="mt-2 font-semibold text-stone-900">
                 {{ product.storage === 'Refrigerated' ? $t('product.refrigerated') : $t('product.roomTemp') }}
@@ -162,7 +163,7 @@ useSeoMeta({
             <li class="rounded-2xl bg-white p-4 ring-1 ring-sand-200">
               <UIcon
                 name="i-lucide-calendar-check"
-                class="size-5 text-olive-600"
+                class="size-5 text-terra-600"
               />
               <p class="mt-2 font-semibold text-stone-900">
                 {{ $t('product.days', { n: product.shelfLifeDays }) }}
@@ -174,7 +175,7 @@ useSeoMeta({
             <li class="rounded-2xl bg-white p-4 ring-1 ring-sand-200">
               <UIcon
                 name="i-lucide-map-pin"
-                class="size-5 text-olive-600"
+                class="size-5 text-terra-600"
               />
               <p class="mt-2 font-semibold text-stone-900">
                 {{ $t('product.casablanca') }}
@@ -188,9 +189,9 @@ useSeoMeta({
           <NuxtLinkLocale
             v-if="compatiblePlans[0]"
             to="/subscribe"
-            class="mt-6 flex items-center gap-4 rounded-2xl bg-saffron-50 p-4 ring-1 ring-saffron-200 transition hover:ring-saffron-400"
+            class="mt-6 flex items-center gap-4 rounded-2xl bg-sage-50 p-4 ring-1 ring-sage-200 transition hover:ring-sage-400"
           >
-            <span class="grid size-11 shrink-0 place-items-center rounded-full bg-saffron-300 text-olive-950">
+            <span class="grid size-11 shrink-0 place-items-center rounded-full bg-sage-300 text-terra-950">
               <UIcon
                 name="i-lucide-repeat"
                 class="size-5"
@@ -202,7 +203,7 @@ useSeoMeta({
             </span>
             <UIcon
               name="i-lucide-arrow-right"
-              class="flip-rtl ms-auto size-5 shrink-0 text-saffron-700"
+              class="flip-rtl ms-auto size-5 shrink-0 text-sage-700"
             />
           </NuxtLinkLocale>
 
@@ -245,11 +246,11 @@ useSeoMeta({
               </summary>
               <div class="mt-4 flex h-3 overflow-hidden rounded-full bg-sand-200">
                 <div
-                  class="bg-olive-600"
+                  class="bg-terra-600"
                   :style="`width:${product.nutrition.proteins}%`"
                 />
                 <div
-                  class="bg-saffron-400"
+                  class="bg-sage-400"
                   :style="`width:${product.nutrition.fats}%`"
                 />
                 <div
@@ -258,8 +259,8 @@ useSeoMeta({
                 />
               </div>
               <div class="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-sm text-stone-600">
-                <span class="flex items-center gap-2"><span class="size-2.5 rounded-full bg-olive-600" />{{ $t('product.protein', { n: product.nutrition.proteins }) }}</span>
-                <span class="flex items-center gap-2"><span class="size-2.5 rounded-full bg-saffron-400" />{{ $t('product.fat', { n: product.nutrition.fats }) }}</span>
+                <span class="flex items-center gap-2"><span class="size-2.5 rounded-full bg-terra-600" />{{ $t('product.protein', { n: product.nutrition.proteins }) }}</span>
+                <span class="flex items-center gap-2"><span class="size-2.5 rounded-full bg-sage-400" />{{ $t('product.fat', { n: product.nutrition.fats }) }}</span>
                 <span class="flex items-center gap-2"><span class="size-2.5 rounded-full bg-sand-400" />{{ $t('product.carbs', { n: product.nutrition.carbs }) }}</span>
               </div>
               <p
@@ -320,7 +321,7 @@ useSeoMeta({
         </div>
         <button
           type="button"
-          class="inline-flex items-center gap-2 rounded-full bg-olive-700 px-5 py-3 text-sm font-semibold text-sand-50"
+          class="inline-flex items-center gap-2 rounded-full bg-terra-700 px-5 py-3 text-sm font-semibold text-sand-50"
           @click="addToCart"
         >
           <UIcon

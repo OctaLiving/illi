@@ -84,7 +84,7 @@ function uniqueSlug(base: string, taken: Set<string>) {
 
 // Keeps only known languages and fields, trimmed; empty values are dropped so the
 // storefront falls back to English. Returns undefined when nothing was sent.
-const LANGS = ['ar'] as const
+const LANGS = ['fr', 'ar'] as const
 function cleanTranslations(input: unknown, fields: string[]): Translations | undefined {
   if (!input || typeof input !== 'object') return undefined
   const out: Translations = {}
@@ -218,9 +218,14 @@ function normalizeProduct(input: ProductInput): NormalizedProduct {
 function productData(n: NormalizedProduct, input: ProductInput, names: CategoryNames, currentPrice?: number) {
   const price = Number(input.price?.amount)
   const category = names.name
-  // The Arabic category label always follows the chosen category.
+  // The translated category label always follows the chosen category.
   const translations = cleanTranslations(input.translations, ['name', 'description', 'ingredients', 'nutritionSummary'])
-  if (translations && names.ar) translations.ar = { ...translations.ar, category: names.ar }
+  if (translations) {
+    for (const lang of LANGS) {
+      const label = names.translated[lang]
+      if (label) translations[lang] = { ...translations[lang], category: label }
+    }
+  }
   return {
     name: n.name,
     subtitle: input.subtitle?.trim() || `${n.storage === 'Refrigerated' ? 'Refrigerated' : 'Room temp'} · ${n.shelfLifeDays}-day shelf`,
@@ -246,12 +251,17 @@ function productData(n: NormalizedProduct, input: ProductInput, names: CategoryN
   }
 }
 
-interface CategoryNames { name: string, ar?: string }
+interface CategoryNames { name: string, translated: Partial<Record<typeof LANGS[number], string>> }
 
 async function categoryName(slotType: BundleSlotType): Promise<CategoryNames> {
   const category = await prisma.category.findUnique({ where: { slug: slotType } })
-  const ar = asTranslations(category?.translations)?.ar?.name
-  return { name: category?.name ?? slotType, ar: typeof ar === 'string' ? ar : undefined }
+  const stored = asTranslations(category?.translations)
+  const translated: CategoryNames['translated'] = {}
+  for (const lang of LANGS) {
+    const label = stored?.[lang]?.name
+    if (typeof label === 'string') translated[lang] = label
+  }
+  return { name: category?.name ?? slotType, translated }
 }
 
 export async function createProduct(input: ProductInput): Promise<CatalogProduct> {

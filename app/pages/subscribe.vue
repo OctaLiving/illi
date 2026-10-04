@@ -75,17 +75,17 @@ useSeoMeta({
       <section class="grid items-end gap-10 lg:grid-cols-[1.15fr_0.85fr]">
         <div>
           <p
-            class="reveal inline-flex items-center gap-3 font-[family:var(--font-mono)] text-[0.7rem] uppercase tracking-[0.3em] text-olive-700"
+            class="reveal inline-flex items-center gap-3 font-mono text-[0.7rem] uppercase tracking-[0.3em] text-terra-700"
             style="animation-delay:.05s"
           >
-            <span class="h-px w-8 bg-saffron-600" />
+            <span class="h-px w-8 bg-sage-600" />
             {{ $t('builder.eyebrow') }}
           </p>
           <h1
-            class="reveal mt-6 max-w-3xl font-[family:var(--font-serif)] text-5xl font-normal leading-[1.0] tracking-tight text-stone-900 sm:text-6xl"
+            class="reveal mt-6 max-w-3xl font-serif text-5xl font-normal leading-[1.0] tracking-tight text-stone-900 sm:text-6xl"
             style="animation-delay:.16s"
           >
-            {{ $t('builder.titleA') }} <em class="italic text-olive-700">{{ $t('builder.titleB') }}</em>
+            {{ $t('builder.titleA') }} <em class="italic text-terra-700">{{ $t('builder.titleB') }}</em>
           </h1>
           <p
             class="reveal mt-6 max-w-2xl text-lg leading-8 text-stone-700"
@@ -98,14 +98,14 @@ useSeoMeta({
         <!-- Progress card -->
         <div
           class="reveal rounded-3xl border p-7 transition-colors duration-500"
-          :class="isReady ? 'border-olive-600/40 bg-olive-600/[0.04]' : 'border-sand-600/30 bg-sand-50/60'"
+          :class="isReady ? 'border-terra-600/40 bg-terra-600/[0.04]' : 'border-sand-600/30 bg-sand-50/60'"
           style="animation-delay:.3s"
         >
           <div class="flex items-center justify-between">
-            <p class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.2em] text-saffron-600">
+            <p class="font-mono text-[0.66rem] uppercase tracking-[0.2em] text-sage-600">
               {{ $t('builder.progress') }}
             </p>
-            <p class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.16em] text-stone-500">
+            <p class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-stone-500">
               {{ requiredFilled }} / {{ requiredTotal }}
             </p>
           </div>
@@ -116,7 +116,7 @@ useSeoMeta({
               v-for="(seg, i) in requiredSlotStates"
               :key="seg.id"
               class="h-1.5 flex-1 rounded-full transition-colors duration-500"
-              :class="seg.filled ? 'bg-olive-600' : 'bg-sand-600/20'"
+              :class="seg.filled ? 'bg-terra-600' : 'bg-sand-600/20'"
               :style="`transition-delay:${i * 60}ms`"
             />
           </div>
@@ -136,10 +136,10 @@ useSeoMeta({
             v-else
             class="mt-6"
           >
-            <p class="font-[family:var(--font-serif)] text-5xl leading-none text-stone-900">
+            <p class="font-serif text-5xl leading-none text-stone-900">
               {{ remainingRequiredSlots }}
             </p>
-            <p class="mt-2 font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.16em] text-stone-500">
+            <p class="mt-2 font-mono text-[0.66rem] uppercase tracking-[0.16em] text-stone-500">
               {{ $t('builder.spotsLeft', remainingRequiredSlots) }}
             </p>
           </div>
@@ -149,8 +149,8 @@ useSeoMeta({
       <!-- Step 1 -->
       <section class="space-y-6">
         <div class="flex items-baseline gap-4">
-          <span class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.24em] text-saffron-600">{{ $t('builder.step', { n: 1 }) }}</span>
-          <h2 class="font-[family:var(--font-serif)] text-4xl text-stone-900">
+          <span class="font-mono text-[0.66rem] uppercase tracking-[0.24em] text-sage-600">{{ $t('builder.step', { n: 1 }) }}</span>
+          <h2 class="font-serif text-4xl text-stone-900">
             {{ $t('builder.chooseBox') }}
           </h2>
         </div>
@@ -162,16 +162,16 @@ useSeoMeta({
             type="button"
             class="rounded-3xl border p-7 text-left transition"
             :class="selectedPlanId === plan.id
-              ? 'border-olive-600 bg-olive-600/[0.04] shadow-[0_20px_40px_-30px_rgba(30,58,95,0.6)]'
-              : 'border-sand-600/30 bg-white hover:border-saffron-600/50'"
+              ? 'border-terra-600 bg-terra-600/[0.04] shadow-[0_20px_40px_-30px_rgba(30,58,95,0.6)]'
+              : 'border-sand-600/30 bg-white hover:border-sage-600/50'"
             @click="setPlan(plan.id)"
           >
             <div class="flex flex-wrap items-start justify-between gap-4">
               <div class="space-y-3">
-                <p class="font-[family:var(--font-mono)] text-[0.64rem] uppercase tracking-[0.2em] text-saffron-600">
+                <p class="font-mono text-[0.64rem] uppercase tracking-[0.2em] text-sage-600">
                   {{ $t(`cadenceTitle.${plan.cadence}`) }}
                 </p>
-                <h3 class="font-[family:var(--font-serif)] text-3xl text-stone-900">
+                <h3 class="font-serif text-3xl text-stone-900">
                   {{ tr(plan, 'name') }}
                 </h3>
                 <p class="max-w-md text-sm leading-7 text-stone-600">
@@ -179,8 +179,8 @@ useSeoMeta({
                 </p>
               </div>
               <span
-                class="shrink-0 rounded-lg px-3 py-1.5 font-[family:var(--font-mono)] text-xs"
-                :class="selectedPlanId === plan.id ? 'bg-olive-600 text-sand-50' : 'bg-sand-600/10 text-stone-600'"
+                class="shrink-0 rounded-lg px-3 py-1.5 font-mono text-xs"
+                :class="selectedPlanId === plan.id ? 'bg-terra-600 text-sand-50' : 'bg-sand-600/10 text-stone-600'"
               >
                 {{ price(plan.price.amount) }}
               </span>
@@ -196,8 +196,8 @@ useSeoMeta({
       >
         <div class="space-y-6">
           <div class="flex items-baseline gap-4">
-            <span class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.24em] text-saffron-600">{{ $t('builder.step', { n: 2 }) }}</span>
-            <h2 class="font-[family:var(--font-serif)] text-4xl text-stone-900">
+            <span class="font-mono text-[0.66rem] uppercase tracking-[0.24em] text-sage-600">{{ $t('builder.step', { n: 2 }) }}</span>
+            <h2 class="font-serif text-4xl text-stone-900">
               {{ $t('builder.fill', { name: tr(selectedPlan, 'name') }) }}
             </h2>
           </div>
@@ -207,26 +207,26 @@ useSeoMeta({
               v-for="slot in selectedPlan.includedSlots"
               :key="slot.id"
               class="rounded-3xl border p-6 transition-colors duration-300"
-              :class="slotIsFilled(slot.id) ? 'border-olive-600/40 bg-olive-600/[0.02]' : 'border-sand-600/25 bg-white'"
+              :class="slotIsFilled(slot.id) ? 'border-terra-600/40 bg-terra-600/[0.02]' : 'border-sand-600/25 bg-white'"
             >
               <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                 <div class="space-y-3">
-                  <div class="flex flex-wrap gap-2 font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.16em]">
-                    <span class="rounded-lg bg-saffron-600/10 px-2 py-1 text-saffron-700">{{ categoryName(slot.slotType) }}</span>
+                  <div class="flex flex-wrap gap-2 font-mono text-[0.6rem] uppercase tracking-[0.16em]">
+                    <span class="rounded-lg bg-sage-600/10 px-2 py-1 text-sage-700">{{ categoryName(slot.slotType) }}</span>
                     <span
                       class="rounded-lg px-2 py-1"
-                      :class="slot.required ? 'bg-olive-600/10 text-olive-700' : 'bg-sand-600/10 text-stone-500'"
+                      :class="slot.required ? 'bg-terra-600/10 text-terra-700' : 'bg-sand-600/10 text-stone-500'"
                     >
                       {{ slot.required ? $t('builder.required') : $t('builder.optional') }}
                     </span>
                   </div>
                   <div>
-                    <h3 class="flex items-center gap-2 font-[family:var(--font-serif)] text-3xl text-stone-900">
+                    <h3 class="flex items-center gap-2 font-serif text-3xl text-stone-900">
                       {{ tr(slot, 'label') }}
                       <UIcon
                         v-if="slotIsFilled(slot.id)"
                         name="i-lucide-check"
-                        class="size-5 text-olive-600"
+                        class="size-5 text-terra-600"
                       />
                     </h3>
                     <p class="mt-2 max-w-md text-sm leading-7 text-stone-600">
@@ -235,11 +235,11 @@ useSeoMeta({
                   </div>
                 </div>
 
-                <div class="flex shrink-0 items-center gap-3 font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.14em] text-stone-500">
+                <div class="flex shrink-0 items-center gap-3 font-mono text-[0.66rem] uppercase tracking-[0.14em] text-stone-500">
                   <span>{{ getSelectedProductIds(slot.id).length }} / {{ slot.maxQuantity }}</span>
                   <button
                     type="button"
-                    class="rounded-lg px-2.5 py-1.5 text-olive-700 transition hover:bg-olive-600/8 disabled:opacity-30 disabled:hover:bg-transparent"
+                    class="rounded-lg px-2.5 py-1.5 text-terra-700 transition hover:bg-terra-600/8 disabled:opacity-30 disabled:hover:bg-transparent"
                     :disabled="getSelectedProductIds(slot.id).length === 0"
                     @click="clearSlot(slot.id)"
                   >
@@ -255,8 +255,8 @@ useSeoMeta({
                   type="button"
                   class="group/card rounded-3xl border p-3 text-left transition active:scale-[0.99]"
                   :class="isSelected(slot.id, product.id)
-                    ? 'border-saffron-600 bg-saffron-600/[0.06] shadow-[0_18px_34px_-26px_rgba(194,65,12,0.7)] ring-1 ring-saffron-600/30'
-                    : 'border-sand-600/25 bg-sand-50/40 hover:border-saffron-600/50'"
+                    ? 'border-sage-600 bg-sage-600/[0.06] shadow-[0_18px_34px_-26px_rgba(194,65,12,0.7)] ring-1 ring-sage-600/30'
+                    : 'border-sand-600/25 bg-sand-50/40 hover:border-sage-600/50'"
                   @click="toggleProduct(slot, product.id)"
                 >
                   <div class="flex gap-4">
@@ -269,24 +269,24 @@ useSeoMeta({
                     </div>
                     <div class="min-w-0 space-y-1.5">
                       <div class="flex items-center gap-2">
-                        <h4 class="font-[family:var(--font-serif)] text-xl text-stone-900">
+                        <h4 class="font-serif text-xl text-stone-900">
                           {{ tr(product, 'name') }}
                         </h4>
                         <UIcon
                           v-if="isSelected(slot.id, product.id)"
                           name="i-lucide-check"
-                          class="size-4 shrink-0 text-saffron-600"
+                          class="size-4 shrink-0 text-sage-600"
                         />
                       </div>
-                      <p class="font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.14em] text-stone-500">
+                      <p class="font-mono text-[0.6rem] uppercase tracking-[0.14em] text-stone-500">
                         {{ subtitle(product) }}
                       </p>
                       <p class="line-clamp-2 text-sm leading-6 text-stone-600">
                         {{ tr(product, 'description') }}
                       </p>
                       <p
-                        class="font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.16em] transition"
-                        :class="isSelected(slot.id, product.id) ? 'text-saffron-700' : 'text-transparent group-hover/card:text-stone-400'"
+                        class="font-mono text-[0.58rem] uppercase tracking-[0.16em] transition"
+                        :class="isSelected(slot.id, product.id) ? 'text-sage-700' : 'text-transparent group-hover/card:text-stone-400'"
                       >
                         {{ isSelected(slot.id, product.id) ? $t('builder.inBox') : $t('builder.tapToAdd') }}
                       </p>
@@ -306,10 +306,10 @@ useSeoMeta({
           <section class="rounded-3xl border border-sand-600/30 bg-sand-50/60 p-6">
             <div class="flex items-start justify-between gap-3">
               <div>
-                <p class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.2em] text-saffron-600">
+                <p class="font-mono text-[0.66rem] uppercase tracking-[0.2em] text-sage-600">
                   {{ $t('builder.summary') }}
                 </p>
-                <h2 class="mt-2 font-[family:var(--font-serif)] text-3xl text-stone-900">
+                <h2 class="mt-2 font-serif text-3xl text-stone-900">
                   {{ $t('builder.yourBox') }}
                 </h2>
               </div>
@@ -328,19 +328,19 @@ useSeoMeta({
               <div class="rounded-3xl bg-white ring-1 ring-sand-200 p-4">
                 <div class="flex flex-wrap items-start justify-between gap-3">
                   <div>
-                    <p class="font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.18em] text-stone-500">
+                    <p class="font-mono text-[0.6rem] uppercase tracking-[0.18em] text-stone-500">
                       {{ $t(`cadenceTitle.${bundleSummary.cadence}`) }}
                     </p>
-                    <p class="mt-1.5 font-[family:var(--font-serif)] text-2xl text-stone-900">
+                    <p class="mt-1.5 font-serif text-2xl text-stone-900">
                       {{ selectedPlan ? tr(selectedPlan, 'name') : bundleSummary.planName }}
                     </p>
-                    <p class="mt-1 font-[family:var(--font-mono)] text-sm text-olive-700">
+                    <p class="mt-1 font-mono text-sm text-terra-700">
                       {{ price(bundleSummary.basePriceAmount) }}
                     </p>
                   </div>
                   <span
-                    class="rounded-lg px-2.5 py-1 font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.14em]"
-                    :class="isReady ? 'bg-olive-600 text-sand-50' : 'bg-saffron-600/15 text-saffron-700'"
+                    class="rounded-lg px-2.5 py-1 font-mono text-[0.6rem] uppercase tracking-[0.14em]"
+                    :class="isReady ? 'bg-terra-600 text-sand-50' : 'bg-sage-600/15 text-sage-700'"
                   >
                     {{ isReady ? $t('builder.ready') : $t('builder.inProgress') }}
                   </span>
@@ -357,13 +357,13 @@ useSeoMeta({
                     <p class="font-medium text-stone-900">
                       {{ slotLabelById(item.slotId, item.slotLabel) }}
                     </p>
-                    <p class="font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.14em] text-stone-500">
+                    <p class="font-mono text-[0.6rem] uppercase tracking-[0.14em] text-stone-500">
                       {{ categoryName(item.slotType) }}
                     </p>
                   </div>
                   <span
-                    class="rounded-lg px-2 py-0.5 font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.12em]"
-                    :class="item.isComplete ? 'bg-olive-600/10 text-olive-700' : 'bg-saffron-600/10 text-saffron-700'"
+                    class="rounded-lg px-2 py-0.5 font-mono text-[0.58rem] uppercase tracking-[0.12em]"
+                    :class="item.isComplete ? 'bg-terra-600/10 text-terra-700' : 'bg-sage-600/10 text-sage-700'"
                   >
                     {{ item.isComplete ? $t('builder.filled') : item.required ? $t('builder.required') : $t('builder.optional') }}
                   </span>
@@ -383,7 +383,7 @@ useSeoMeta({
                   >
                     <UIcon
                       name="i-lucide-check"
-                      class="mt-1 size-4 shrink-0 text-saffron-600"
+                      class="mt-1 size-4 shrink-0 text-sage-600"
                     />
                     <span>{{ productNameById(productId, item.productNames[i] ?? productId) }}</span>
                   </li>
@@ -394,9 +394,9 @@ useSeoMeta({
               <div class="space-y-2 pt-1">
                 <button
                   type="button"
-                  class="flex w-full items-center justify-center gap-2 rounded-lg px-5 py-3.5 font-[family:var(--font-mono)] text-xs uppercase tracking-[0.16em] transition"
+                  class="flex w-full items-center justify-center gap-2 rounded-lg px-5 py-3.5 font-mono text-xs uppercase tracking-[0.16em] transition"
                   :class="isReady
-                    ? 'bg-saffron-600 text-sand-50 hover:bg-saffron-700'
+                    ? 'bg-sage-600 text-sand-50 hover:bg-sage-700'
                     : 'cursor-not-allowed bg-sand-600/10 text-stone-400'"
                   :disabled="!isReady"
                   @click="proceedToCheckout"
@@ -408,7 +408,7 @@ useSeoMeta({
                     class="flip-rtl size-4"
                   />
                 </button>
-                <p class="text-center font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.12em] text-stone-400">
+                <p class="text-center font-mono text-[0.58rem] uppercase tracking-[0.12em] text-stone-400">
                   {{ $t('builder.payNote') }}
                 </p>
               </div>
@@ -417,12 +417,12 @@ useSeoMeta({
 
           <section
             v-if="validationIssues.length > 0"
-            class="rounded-3xl border border-saffron-600/30 bg-saffron-50/70 p-6"
+            class="rounded-3xl border border-sage-600/30 bg-sage-50/70 p-6"
           >
-            <p class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.2em] text-saffron-700">
+            <p class="font-mono text-[0.66rem] uppercase tracking-[0.2em] text-sage-700">
               {{ $t('builder.almost') }}
             </p>
-            <h2 class="mt-2 font-[family:var(--font-serif)] text-2xl text-stone-900">
+            <h2 class="mt-2 font-serif text-2xl text-stone-900">
               {{ $t('builder.stillToChoose') }}
             </h2>
             <ul class="mt-4 space-y-3 text-sm leading-7 text-stone-700">
@@ -433,7 +433,7 @@ useSeoMeta({
               >
                 <UIcon
                   name="i-lucide-alert-circle"
-                  class="mt-1 size-4 shrink-0 text-saffron-600"
+                  class="mt-1 size-4 shrink-0 text-sage-600"
                 />
                 <span>{{ $t(`builder.issues.${issue.type}`, { slot: slotLabelById(issue.slotId, issue.slotId) }) }}</span>
               </li>
@@ -455,17 +455,17 @@ useSeoMeta({
               v-for="seg in requiredSlotStates"
               :key="seg.id"
               class="h-1 flex-1 rounded-full transition-colors duration-500"
-              :class="seg.filled ? 'bg-olive-600' : 'bg-sand-600/20'"
+              :class="seg.filled ? 'bg-terra-600' : 'bg-sand-600/20'"
             />
           </div>
-          <p class="mt-1.5 font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.14em] text-stone-500">
+          <p class="mt-1.5 font-mono text-[0.6rem] uppercase tracking-[0.14em] text-stone-500">
             {{ $t('builder.chosen', { a: requiredFilled, b: requiredTotal }) }}
           </p>
         </div>
         <a
           href="#bundle-summary"
-          class="shrink-0 rounded-lg px-4 py-2.5 font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.14em] transition"
-          :class="isReady ? 'bg-saffron-600 text-sand-50' : 'bg-olive-600 text-sand-50'"
+          class="shrink-0 rounded-lg px-4 py-2.5 font-mono text-[0.62rem] uppercase tracking-[0.14em] transition"
+          :class="isReady ? 'bg-sage-600 text-sand-50' : 'bg-terra-600 text-sand-50'"
         >
           {{ isReady ? $t('builder.readyReview') : $t('builder.left', { n: remainingRequiredSlots }) }}
         </a>
