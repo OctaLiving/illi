@@ -24,7 +24,7 @@ const protocolSteps = [
 
 useSeoMeta({
   title: 'illi',
-  description: 'Small-batch foods for the season. Made in Casablanca. Available by invitation.'
+  description: 'Small-batch foods for the season. Made in Casablanca. Available by subscription.'
 })
 </script>
 
@@ -39,7 +39,7 @@ useSeoMeta({
             style="animation-delay:.05s"
           >
             <span class="h-px w-8 bg-terra-600" />
-            Made in Casablanca · By invitation
+            Made in Casablanca · By subscription
           </p>
 
           <h1
@@ -100,7 +100,7 @@ useSeoMeta({
             class="wax-seal stamp-in absolute -bottom-5 -left-5 [--seal-size:6rem]"
             style="animation-delay:.7s"
           >
-            <span>illi<br>·<br>by<br>invitation</span>
+            <span>illi<br>·<br>small<br>batch</span>
           </div>
         </div>
       </div>
@@ -139,7 +139,7 @@ useSeoMeta({
             Crypto
           </p>
           <p class="mt-2 text-sm leading-6 text-stone-600">
-            Priced in dirhams, paid in crypto. Members only — access is by invitation.
+            Priced in dirhams, paid in crypto.
           </p>
         </div>
       </div>
@@ -284,8 +284,8 @@ useSeoMeta({
               The storefront is ready for a branded subscription journey.
             </h2>
             <p class="max-w-xl text-base leading-8 text-indigo-100">
-              Browse the collection, shape a subscription, then let the next phase bring invitation access
-              and crypto checkout into the same experience.
+              Browse the collection, shape a subscription, then check out in crypto — all in the
+              same experience.
             </p>
             <div class="flex flex-wrap gap-3 pt-1">
               <NuxtLink
@@ -307,7 +307,7 @@ useSeoMeta({
             </div>
           </div>
           <div class="wax-seal stamp-in justify-self-center [--seal-size:8.5rem]">
-            <span>illi<br>·<br>by<br>invitation</span>
+            <span>illi<br>·<br>small<br>batch</span>
           </div>
         </div>
       </div>

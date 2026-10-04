@@ -80,7 +80,7 @@ async function signOut() {
     <footer class="border-t border-amber-600/15 bg-amber-50/50">
       <div class="mx-auto grid max-w-6xl gap-10 px-5 py-14 sm:px-8 md:grid-cols-[auto_1fr_auto] md:items-start">
         <div class="wax-seal stamp-in shrink-0">
-          <span>illi<br>·<br>by<br>invitation</span>
+          <span>illi<br>·<br>small<br>batch</span>
         </div>
 
         <div class="space-y-3">
@@ -89,12 +89,12 @@ async function signOut() {
           </p>
           <p class="max-w-md text-sm leading-7 text-stone-600">
             Small-batch foods for the season. Short ingredient lists, reusable glass,
-            and a subscription you shape yourself — made in Casablanca, sent by invitation.
+            and a subscription you shape yourself — made in Casablanca.
           </p>
         </div>
 
         <div class="space-y-2 font-[family:var(--font-mono)] text-[0.7rem] uppercase tracking-[0.16em] text-stone-500 md:text-right">
-          <p>Invitation-only storefront</p>
+          <p>Small-batch storefront</p>
           <p>Crypto checkout · catalog first</p>
           <p>© {{ new Date().getFullYear() }} illi</p>
         </div>

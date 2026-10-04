@@ -11,7 +11,7 @@ function shell(heading: string, bodyHtml: string): string {
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center">
     <table role="presentation" width="480" cellpadding="0" cellspacing="0" style="max-width:480px;background:#fffaf0;border:1px solid rgba(141,98,62,0.25);border-radius:10px;overflow:hidden;">
       <tr><td style="padding:28px 32px 0;">
-        <div style="font-family:Arial,sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:${TERRA};">illi · by invitation</div>
+        <div style="font-family:Arial,sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:${TERRA};">illi · small batch</div>
         <h1 style="margin:12px 0 0;font-size:28px;font-weight:normal;color:${INK};">${heading}</h1>
       </td></tr>
       <tr><td style="padding:16px 32px 32px;font-family:Arial,sans-serif;font-size:15px;line-height:1.6;color:#5a4634;">

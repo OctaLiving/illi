@@ -1,6 +1,6 @@
 # Context
 
-The domain language for **illi** — an invitation-only, additive-free food
+The domain language for **illi** — an additive-free food
 subscription store with crypto checkout (planned). Use these terms exactly
 in code and conversation. Architecture terms (module, seam, depth, locality)
 follow the deepening skill's vocabulary.

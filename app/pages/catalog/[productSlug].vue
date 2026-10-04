@@ -59,7 +59,7 @@ useSeoMeta({
             class="wax-seal stamp-in absolute -bottom-5 -right-4 [--seal-size:5.5rem]"
             style="animation-delay:.5s"
           >
-            <span>illi<br>·<br>by<br>invitation</span>
+            <span>illi<br>·<br>small<br>batch</span>
           </div>
         </div>
 

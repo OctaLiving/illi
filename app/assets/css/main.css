@@ -92,7 +92,7 @@ body {
   border-radius: 50% 50% 0.35rem 0.35rem / 42% 42% 0.35rem 0.35rem;
 }
 
-/* The wax seal — illi's "by invitation" stamp, borrowed from Larder Ledger. */
+/* The wax seal — illi's stamp, borrowed from Larder Ledger. */
 .wax-seal {
   --seal-size: 7.25rem;
   position: relative;

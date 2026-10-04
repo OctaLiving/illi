@@ -82,12 +82,12 @@ useSeoMeta({ title: 'Sign in · illi', robots: 'noindex' })
       </form>
 
       <p class="mt-5 text-center text-sm text-stone-600">
-        Have an invitation?
+        New to illi?
         <NuxtLink
-          to="/join"
+          :to="{ path: '/join', query: route.query }"
           class="font-[family:var(--font-mono)] text-[0.7rem] uppercase tracking-[0.14em] text-indigo-700 underline decoration-terra-600 decoration-2 underline-offset-4"
         >
-          Redeem it here
+          Create an account
         </NuxtLink>
       </p>
     </div>

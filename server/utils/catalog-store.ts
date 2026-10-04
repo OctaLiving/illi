@@ -114,6 +114,12 @@ function toSlot(row: PlanSlotRow): BundleSlotRule {
   }
 }
 
+// Plans saved before prices moved to dirhams may still hold the old amount until the
+// price_in_mad migration runs; convert them the same way so they never show e.g. "64 MAD".
+const MAD_PER_LEGACY_UNIT = 9.35
+const toMad = (row: PlanRow) =>
+  row.priceCurrency === 'MAD' ? row.priceAmount : Math.round(row.priceAmount * MAD_PER_LEGACY_UNIT / 10) * 10
+
 function toPlan(row: PlanRow): SubscriptionPlan {
   return {
     id: row.id,
@@ -121,7 +127,7 @@ function toPlan(row: PlanRow): SubscriptionPlan {
     name: row.name,
     cadence: row.cadence as SubscriptionCadence,
     summary: row.summary,
-    price: { amount: row.priceAmount, currency: 'MAD' },
+    price: { amount: toMad(row), currency: 'MAD' },
     includedSlots: row.includedSlots.map(toSlot)
   }
 }

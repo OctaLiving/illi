@@ -15,7 +15,7 @@ useHead({
 })
 
 const title = 'illi'
-const description = 'Small-batch preserved foods for the season. Made in Casablanca. Available by invitation.'
+const description = 'Small-batch preserved foods for the season. Made in Casablanca. Available by subscription.'
 
 useSeoMeta({
   title,

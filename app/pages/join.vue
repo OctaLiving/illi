@@ -2,17 +2,11 @@
 const route = useRoute()
 const next = computed(() => (typeof route.query.next === 'string' ? route.query.next : '/'))
 
-const form = reactive({ code: '', name: '', email: '', password: '' })
+const form = reactive({ name: '', email: '', password: '' })
 const error = ref('')
 const pending = ref(false)
 
 const field = 'w-full rounded-sm border border-amber-600/30 bg-amber-50/60 px-3.5 py-2.5 text-sm text-stone-900 transition focus:border-indigo-600 focus:outline-none focus:ring-1 focus:ring-indigo-600/30'
-
-onMounted(() => {
-  if (typeof route.query.code === 'string') {
-    form.code = route.query.code
-  }
-})
 
 async function submit() {
   pending.value = true
@@ -23,7 +17,7 @@ async function submit() {
     await navigateTo(next.value)
   } catch (err) {
     const e = err as { data?: { statusMessage?: string } }
-    error.value = e?.data?.statusMessage ?? 'Could not redeem this invitation.'
+    error.value = e?.data?.statusMessage ?? 'Could not create your account.'
     pending.value = false
   }
 }
@@ -36,10 +30,10 @@ useSeoMeta({ title: 'Join illi', robots: 'noindex' })
     <div class="w-full max-w-sm">
       <div class="reveal text-center">
         <p class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.3em] text-terra-600">
-          By invitation
+          Join illi
         </p>
         <h1 class="mt-3 font-[family:var(--font-serif)] text-4xl text-stone-900">
-          Redeem your invitation.
+          Create your account.
         </h1>
       </div>
 
@@ -48,15 +42,6 @@ useSeoMeta({ title: 'Join illi', robots: 'noindex' })
         style="animation-delay:.1s"
         @submit.prevent="submit"
       >
-        <div>
-          <label class="mb-1 block font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.16em] text-stone-500">Invitation code</label>
-          <input
-            v-model="form.code"
-            required
-            placeholder="ILLI-XXXXXX"
-            :class="[field, 'font-[family:var(--font-mono)] tracking-[0.1em]']"
-          >
-        </div>
         <div>
           <label class="mb-1 block font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.16em] text-stone-500">Name</label>
           <input
@@ -107,7 +92,7 @@ useSeoMeta({ title: 'Join illi', robots: 'noindex' })
       <p class="mt-5 text-center text-sm text-stone-600">
         Already a member?
         <NuxtLink
-          to="/login"
+          :to="{ path: '/login', query: route.query }"
           class="font-[family:var(--font-mono)] text-[0.7rem] uppercase tracking-[0.14em] text-indigo-700 underline decoration-terra-600 decoration-2 underline-offset-4"
         >
           Sign in

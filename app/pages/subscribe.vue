@@ -38,7 +38,7 @@ function slotIsFilled(slotId: string) {
 }
 
 // Checkout is the gate: browsing and building are open, but proceeding requires
-// an account (which only exists via a redeemed invitation).
+// an account.
 const { data: me } = useMe()
 
 function proceedToCheckout() {
@@ -393,7 +393,7 @@ useSeoMeta({
                   />
                 </button>
                 <p class="text-center font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.12em] text-stone-400">
-                  Members only · crypto checkout is the next phase
+                  Crypto checkout is the next phase
                 </p>
               </div>
             </div>
