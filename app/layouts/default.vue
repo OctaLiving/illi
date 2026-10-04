@@ -223,7 +223,7 @@ async function signOut() {
       <div class="border-t border-olive-800">
         <div class="mx-auto flex max-w-6xl flex-col gap-2 px-5 py-6 text-xs text-sand-400 sm:flex-row sm:justify-between sm:px-8">
           <p>© {{ new Date().getFullYear() }} illi · Made in Casablanca</p>
-          <p>Prices in Moroccan dirhams · Secure payment in crypto</p>
+          <p>Prices in Moroccan dirhams · Cash on delivery or secure online payment</p>
         </div>
       </div>
     </footer>

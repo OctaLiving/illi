@@ -40,29 +40,46 @@ export function invitationEmail(code: string, joinUrl: string) {
   }
 }
 
-export function orderConfirmationEmail(name: string, planName: string, amount: number, currency: string) {
+export function orderConfirmationEmail(name: string, planName: string, amount: number, currency: string, cash = false) {
   return {
-    subject: `Your illi subscription is active — ${planName}`,
-    text: `Hi ${name}, your ${planName} subscription is active (${amount} ${currency} per cycle).`,
-    html: shell('Your subscription is active.', `
+    subject: `Your illi box is confirmed — ${planName}`,
+    text: cash
+      ? `Hi ${name}, your ${planName} is confirmed. Pay ${amount} ${currency} in cash when it is delivered.`
+      : `Hi ${name}, your ${planName} is active (${amount} ${currency} per cycle).`,
+    html: shell('Your box is confirmed.', `
       <p>Hi ${name},</p>
-      <p>Your <strong>${planName}</strong> subscription is confirmed and active.</p>
-      <p style="margin:20px 0;font-size:20px;color:${INK};">${amount} ${currency} <span style="font-size:13px;color:#8a7761;">per cycle</span></p>
-      <p>We'll send a fresh payment request before each renewal — crypto can't auto-charge, so you approve every cycle.</p>`)
+      <p>Your <strong>${planName}</strong> is confirmed and we're preparing it.</p>
+      <p style="margin:20px 0;font-size:20px;color:${INK};">${amount} ${currency} <span style="font-size:13px;color:#8a7761;">${cash ? 'to pay in cash on delivery' : 'per cycle'}</span></p>
+      <p>${cash
+        ? 'Please have the exact amount ready for the courier. Each renewal is also paid on delivery.'
+        : 'We\'ll send a fresh payment request before each renewal, so you approve every cycle.'}</p>`)
   }
 }
 
-export function purchaseConfirmationEmail(name: string, items: { productName: string, quantity: number }[], amount: number, currency: string) {
+export function purchaseConfirmationEmail(name: string, items: { productName: string, quantity: number }[], amount: number, currency: string, cash = false) {
   const summary = items.map(i => `${i.quantity} × ${i.productName}`).join(', ') || 'your order'
   return {
     subject: 'Your illi order is confirmed',
-    text: `Hi ${name}, your order (${summary}, ${amount} ${currency}) is paid and confirmed.`,
+    text: cash
+      ? `Hi ${name}, your order (${summary}) is confirmed. Pay ${amount} ${currency} in cash when it is delivered.`
+      : `Hi ${name}, your order (${summary}, ${amount} ${currency}) is paid and confirmed.`,
     html: shell('Your order is confirmed.', `
       <p>Hi ${name},</p>
-      <p>Your order is paid and confirmed:</p>
+      <p>${cash ? 'Your order is confirmed:' : 'Your order is paid and confirmed:'}</p>
       <ul>${items.map(i => `<li>${i.quantity} × ${i.productName}</li>`).join('')}</ul>
-      <p style="margin:20px 0;font-size:20px;color:${INK};">${amount} ${currency} <span style="font-size:13px;color:#8a7761;">one-time</span></p>
-      <p>We'll be in touch when it's on its way.</p>`)
+      <p style="margin:20px 0;font-size:20px;color:${INK};">${amount} ${currency} <span style="font-size:13px;color:#8a7761;">${cash ? 'to pay in cash on delivery' : 'paid'}</span></p>
+      <p>${cash ? 'Please have the exact amount ready for the courier. ' : ''}We'll be in touch when it's on its way.</p>`)
+  }
+}
+
+export function cashRenewalEmail(name: string, planName: string, amount: number, currency: string) {
+  return {
+    subject: `Your next ${planName} is on its way`,
+    text: `Hi ${name}, we're preparing your next ${planName}. Pay ${amount} ${currency} in cash on delivery.`,
+    html: shell('Your next box is coming.', `
+      <p>Hi ${name},</p>
+      <p>We're preparing your next <strong>${planName}</strong>.</p>
+      <p style="margin:20px 0;font-size:20px;color:${INK};">${amount} ${currency} <span style="font-size:13px;color:#8a7761;">to pay in cash on delivery</span></p>`)
   }
 }
 

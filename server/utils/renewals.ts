@@ -18,6 +18,34 @@ export async function runRenewals(now = new Date()): Promise<{ invoiced: number,
   })
 
   for (const sub of due) {
+    // Cash on delivery: the next box is simply prepared and paid at the door, so
+    // the subscription stays active and moves on to the following cycle.
+    if (sub.paymentMethod === 'cod') {
+      const order = await prisma.order.create({
+        data: {
+          userId: sub.userId,
+          subscriptionId: sub.id,
+          currency: sub.currency,
+          amount: sub.amount,
+          snapshot: sub.snapshot,
+          paymentMethod: 'cod',
+          shipping: sub.shipping ?? undefined,
+          status: 'cod_pending',
+          provider: 'cod'
+        }
+      })
+      await confirmCashOrder(order.id)
+      if (sub.user) {
+        try {
+          await sendMail({ to: sub.user.email, ...cashRenewalEmail(sub.user.name, sub.planName, sub.amount, sub.currency) })
+        } catch (err) {
+          console.error('[renewals] renewal email failed:', err)
+        }
+      }
+      invoiced++
+      continue
+    }
+
     const order = await prisma.order.create({
       data: {
         userId: sub.userId,
@@ -25,6 +53,8 @@ export async function runRenewals(now = new Date()): Promise<{ invoiced: number,
         currency: sub.currency,
         amount: sub.amount,
         snapshot: sub.snapshot,
+        paymentMethod: sub.paymentMethod,
+        shipping: sub.shipping ?? undefined,
         provider: provider.name
       }
     })
@@ -34,7 +64,7 @@ export async function runRenewals(now = new Date()): Promise<{ invoiced: number,
       amount: sub.amount,
       currency: sub.currency,
       description: `illi — ${sub.planName} renewal`,
-      successUrl: `${base}/account`,
+      successUrl: `${base}/orders/${order.id}`,
       cancelUrl: `${base}/account`,
       ipnUrl: `${base}/api/webhooks/nowpayments`
     })

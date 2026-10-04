@@ -33,6 +33,7 @@ const { data: account } = await useFetch<AccountData>('/api/account', {
 const statusBadge: Record<string, string> = {
   active: 'bg-olive-600/10 text-olive-700',
   pending: 'bg-saffron-600/10 text-saffron-700',
+  cod_pending: 'bg-saffron-600/10 text-saffron-700',
   paid: 'bg-olive-600/10 text-olive-700',
   past_due: 'bg-saffron-600/10 text-saffron-700',
   paused: 'bg-stone-400/15 text-stone-500',
@@ -154,7 +155,10 @@ useSeoMeta({ title: 'Your account · illi', robots: 'noindex' })
               </td>
               <td class="px-5 py-3">
                 <p class="text-sm font-semibold text-stone-900">
-                  {{ orderLabel(o) }}
+                  <NuxtLink
+                    :to="`/orders/${o.id}`"
+                    class="hover:text-olive-700 hover:underline"
+                  >{{ orderLabel(o) }}</NuxtLink>
                 </p>
                 <p class="text-sm text-stone-500">
                   {{ o.amount }} {{ o.currency }}
@@ -165,7 +169,7 @@ useSeoMeta({ title: 'Your account · illi', robots: 'noindex' })
                   class="rounded-lg px-2 py-0.5 font-[family:var(--font-mono)] text-[0.56rem] uppercase tracking-[0.1em]"
                   :class="statusBadge[o.status]"
                 >
-                  {{ o.status }}
+                  {{ o.status === 'cod_pending' ? 'pay on delivery' : o.status }}
                 </span>
               </td>
               <td class="px-5 py-3 text-right">

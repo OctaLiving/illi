@@ -12,6 +12,8 @@ model Subscription {
   amount           Float
   status           String    @default("pending") // pending | active | past_due | paused | canceled
   snapshot         String // JSON checkout-handoff payload
+  paymentMethod    String    @default("crypto") // card | crypto | cod — used again for each renewal
+  shipping         Json? // delivery details: name, phone, address, city, country, notes
   currentPeriodEnd DateTime?
   nextInvoiceAt    DateTime?
   createdAt        DateTime  @default(now())
@@ -28,10 +30,12 @@ model Order {
   user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   subscriptionId String?
   subscription   Subscription? @relation(fields: [subscriptionId], references: [id])
-  status         String        @default("pending") // pending | paid | expired | failed
+  status         String        @default("pending") // pending | cod_pending | paid | expired | failed
   currency       String        @default("MAD")
   amount         Float
   snapshot       String // JSON bundle snapshot, server-priced
+  paymentMethod  String        @default("crypto") // card | crypto | cod
+  shipping       Json? // delivery details copied from checkout
   provider       String?
   providerRef    String?
   payUrl         String?

@@ -1,6 +1,5 @@
 <script setup lang="ts">
-const { lines, count, subtotal, isOpen, items, clear } = useCart()
-const { checkout, pending, error } = useCheckout()
+const { lines, count, subtotal, isOpen } = useCart()
 
 const route = useRoute()
 watch(() => route.fullPath, () => {
@@ -14,7 +13,8 @@ onMounted(() => window.addEventListener('keydown', onKeydown))
 onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
 
 function startCheckout() {
-  checkout(items.value, clear)
+  isOpen.value = false
+  navigateTo('/cart')
 }
 </script>
 
@@ -94,26 +94,19 @@ function startCheckout() {
               <span class="text-stone-600">Subtotal</span>
               <span class="font-serif text-3xl text-stone-900">{{ subtotal }} MAD</span>
             </div>
-            <p
-              v-if="error"
-              class="rounded-xl bg-saffron-50 px-3 py-2 text-sm text-saffron-800"
-            >
-              {{ error }}
-            </p>
             <button
               type="button"
               class="flex w-full items-center justify-center gap-2 rounded-full bg-olive-700 py-4 text-base font-semibold text-sand-50 transition hover:bg-olive-800 disabled:opacity-60"
-              :disabled="pending"
               @click="startCheckout"
             >
               <UIcon
                 name="i-lucide-lock"
                 class="size-4"
               />
-              {{ pending ? 'Starting checkout…' : 'Checkout' }}
+              Checkout
             </button>
             <p class="text-center text-xs text-stone-500">
-              Secure payment in crypto · Prices in Moroccan dirhams
+              Cash on delivery or online payment · Prices in MAD
             </p>
           </footer>
         </template>

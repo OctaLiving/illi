@@ -40,6 +40,12 @@ follow the deepening skill's vocabulary.
   checkout-facing projection of the summary. Kept deliberately separate from the
   summary (summary = UI shape, payload = the contract a future checkout
   consumes).
+- **Checkout** — delivery details (`Shipping`) plus a **payment method**: `cod`
+  (cash on delivery, Morocco only, confirmed at once and marked paid when the
+  courier collects), `crypto` (NOWPayments) or `card` (via **Solutio**, our own
+  hosted checkout, not connected yet). One `placeOrder` path in
+  `server/utils/checkout.ts` serves both the cart and boxes; a box keeps its
+  method and address for every renewal.
 - **Product–plan fit** (`ProductPlanFit`) — for one product, the plans it fits
   and the slots it can fill within each. Powers the catalog views.
 

@@ -79,37 +79,46 @@ export function useCart() {
   return { items, lines, count, subtotal, isOpen, add, setQuantity, clear }
 }
 
-// Starts payment for the given items (the cart, or a single "Buy now" item).
-// Signed-out shoppers are sent to sign in first and come back to /cart.
-export function useCheckout() {
-  const { data: me } = useMe()
+export type PaymentMethod = 'card' | 'crypto' | 'cod'
+
+export interface ShippingDetails {
+  name: string
+  phone: string
+  address: string
+  city: string
+  country: string
+  notes: string
+}
+
+export interface CheckoutDetails {
+  method: PaymentMethod
+  shipping: ShippingDetails
+}
+
+// Places an order at a checkout endpoint (the cart or a box), then sends the
+// shopper on: to the payment page for online methods, or to the order page for
+// cash on delivery.
+export function useCheckout(endpoint: '/api/checkout/cart' | '/api/checkout') {
   const pending = ref(false)
   const error = ref('')
 
-  async function checkout(items: CartItem[], onStarted?: () => void) {
-    if (!me.value?.user) {
-      await navigateTo('/login?next=/cart')
-      return
-    }
+  async function submit(body: Record<string, unknown>, onPlaced?: () => void) {
     pending.value = true
     error.value = ''
     try {
-      const { payUrl } = await $fetch<{ payUrl: string }>('/api/checkout/cart', {
-        method: 'POST',
-        body: { items }
-      })
-      onStarted?.()
-      if (/^https?:\/\//.test(payUrl)) {
-        window.location.href = payUrl // external hosted page (NOWPayments)
+      const { nextUrl } = await $fetch<{ nextUrl: string }>(endpoint, { method: 'POST', body })
+      onPlaced?.()
+      if (/^https?:\/\//.test(nextUrl)) {
+        window.location.href = nextUrl // external hosted payment page
       } else {
-        await navigateTo(payUrl) // internal simulated page
+        await navigateTo(nextUrl)
       }
     } catch (err) {
       const e = err as { data?: { statusMessage?: string } }
-      error.value = e?.data?.statusMessage ?? 'Could not start checkout.'
+      error.value = e?.data?.statusMessage ?? 'Could not place your order. Please try again.'
       pending.value = false
     }
   }
 
-  return { checkout, pending, error }
+  return { submit, pending, error }
 }
