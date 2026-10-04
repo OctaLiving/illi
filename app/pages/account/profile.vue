@@ -33,7 +33,7 @@ const saving = ref(false)
 const saved = ref(false)
 const error = ref('')
 
-const field = 'w-full rounded-sm border border-amber-600/30 bg-amber-50/60 px-3.5 py-2.5 text-sm text-stone-900 transition focus:border-indigo-600 focus:outline-none focus:ring-1 focus:ring-indigo-600/30'
+const field = 'w-full rounded-lg border border-sand-600/30 bg-sand-50/60 px-3.5 py-2.5 text-sm text-stone-900 transition focus:border-olive-600 focus:outline-none focus:ring-1 focus:ring-olive-600/30'
 const labelText = 'mb-1 block font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.16em] text-stone-500'
 
 async function save() {
@@ -63,7 +63,7 @@ useSeoMeta({ title: 'Your information · illi', robots: 'noindex' })
         :items="[{ label: 'Home', to: '/' }, { label: 'Account', to: '/account' }, { label: 'Information' }]"
       />
 
-      <p class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.3em] text-terra-600">
+      <p class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.3em] text-saffron-600">
         Your information
       </p>
       <h1 class="mt-2 font-[family:var(--font-serif)] text-4xl text-stone-900 sm:text-5xl">
@@ -75,7 +75,7 @@ useSeoMeta({ title: 'Your information · illi', robots: 'noindex' })
       </p>
 
       <form
-        class="mt-8 space-y-5 rounded-md border border-amber-600/25 bg-[#f4ecdd] p-7"
+        class="mt-8 space-y-5 rounded-3xl bg-white ring-1 ring-sand-200 p-7"
         @submit.prevent="save"
       >
         <div class="grid gap-4 sm:grid-cols-2">
@@ -162,7 +162,7 @@ useSeoMeta({ title: 'Your information · illi', robots: 'noindex' })
 
         <p
           v-if="error"
-          class="rounded-sm bg-terra-600/10 px-3 py-2 text-sm text-terra-700"
+          class="rounded-lg bg-saffron-600/10 px-3 py-2 text-sm text-saffron-700"
         >
           {{ error }}
         </p>
@@ -170,14 +170,14 @@ useSeoMeta({ title: 'Your information · illi', robots: 'noindex' })
         <div class="flex items-center gap-4">
           <button
             type="submit"
-            class="rounded-sm bg-indigo-600 px-6 py-3 font-[family:var(--font-mono)] text-[0.64rem] uppercase tracking-[0.16em] text-amber-50 transition hover:bg-indigo-700 disabled:opacity-50"
+            class="rounded-full bg-olive-700 px-6 py-3 text-sm font-semibold text-sand-50 transition hover:bg-olive-800 disabled:opacity-50"
             :disabled="saving"
           >
             {{ saving ? 'Saving…' : 'Save information' }}
           </button>
           <span
             v-if="saved"
-            class="inline-flex items-center gap-1.5 font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.14em] text-indigo-700"
+            class="inline-flex items-center gap-1.5 font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.14em] text-olive-700"
           >
             <UIcon
               name="i-lucide-check"

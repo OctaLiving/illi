@@ -1,149 +1,112 @@
 <script setup lang="ts">
-import type { CatalogProduct } from '~/types/catalog'
-import { getEligiblePlansForProduct } from '~/utils/catalog'
-
 const { data: catalog } = await useCatalog()
-const catalogProducts = computed(() => catalog.value.products)
-const subscriptionPlans = computed(() => catalog.value.plans)
+const route = useRoute()
+const router = useRouter()
 
-const groups = computed(() =>
-  catalog.value.categories
-    .map(category => ({
-      category,
-      products: catalog.value.products.filter(product => product.eligibleSlotTypes.includes(category.slug))
-    }))
-    .filter(group => group.products.length > 0)
+const activeCategory = computed(() => (typeof route.query.category === 'string' ? route.query.category : ''))
+const activeName = computed(() => catalog.value.categories.find(c => c.slug === activeCategory.value)?.name)
+
+const products = computed(() => {
+  const list = activeCategory.value
+    ? catalog.value.products.filter(p => p.eligibleSlotTypes.includes(activeCategory.value as never))
+    : catalog.value.products
+  // Available first, keep catalog order otherwise.
+  return [...list].sort((a, b) => Number(b.isAvailable) - Number(a.isAvailable))
+})
+
+const counts = computed(() =>
+  Object.fromEntries(catalog.value.categories.map(c => [c.slug, catalog.value.products.filter(p => p.eligibleSlotTypes.includes(c.slug)).length]))
 )
+const lowestPlan = computed(() => Math.min(...catalog.value.plans.map(p => p.price.amount)))
 
-function matchedPlanCount(product: CatalogProduct) {
-  return getEligiblePlansForProduct(product, catalog.value.plans).length
+function selectCategory(slug: string) {
+  router.replace({ query: slug ? { category: slug } : {} })
 }
 
 useSeoMeta({
-  title: 'The collection',
-  description: 'Browse the preserved foods and pantry staples available for customization inside illi subscription plans.'
+  title: () => (activeName.value ? `${activeName.value} — Shop` : 'Shop the pantry'),
+  description: 'Ferments, cheeses, nut butters, jams, marinated fish and sauces — made in small batches in Casablanca. Buy a single jar or build a box.'
 })
 </script>
 
 <template>
   <div>
-    <!-- Hero -->
-    <section class="maghreb-wash relative overflow-hidden border-b border-amber-600/15">
-      <div class="mx-auto grid max-w-6xl items-end gap-10 px-5 py-16 sm:px-8 sm:py-20 lg:grid-cols-[1.2fr_0.8fr]">
-        <div>
-          <p
-            class="reveal inline-flex items-center gap-3 font-[family:var(--font-mono)] text-[0.7rem] uppercase tracking-[0.3em] text-indigo-700"
-            style="animation-delay:.05s"
-          >
-            <span class="h-px w-8 bg-terra-600" />
-            The collection
-          </p>
-          <h1
-            class="reveal mt-6 max-w-3xl font-[family:var(--font-serif)] text-5xl font-normal leading-[1.0] tracking-tight text-stone-900 sm:text-6xl"
-            style="animation-delay:.16s"
-          >
-            Preserved foods for the <em class="italic text-terra-600">season.</em>
-          </h1>
-          <p
-            class="reveal mt-6 max-w-xl text-lg leading-8 text-stone-700"
-            style="animation-delay:.26s"
-          >
-            The illi collection is intentionally narrow: products that keep well, belong in a recurring
-            household ritual, and fit into a curated subscription with clear rules.
-          </p>
-          <div
-            class="reveal mt-8 flex flex-wrap gap-3"
-            style="animation-delay:.36s"
-          >
-            <NuxtLink
-              to="/subscribe"
-              class="inline-flex items-center gap-2 rounded-sm bg-indigo-600 px-6 py-3.5 text-sm font-semibold text-amber-50 transition hover:bg-indigo-700"
-            >
-              Shape a subscription
-              <UIcon
-                name="i-lucide-arrow-right"
-                class="size-4"
-              />
-            </NuxtLink>
-            <NuxtLink
-              to="/"
-              class="inline-flex items-center gap-2 rounded-sm border border-indigo-600 px-6 py-3.5 text-sm font-semibold text-indigo-700 transition hover:bg-indigo-600/8"
-            >
-              Back to brand story
-            </NuxtLink>
-          </div>
-        </div>
+    <section class="maghreb-wash border-b border-sand-200">
+      <div class="mx-auto max-w-6xl px-5 pb-8 pt-12 sm:px-8 sm:pt-16">
+        <p class="eyebrow">
+          The pantry
+        </p>
+        <h1 class="mt-3 max-w-3xl font-serif text-4xl leading-[1.05] text-stone-900 sm:text-6xl">
+          {{ activeName ?? 'Everything we make' }}
+        </h1>
+        <p class="mt-4 max-w-2xl text-lg leading-8 text-stone-600">
+          Small batches, short ingredient lists, nothing added that shouldn't be. Add any jar to your cart —
+          no subscription needed.
+        </p>
 
-        <div
-          class="reveal grid gap-px overflow-hidden rounded-md border border-amber-600/40 bg-amber-600/40"
-          style="animation-delay:.3s"
-        >
-          <div class="grid grid-cols-3 gap-px bg-amber-600/40">
-            <div class="bg-[#f4ecdd] p-5">
-              <p class="font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.14em] text-terra-600">
-                Products
-              </p>
-              <p class="mt-2 font-[family:var(--font-serif)] text-4xl text-stone-900">
-                {{ catalogProducts.length }}
-              </p>
-            </div>
-            <div class="bg-[#f4ecdd] p-5">
-              <p class="font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.14em] text-terra-600">
-                Categories
-              </p>
-              <p class="mt-2 font-[family:var(--font-serif)] text-4xl text-stone-900">
-                {{ groups.length }}
-              </p>
-            </div>
-            <div class="bg-[#f4ecdd] p-5">
-              <p class="font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.14em] text-terra-600">
-                Plans
-              </p>
-              <p class="mt-2 font-[family:var(--font-serif)] text-4xl text-stone-900">
-                {{ subscriptionPlans.length }}
-              </p>
-            </div>
-          </div>
-          <div class="bg-[#f4ecdd] p-6">
-            <p class="text-sm leading-7 text-stone-600">
-              Every item already knows its category — from live ferments to marinated fish. That
-              compatibility becomes the basis for the subscription builder.
-            </p>
-          </div>
+        <div class="no-scrollbar -mx-5 mt-8 flex gap-2 overflow-x-auto px-5 pb-1 sm:mx-0 sm:flex-wrap sm:px-0">
+          <button
+            type="button"
+            class="shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition"
+            :class="!activeCategory ? 'bg-olive-700 text-sand-50' : 'bg-white text-stone-700 ring-1 ring-sand-300 hover:ring-olive-600'"
+            @click="selectCategory('')"
+          >
+            All <span class="opacity-70">{{ catalog.products.length }}</span>
+          </button>
+          <button
+            v-for="category in catalog.categories"
+            :key="category.slug"
+            type="button"
+            class="shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition"
+            :class="activeCategory === category.slug ? 'bg-olive-700 text-sand-50' : 'bg-white text-stone-700 ring-1 ring-sand-300 hover:ring-olive-600'"
+            @click="selectCategory(category.slug)"
+          >
+            {{ category.name }} <span class="opacity-70">{{ counts[category.slug] }}</span>
+          </button>
         </div>
       </div>
     </section>
 
-    <!-- Grouped grid -->
-    <section class="mx-auto max-w-6xl space-y-20 px-5 py-16 sm:px-8 sm:py-20">
-      <div
-        v-for="group in groups"
-        :key="group.category.slug"
-        class="scroll-mt-24"
-      >
-        <div class="flex flex-col gap-2 border-b border-amber-600/20 pb-5 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p class="font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.24em] text-terra-600">
-              {{ group.products.length }} {{ group.products.length === 1 ? 'product' : 'products' }}
+    <section class="mx-auto max-w-6xl px-5 py-10 sm:px-8">
+      <div class="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4">
+        <template
+          v-for="(product, i) in products"
+          :key="product.id"
+        >
+          <CatalogProductCard :product="product" />
+          <NuxtLink
+            v-if="i === 5 && catalog.plans.length"
+            to="/subscribe"
+            class="col-span-2 flex flex-col justify-between gap-6 rounded-3xl bg-olive-800 p-6 text-sand-100 transition hover:bg-olive-900 sm:p-8 lg:col-span-1"
+          >
+            <div>
+              <p class="text-xs font-bold uppercase tracking-[0.18em] text-saffron-300">
+                Boxes on repeat
+              </p>
+              <p class="mt-3 font-serif text-3xl leading-tight text-sand-50">
+                Choose your favourites once — we refill them on your schedule.
+              </p>
+            </div>
+            <p class="flex items-center justify-between text-sm font-semibold">
+              From {{ lowestPlan }} MAD
+              <span class="inline-flex items-center gap-1 rounded-full bg-saffron-400 px-4 py-2 text-olive-950">
+                Build a box
+                <UIcon
+                  name="i-lucide-arrow-right"
+                  class="size-4"
+                />
+              </span>
             </p>
-            <h2 class="mt-1 font-[family:var(--font-serif)] text-4xl text-stone-900">
-              {{ group.category.name }}
-            </h2>
-          </div>
-          <p class="max-w-md text-sm leading-7 text-stone-600 sm:text-right">
-            {{ group.category.blurb }}
-          </p>
-        </div>
-
-        <div class="mt-8 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-          <CatalogProductCard
-            v-for="product in group.products"
-            :key="product.id"
-            :product="product"
-            :matched-plan-count="matchedPlanCount(product)"
-          />
-        </div>
+          </NuxtLink>
+        </template>
       </div>
+
+      <p
+        v-if="products.length === 0"
+        class="rounded-3xl bg-white p-10 text-center text-stone-600 ring-1 ring-sand-200"
+      >
+        Nothing here yet — try another category.
+      </p>
     </section>
   </div>
 </template>

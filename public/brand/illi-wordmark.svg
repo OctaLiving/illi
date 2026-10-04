@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132 100" role="img" aria-label="illi">
+  <g stroke="#2f4a29" stroke-width="15" stroke-linecap="round" fill="none">
+    <path d="M14 46V88"/>
+    <path d="M50 12V88"/>
+    <path d="M82 12V88"/>
+    <path d="M118 46V88"/>
+  </g>
+  <circle cx="14" cy="17" r="9.5" fill="#e9a032"/>
+  <circle cx="118" cy="17" r="9.5" fill="#e9a032"/>
+</svg>

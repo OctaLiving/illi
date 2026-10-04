@@ -43,10 +43,10 @@ export async function fulfillOrder(orderId: string, rawEvent?: unknown) {
   } else if (order.user) {
     // One-time product purchase — no subscription to activate, just confirm.
     try {
-      const { productName } = JSON.parse(order.snapshot) as { productName?: string }
+      const { items = [] } = JSON.parse(order.snapshot) as { items?: { productName: string, quantity: number }[] }
       await sendMail({
         to: order.user.email,
-        ...purchaseConfirmationEmail(order.user.name, productName ?? 'your order', order.amount, order.currency)
+        ...purchaseConfirmationEmail(order.user.name, items, order.amount, order.currency)
       })
     } catch (err) {
       console.error('[fulfill] purchase confirmation email failed:', err)

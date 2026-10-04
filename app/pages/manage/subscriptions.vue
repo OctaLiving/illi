@@ -47,9 +47,9 @@ useSeoMeta({ title: 'Subscriptions · illi ops', robots: 'noindex, nofollow' })
 
 <template>
   <section>
-    <div class="flex flex-wrap items-end justify-between gap-3 border-b border-amber-600/20 pb-4">
+    <div class="flex flex-wrap items-end justify-between gap-3 border-b border-sand-600/20 pb-4">
       <div>
-        <p class="font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.24em] text-terra-600">
+        <p class="font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.24em] text-saffron-600">
           {{ activeSubscribers }} active · {{ revenueCollected }} MAD collected
         </p>
         <h1 class="mt-1 font-[family:var(--font-serif)] text-3xl text-stone-900">
@@ -58,7 +58,7 @@ useSeoMeta({ title: 'Subscriptions · illi ops', robots: 'noindex, nofollow' })
       </div>
       <button
         type="button"
-        class="inline-flex items-center gap-2 rounded-sm border border-indigo-600 px-4 py-2.5 font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.14em] text-indigo-700 transition hover:bg-indigo-600/8 disabled:opacity-50"
+        class="inline-flex items-center gap-2 rounded-sm border border-olive-600 px-4 py-2.5 font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.14em] text-olive-700 transition hover:bg-olive-600/8 disabled:opacity-50"
         :disabled="runningRenewals"
         @click="runRenewalsNow"
       >
@@ -70,10 +70,10 @@ useSeoMeta({ title: 'Subscriptions · illi ops', robots: 'noindex, nofollow' })
       </button>
     </div>
 
-    <div class="mt-6 overflow-x-auto rounded-md border border-amber-600/25 bg-[#f4ecdd]">
+    <div class="mt-6 overflow-x-auto rounded-md border border-sand-600/25 bg-sand-100">
       <table class="w-full border-collapse text-left">
         <thead>
-          <tr class="border-b border-amber-600/25 font-[family:var(--font-mono)] text-[0.56rem] uppercase tracking-[0.14em] text-stone-500">
+          <tr class="border-b border-sand-600/25 font-[family:var(--font-mono)] text-[0.56rem] uppercase tracking-[0.14em] text-stone-500">
             <th class="px-5 py-3 font-medium">
               Customer
             </th>
@@ -106,7 +106,7 @@ useSeoMeta({ title: 'Subscriptions · illi ops', robots: 'noindex, nofollow' })
           <tr
             v-for="sub in commerce.subscriptions"
             :key="sub.id"
-            class="border-b border-amber-600/10 last:border-0"
+            class="border-b border-sand-600/10 last:border-0"
           >
             <td class="px-5 py-3">
               <p class="text-sm text-stone-900">
@@ -144,7 +144,7 @@ useSeoMeta({ title: 'Subscriptions · illi ops', robots: 'noindex, nofollow' })
     <h2 class="mt-8 font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.2em] text-stone-500">
       Recent orders
     </h2>
-    <div class="mt-3 overflow-x-auto rounded-md border border-amber-600/25 bg-[#f4ecdd]">
+    <div class="mt-3 overflow-x-auto rounded-md border border-sand-600/25 bg-sand-100">
       <table class="w-full border-collapse text-left">
         <tbody>
           <tr v-if="commerce.orders.length === 0">
@@ -155,7 +155,7 @@ useSeoMeta({ title: 'Subscriptions · illi ops', robots: 'noindex, nofollow' })
           <tr
             v-for="o in commerce.orders"
             :key="o.id"
-            class="border-b border-amber-600/10 last:border-0"
+            class="border-b border-sand-600/10 last:border-0"
           >
             <td class="px-5 py-3 font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.1em] text-stone-500">
               {{ fmtDate(o.createdAt) }}

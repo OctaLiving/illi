@@ -25,14 +25,15 @@ async function signOut() {
 </script>
 
 <template>
-  <div class="min-h-screen bg-[#f4ecdd] text-stone-900">
+  <div class="min-h-screen bg-sand-100 text-stone-900">
     <!-- Desktop sidebar -->
-    <aside class="hidden bg-indigo-950 text-amber-50 lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
-      <div class="border-b border-amber-50/10 px-6 py-6">
-        <p class="font-[family:var(--font-serif)] text-2xl lowercase">
-          illi
-        </p>
-        <p class="mt-1 font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.26em] text-amber-200/60">
+    <aside class="hidden bg-olive-950 text-sand-50 lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
+      <div class="border-b border-sand-50/10 px-6 py-6">
+        <BrandLogo
+          reversed
+          class="text-[2rem] text-sand-50"
+        />
+        <p class="mt-1 font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.26em] text-sand-200/60">
           Operator console
         </p>
       </div>
@@ -43,28 +44,28 @@ async function signOut() {
           :key="item.to"
           :to="item.to"
           class="flex items-center gap-3 rounded-sm px-3 py-2.5 text-sm transition"
-          :class="isActive(item.to) ? 'bg-amber-50/12 text-amber-50' : 'text-amber-50/70 hover:bg-amber-50/8 hover:text-amber-50'"
+          :class="isActive(item.to) ? 'bg-sand-50/12 text-sand-50' : 'text-sand-50/70 hover:bg-sand-50/8 hover:text-sand-50'"
         >
           <UIcon
             :name="item.icon"
             class="size-4 shrink-0"
-            :class="isActive(item.to) ? 'text-terra-200' : 'text-terra-300'"
+            :class="isActive(item.to) ? 'text-saffron-200' : 'text-saffron-300'"
           />
           {{ item.label }}
         </NuxtLink>
       </nav>
 
-      <div class="space-y-3 border-t border-amber-50/10 px-6 py-5">
+      <div class="space-y-3 border-t border-sand-50/10 px-6 py-5">
         <p
           v-if="me?.user"
-          class="truncate font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.14em] text-amber-200/50"
+          class="truncate font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.14em] text-sand-200/50"
         >
           {{ me.user.email }}
         </p>
         <div class="flex items-center justify-between gap-3">
           <NuxtLink
             to="/"
-            class="flex items-center gap-2 font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.16em] text-amber-200/60 transition hover:text-amber-50"
+            class="flex items-center gap-2 font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.16em] text-sand-200/60 transition hover:text-sand-50"
           >
             <UIcon
               name="i-lucide-arrow-left"
@@ -74,7 +75,7 @@ async function signOut() {
           </NuxtLink>
           <button
             type="button"
-            class="flex items-center gap-2 font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.16em] text-terra-300 transition hover:text-terra-200"
+            class="flex items-center gap-2 font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.16em] text-saffron-300 transition hover:text-saffron-200"
             @click="signOut"
           >
             <UIcon
@@ -88,22 +89,25 @@ async function signOut() {
     </aside>
 
     <!-- Mobile top bar -->
-    <header class="sticky top-0 z-40 bg-indigo-950 text-amber-50 lg:hidden">
+    <header class="sticky top-0 z-40 bg-olive-950 text-sand-50 lg:hidden">
       <div class="flex items-center justify-between px-5 py-3">
-        <p class="font-[family:var(--font-serif)] text-xl lowercase">
-          illi
-          <span class="font-[family:var(--font-mono)] text-[0.56rem] uppercase tracking-[0.2em] text-amber-200/60">ops</span>
+        <p class="flex items-center gap-2">
+          <BrandLogo
+            reversed
+            class="text-[1.6rem] text-sand-50"
+          />
+          <span class="text-[0.56rem] uppercase tracking-[0.2em] text-sand-200/60">ops</span>
         </p>
         <div class="flex items-center gap-4">
           <NuxtLink
             to="/"
-            class="font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.14em] text-amber-200/70"
+            class="font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.14em] text-sand-200/70"
           >
             Storefront
           </NuxtLink>
           <button
             type="button"
-            class="font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.14em] text-terra-300"
+            class="font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.14em] text-saffron-300"
             @click="signOut"
           >
             Sign out
@@ -116,7 +120,7 @@ async function signOut() {
           :key="item.to"
           :to="item.to"
           class="whitespace-nowrap rounded-sm px-3 py-1.5 font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.14em] transition"
-          :class="isActive(item.to) ? 'bg-amber-50/12 text-amber-50' : 'text-amber-50/70'"
+          :class="isActive(item.to) ? 'bg-sand-50/12 text-sand-50' : 'text-sand-50/70'"
         >
           {{ item.label }}
         </NuxtLink>

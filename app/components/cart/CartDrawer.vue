@@ -1,0 +1,123 @@
+<script setup lang="ts">
+const { lines, count, subtotal, isOpen, items, clear } = useCart()
+const { checkout, pending, error } = useCheckout()
+
+const route = useRoute()
+watch(() => route.fullPath, () => {
+  isOpen.value = false
+})
+
+function onKeydown(e: KeyboardEvent) {
+  if (e.key === 'Escape') isOpen.value = false
+}
+onMounted(() => window.addEventListener('keydown', onKeydown))
+onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
+
+function startCheckout() {
+  checkout(items.value, clear)
+}
+</script>
+
+<template>
+  <Teleport to="body">
+    <Transition
+      enter-from-class="opacity-0"
+      leave-to-class="opacity-0"
+      enter-active-class="transition duration-200"
+      leave-active-class="transition duration-200"
+    >
+      <div
+        v-if="isOpen"
+        class="fixed inset-0 z-50 bg-stone-950/40 backdrop-blur-[2px]"
+        @click="isOpen = false"
+      />
+    </Transition>
+    <Transition
+      enter-from-class="translate-x-full"
+      leave-to-class="translate-x-full"
+      enter-active-class="transition duration-300 ease-out"
+      leave-active-class="transition duration-200 ease-in"
+    >
+      <aside
+        v-if="isOpen"
+        class="fixed inset-y-0 right-0 z-50 flex w-full max-w-md flex-col bg-sand-50 shadow-2xl"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Your cart"
+      >
+        <header class="flex items-center justify-between border-b border-sand-200 px-6 py-5">
+          <h2 class="font-serif text-2xl text-stone-900">
+            Your cart <span class="font-sans text-base text-stone-500">({{ count }})</span>
+          </h2>
+          <button
+            type="button"
+            class="grid size-10 place-items-center rounded-full text-stone-600 transition hover:bg-sand-200"
+            aria-label="Close cart"
+            @click="isOpen = false"
+          >
+            <UIcon
+              name="i-lucide-x"
+              class="size-5"
+            />
+          </button>
+        </header>
+
+        <div
+          v-if="lines.length === 0"
+          class="flex flex-1 flex-col items-center justify-center gap-4 px-8 text-center"
+        >
+          <BrandLogo
+            variant="mark"
+            class="text-6xl opacity-80"
+          />
+          <p class="font-serif text-2xl text-stone-900">
+            Your cart is empty
+          </p>
+          <p class="text-sm text-stone-600">
+            Pick a jar or two — every product is made in small batches in Casablanca.
+          </p>
+          <NuxtLink
+            to="/catalog"
+            class="mt-2 rounded-full bg-olive-700 px-6 py-3 text-sm font-semibold text-sand-50 transition hover:bg-olive-800"
+          >
+            Shop the pantry
+          </NuxtLink>
+        </div>
+
+        <template v-else>
+          <div class="flex-1 overflow-y-auto px-6">
+            <CartLines />
+          </div>
+
+          <footer class="space-y-4 border-t border-sand-200 bg-white px-6 py-5">
+            <div class="flex items-baseline justify-between">
+              <span class="text-stone-600">Subtotal</span>
+              <span class="font-serif text-3xl text-stone-900">{{ subtotal }} MAD</span>
+            </div>
+            <p
+              v-if="error"
+              class="rounded-xl bg-saffron-50 px-3 py-2 text-sm text-saffron-800"
+            >
+              {{ error }}
+            </p>
+            <button
+              type="button"
+              class="flex w-full items-center justify-center gap-2 rounded-full bg-olive-700 py-4 text-base font-semibold text-sand-50 transition hover:bg-olive-800 disabled:opacity-60"
+              :disabled="pending"
+              @click="startCheckout"
+            >
+              <UIcon
+                name="i-lucide-lock"
+                class="size-4"
+              />
+              {{ pending ? 'Starting checkout…' : 'Checkout' }}
+            </button>
+            <p class="text-center text-xs text-stone-500">
+              Secure payment in crypto · Prices in Moroccan dirhams
+            </p>
+          </footer>
+        </template>
+      </aside>
+    </Transition>
+  </Teleport>
+</template>

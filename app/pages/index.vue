@@ -1,314 +1,400 @@
 <script setup lang="ts">
-const { data: catalog } = await useCatalog()
-const catalogProducts = computed(() => catalog.value.products)
-const subscriptionPlans = computed(() => catalog.value.plans)
-const previewProducts = computed(() => catalog.value.products.slice(0, 4))
+import type { CatalogProduct } from '~/types/catalog'
 
-const protocolSteps = [
-  {
-    id: '01',
-    title: 'Sourced close.',
-    body: 'Ingredients come from local and regional farms, selected for the season and chosen for quality over volume.'
-  },
-  {
-    id: '02',
-    title: 'Kept well.',
-    body: 'Each product follows a preservation protocol: small batches, short ingredient lists, reusable glass, and careful handling.'
-  },
-  {
-    id: '03',
-    title: 'Delivered by subscription.',
-    body: 'Customers choose a base plan, then shape the box with compatible products from the current collection.'
-  }
+const { data: catalog } = await useCatalog()
+
+const bySlug = (slug: string) => catalog.value.products.find(p => p.slug === slug && p.isAvailable)
+
+// Hand-picked favourites, topped up from the rest of the catalog if any are missing.
+const FEATURED = ['amlou', 'marinated-sardines', 'pistachio-butter', 'kombucha', 'sun-dried-tomatoes', 'spread-cheese', 'marinated-olives', 'pomegranate-concentrate']
+const featured = computed<CatalogProduct[]>(() => {
+  const picked = FEATURED.map(bySlug).filter((p): p is CatalogProduct => Boolean(p))
+  const rest = catalog.value.products.filter(p => p.isAvailable && !picked.includes(p))
+  return [...picked, ...rest].slice(0, 8)
+})
+
+const heroProducts = computed(() =>
+  ['marinated-olives', 'amlou', 'water-kefir'].map(bySlug).filter((p): p is CatalogProduct => Boolean(p))
+)
+
+// One photo per category for the "shop by category" tiles.
+const categoryTiles = computed(() =>
+  catalog.value.categories.map(category => ({
+    category,
+    image: catalog.value.products.find(p => p.eligibleSlotTypes.includes(category.slug) && !p.image.src.endsWith('.svg'))?.image
+  }))
+)
+
+const lowestPrice = computed(() => {
+  const prices = catalog.value.products.filter(p => p.isAvailable && p.price.amount > 0).map(p => p.price.amount)
+  return prices.length ? Math.min(...prices) : 0
+})
+
+const cadenceLabel: Record<string, string> = { weekly: 'Every week', biweekly: 'Every two weeks', monthly: 'Every month' }
+
+const values = [
+  { icon: 'i-lucide-sprout', title: 'Sourced close', body: 'Seasonal produce from local and regional farms, chosen for flavour over volume.' },
+  { icon: 'i-lucide-flask-conical', title: 'Kept the old way', body: 'Fermented, marinated, slow-cooked. Small batches and short ingredient lists.' },
+  { icon: 'i-lucide-ban', title: 'Nothing extra', body: 'No additives, no shortcuts — just what the recipe needs, in reusable glass.' }
 ]
 
 useSeoMeta({
-  title: 'illi',
-  description: 'Small-batch foods for the season. Made in Casablanca. Available by subscription.'
+  title: 'illi — Small-batch Moroccan pantry',
+  description: 'Ferments, nut butters, marinated fish and slow-cooked sauces, made in small batches in Casablanca. Buy a jar or build a box.'
 })
 </script>
 
 <template>
   <div>
     <!-- Hero -->
-    <section class="maghreb-wash relative overflow-hidden">
-      <div class="mx-auto grid max-w-6xl items-center gap-10 px-5 py-16 sm:px-8 sm:py-24 lg:grid-cols-[1.1fr_0.9fr]">
+    <section class="maghreb-wash overflow-hidden">
+      <div class="mx-auto grid max-w-6xl items-center gap-12 px-5 py-14 sm:px-8 sm:py-20 lg:grid-cols-[1.05fr_0.95fr]">
         <div>
           <p
-            class="reveal inline-flex items-center gap-3 font-[family:var(--font-mono)] text-[0.7rem] uppercase tracking-[0.3em] text-indigo-700"
+            class="eyebrow reveal"
             style="animation-delay:.05s"
           >
-            <span class="h-px w-8 bg-terra-600" />
-            Made in Casablanca · By subscription
+            Small-batch Moroccan pantry
           </p>
-
           <h1
-            class="reveal mt-6 font-[family:var(--font-serif)] text-5xl font-normal leading-[0.98] tracking-tight text-stone-900 sm:text-7xl"
-            style="animation-delay:.16s"
+            class="reveal mt-5 font-serif text-5xl leading-[1.02] text-stone-900 sm:text-7xl"
+            style="animation-delay:.12s"
           >
-            Small-batch foods<br>for the <em class="italic text-terra-600">season.</em>
+            A Moroccan kitchen, <em class="text-olive-700">kept in a jar.</em>
           </h1>
-
           <p
-            class="reveal mt-7 max-w-xl text-lg leading-8 text-stone-700"
-            style="animation-delay:.28s"
+            class="reveal mt-6 max-w-xl text-lg leading-8 text-stone-600"
+            style="animation-delay:.2s"
           >
-            A curated pantry of ferments, spreads, marinated fish and slow fruit — short ingredient
-            lists, reusable glass, and a subscription you shape yourself before checkout ever appears.
+            Amlou, live ferments, marinated sardines, slow-cooked sauces — made in small batches in Casablanca with
+            nothing added that shouldn't be.
           </p>
-
           <div
-            class="reveal mt-9 flex flex-wrap gap-3"
-            style="animation-delay:.4s"
+            class="reveal mt-8 flex flex-wrap items-center gap-3"
+            style="animation-delay:.28s"
           >
             <NuxtLink
               to="/catalog"
-              class="inline-flex items-center gap-2 rounded-sm bg-indigo-600 px-6 py-3.5 text-sm font-semibold text-amber-50 transition hover:bg-indigo-700"
+              class="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-olive-700 px-6 py-4 text-base font-semibold text-sand-50 shadow-[0_14px_30px_-14px_rgba(47,74,41,0.8)] transition hover:bg-olive-800 sm:flex-none sm:px-7"
             >
-              Explore the collection
+              Shop the pantry
               <UIcon
                 name="i-lucide-arrow-right"
-                class="size-4"
+                class="size-5"
               />
             </NuxtLink>
             <NuxtLink
               to="/subscribe"
-              class="inline-flex items-center gap-2 rounded-sm border border-indigo-600 px-6 py-3.5 text-sm font-semibold text-indigo-700 transition hover:bg-indigo-600/8"
+              class="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-white px-6 py-4 text-base font-semibold text-olive-800 ring-1 ring-sand-300 transition hover:ring-olive-600 sm:flex-none sm:px-7"
             >
-              Build a subscription
+              Build a box
             </NuxtLink>
           </div>
+          <p
+            v-if="lowestPrice"
+            class="reveal mt-4 text-sm text-stone-500"
+            style="animation-delay:.32s"
+          >
+            Jars from <strong class="text-stone-800">{{ lowestPrice }} MAD</strong> · No subscription needed
+          </p>
+
+          <ul
+            class="reveal mt-10 grid max-w-lg grid-cols-3 gap-4 border-t border-sand-300 pt-6 text-xs text-stone-700 sm:text-sm"
+            style="animation-delay:.38s"
+          >
+            <li class="flex flex-col gap-1.5">
+              <UIcon
+                name="i-lucide-leaf"
+                class="size-5 text-olive-600"
+              />Small batches
+            </li>
+            <li class="flex flex-col gap-1.5">
+              <UIcon
+                name="i-lucide-list-checks"
+                class="size-5 text-olive-600"
+              />Short ingredient lists
+            </li>
+            <li class="flex flex-col gap-1.5">
+              <UIcon
+                name="i-lucide-map-pin"
+                class="size-5 text-olive-600"
+              />Made in Casablanca
+            </li>
+          </ul>
         </div>
 
+        <!-- Photo trio -->
         <div
-          class="reveal relative mx-auto w-full max-w-sm"
-          style="animation-delay:.34s"
+          class="reveal relative mx-auto grid w-full max-w-sm grid-cols-2 gap-3 sm:max-w-lg sm:gap-4"
+          style="animation-delay:.18s"
         >
-          <div class="arch border-[1.5px] border-amber-600/60 bg-gradient-to-b from-amber-50 to-stone-100 p-3.5 shadow-[0_36px_70px_-34px_rgba(42,29,18,0.55)]">
-            <div class="arch-inner relative aspect-[3/4] overflow-hidden bg-stone-100">
-              <img
-                :src="previewProducts[0]?.image.src"
-                :alt="previewProducts[0]?.image.alt"
-                class="size-full object-cover"
-              >
-              <span class="absolute bottom-4 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-sm bg-indigo-600 px-3.5 py-2 font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.18em] text-amber-50">
-                {{ previewProducts[0]?.category }}
-              </span>
-            </div>
-          </div>
-          <div
-            class="wax-seal stamp-in absolute -bottom-5 -left-5 [--seal-size:6rem]"
-            style="animation-delay:.7s"
-          >
-            <span>illi<br>·<br>small<br>batch</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Tile strip -->
-    <section class="mx-auto max-w-6xl px-5 pb-6 sm:px-8">
-      <div class="grid gap-px overflow-hidden rounded-md border border-amber-600/40 bg-amber-600/40 sm:grid-cols-3">
-        <div class="bg-[#f4ecdd] p-6 sm:p-7">
-          <p class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.18em] text-terra-600">
-            № 01 · Collection
-          </p>
-          <p class="mt-3 font-[family:var(--font-serif)] text-4xl text-stone-900">
-            {{ catalogProducts.length }} lots
-          </p>
-          <p class="mt-2 text-sm leading-6 text-stone-600">
-            Ferments, spreads, seafood and sauces — each one traceable.
-          </p>
-        </div>
-        <div class="bg-[#f4ecdd] p-6 sm:p-7">
-          <p class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.18em] text-terra-600">
-            № 02 · Plans
-          </p>
-          <p class="mt-3 font-[family:var(--font-serif)] text-4xl text-stone-900">
-            {{ subscriptionPlans.length }} boxes
-          </p>
-          <p class="mt-2 text-sm leading-6 text-stone-600">
-            Choose a base cadence, then fill the slots it allows yourself.
-          </p>
-        </div>
-        <div class="bg-[#f4ecdd] p-6 sm:p-7">
-          <p class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.18em] text-terra-600">
-            № 03 · Payment
-          </p>
-          <p class="mt-3 font-[family:var(--font-serif)] text-4xl text-stone-900">
-            Crypto
-          </p>
-          <p class="mt-2 text-sm leading-6 text-stone-600">
-            Priced in dirhams, paid in crypto.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- The collection -->
-    <section class="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
-      <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
-        <div class="lg:sticky lg:top-28">
-          <p class="font-[family:var(--font-mono)] text-[0.7rem] uppercase tracking-[0.3em] text-indigo-700">
-            The collection
-          </p>
-          <h2 class="mt-4 font-[family:var(--font-serif)] text-4xl leading-tight text-stone-900">
-            Pantry foods shaped by season and preservation.
-          </h2>
-          <p class="mt-4 max-w-md text-base leading-8 text-stone-700">
-            Amlou, kefirs, raw-milk cheeses, marinated fish and preserved goods belong to the same logic: what keeps well,
-            what nourishes, and what can be returned to the table with ease.
-          </p>
           <NuxtLink
-            to="/catalog"
-            class="mt-6 inline-flex items-center gap-2 font-[family:var(--font-mono)] text-xs uppercase tracking-[0.16em] text-stone-900 underline decoration-terra-600 decoration-2 underline-offset-4 transition hover:text-terra-700"
+            v-if="heroProducts[0]"
+            :to="`/catalog/${heroProducts[0].slug}`"
+            class="arch row-span-2 overflow-hidden bg-white shadow-[0_40px_70px_-40px_rgba(46,39,27,0.6)] ring-1 ring-sand-200"
           >
-            See the full collection
+            <img
+              :src="heroProducts[0].image.src"
+              :alt="heroProducts[0].image.alt"
+              class="size-full object-cover"
+            >
+          </NuxtLink>
+          <NuxtLink
+            v-for="p in heroProducts.slice(1)"
+            :key="p.id"
+            :to="`/catalog/${p.slug}`"
+            class="overflow-hidden rounded-3xl bg-white shadow-[0_30px_60px_-40px_rgba(46,39,27,0.6)] ring-1 ring-sand-200"
+          >
+            <img
+              :src="p.image.src"
+              :alt="p.image.alt"
+              class="aspect-square size-full object-cover"
+            >
+          </NuxtLink>
+          <div class="wax-seal stamp-in absolute -right-3 -top-6 [--seal-size:5.5rem] sm:-right-8 sm:[--seal-size:6.5rem]">
+            <span>Made in<br>Casablanca</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Shop by category -->
+    <section class="mx-auto max-w-6xl px-5 pt-16 sm:px-8">
+      <div class="flex items-end justify-between gap-4">
+        <h2 class="font-serif text-3xl text-stone-900 sm:text-4xl">
+          Shop by category
+        </h2>
+        <NuxtLink
+          to="/catalog"
+          class="hidden text-sm font-semibold text-olive-700 hover:underline sm:block"
+        >
+          See everything →
+        </NuxtLink>
+      </div>
+      <div class="no-scrollbar -mx-5 mt-6 flex gap-4 overflow-x-auto px-5 pb-2 sm:mx-0 sm:grid sm:grid-cols-4 sm:px-0 lg:grid-cols-7">
+        <NuxtLink
+          v-for="tile in categoryTiles"
+          :key="tile.category.slug"
+          :to="`/catalog?category=${tile.category.slug}`"
+          class="group w-32 shrink-0 text-center sm:w-auto"
+        >
+          <div class="aspect-square overflow-hidden rounded-full bg-white ring-1 ring-sand-200 transition group-hover:ring-2 group-hover:ring-olive-600">
+            <img
+              v-if="tile.image"
+              :src="tile.image.src"
+              :alt="tile.image.alt"
+              class="size-full object-cover transition duration-500 group-hover:scale-105"
+              loading="lazy"
+            >
+          </div>
+          <p class="mt-3 text-sm font-semibold leading-snug text-stone-800">
+            {{ tile.category.name }}
+          </p>
+        </NuxtLink>
+      </div>
+    </section>
+
+    <!-- Favourites -->
+    <section class="mx-auto max-w-6xl px-5 pt-20 sm:px-8">
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p class="eyebrow">
+            Pantry favourites
+          </p>
+          <h2 class="mt-2 font-serif text-3xl text-stone-900 sm:text-5xl">
+            Start with these
+          </h2>
+        </div>
+        <NuxtLink
+          to="/catalog"
+          class="text-sm font-semibold text-olive-700 hover:underline"
+        >
+          Shop all {{ catalog.products.length }} products →
+        </NuxtLink>
+      </div>
+      <div class="mt-8 grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4">
+        <CatalogProductCard
+          v-for="product in featured"
+          :key="product.id"
+          :product="product"
+        />
+      </div>
+    </section>
+
+    <!-- Story -->
+    <section
+      id="story"
+      class="mx-auto mt-24 max-w-6xl scroll-mt-24 px-5 sm:px-8"
+    >
+      <div class="grid overflow-hidden rounded-[2rem] bg-white ring-1 ring-sand-200 lg:grid-cols-2">
+        <div class="relative min-h-72 bg-sand-200">
+          <img
+            v-if="bySlug('seasonal-fermented-vegetables')"
+            :src="bySlug('seasonal-fermented-vegetables')!.image.src"
+            alt="Jars of seasonal fermented vegetables on a shelf"
+            class="absolute inset-0 size-full object-cover"
+            loading="lazy"
+          >
+        </div>
+        <div class="p-8 sm:p-12">
+          <p class="eyebrow">
+            Our story
+          </p>
+          <h2 class="mt-3 font-serif text-3xl leading-tight text-stone-900 sm:text-4xl">
+            Food that keeps, the way our grandmothers kept it.
+          </h2>
+          <p class="mt-4 leading-8 text-stone-600">
+            illi started in a Casablanca kitchen with a simple rule: if it can't be made with a short list of real
+            ingredients, we don't make it. Everything is fermented, marinated or slow-cooked in small batches, then
+            sealed in glass.
+          </p>
+          <ul class="mt-8 space-y-6">
+            <li
+              v-for="v in values"
+              :key="v.title"
+              class="flex gap-4"
+            >
+              <span class="grid size-11 shrink-0 place-items-center rounded-full bg-olive-50 text-olive-700">
+                <UIcon
+                  :name="v.icon"
+                  class="size-5"
+                />
+              </span>
+              <div>
+                <p class="font-semibold text-stone-900">
+                  {{ v.title }}
+                </p>
+                <p class="text-sm leading-6 text-stone-600">
+                  {{ v.body }}
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Boxes -->
+    <section
+      v-if="catalog.plans.length"
+      class="mx-auto mt-24 max-w-6xl px-5 sm:px-8"
+    >
+      <div class="max-w-2xl">
+        <p class="eyebrow">
+          Boxes on repeat
+        </p>
+        <h2 class="mt-2 font-serif text-3xl text-stone-900 sm:text-5xl">
+          Never run out of your favourites
+        </h2>
+        <p class="mt-4 text-lg leading-8 text-stone-600">
+          Choose a box, fill it with the products you love, and we prepare it again on your schedule. Each cycle is
+          paid separately, so there's no lock-in.
+        </p>
+      </div>
+      <div class="mt-10 grid gap-5 md:grid-cols-3">
+        <NuxtLink
+          v-for="(plan, i) in catalog.plans"
+          :key="plan.id"
+          to="/subscribe"
+          class="group flex flex-col rounded-3xl p-7 ring-1 transition hover:-translate-y-0.5"
+          :class="i === 0 ? 'bg-olive-800 text-sand-100 ring-olive-800' : 'bg-white ring-sand-200 hover:ring-olive-600'"
+        >
+          <p
+            class="text-xs font-bold uppercase tracking-[0.16em]"
+            :class="i === 0 ? 'text-saffron-300' : 'text-saffron-700'"
+          >
+            {{ cadenceLabel[plan.cadence] ?? plan.cadence }}
+          </p>
+          <h3
+            class="mt-3 font-serif text-3xl"
+            :class="i === 0 ? 'text-sand-50' : 'text-stone-900'"
+          >
+            {{ plan.name }}
+          </h3>
+          <p
+            class="mt-3 flex-1 leading-7"
+            :class="i === 0 ? 'text-sand-200' : 'text-stone-600'"
+          >
+            {{ plan.summary }}
+          </p>
+          <p
+            class="mt-6 text-sm"
+            :class="i === 0 ? 'text-sand-300' : 'text-stone-500'"
+          >
+            {{ plan.includedSlots.length }} products ·
+            <strong
+              class="text-lg"
+              :class="i === 0 ? 'text-sand-50' : 'text-stone-900'"
+            >{{ plan.price.amount }} MAD</strong>
+          </p>
+          <span
+            class="mt-5 inline-flex items-center justify-center gap-2 rounded-full py-3 text-sm font-semibold transition"
+            :class="i === 0 ? 'bg-saffron-400 text-olive-950 group-hover:bg-saffron-300' : 'bg-olive-700 text-sand-50 group-hover:bg-olive-800'"
+          >
+            Build this box
             <UIcon
               name="i-lucide-arrow-right"
               class="size-4"
             />
-          </NuxtLink>
-        </div>
+          </span>
+        </NuxtLink>
+      </div>
+    </section>
 
-        <div class="grid gap-6 sm:grid-cols-2">
+    <!-- How it works -->
+    <section class="mx-auto mt-24 max-w-6xl px-5 sm:px-8">
+      <h2 class="text-center font-serif text-3xl text-stone-900 sm:text-4xl">
+        How it works
+      </h2>
+      <ol class="mt-10 grid gap-5 sm:grid-cols-3">
+        <li
+          v-for="(step, i) in [
+            { title: 'Pick what you love', body: 'Add single jars to your cart, or build a box you can repeat.' },
+            { title: 'Pay securely', body: 'Prices are in dirhams; you pay in crypto through a secure checkout.' },
+            { title: 'We prepare your order', body: 'Your jars are made in small batches in Casablanca, then packed for you.' }
+          ]"
+          :key="step.title"
+          class="rounded-3xl bg-white p-7 ring-1 ring-sand-200"
+        >
+          <span class="grid size-10 place-items-center rounded-full bg-saffron-300 font-bold text-olive-950">{{ i + 1 }}</span>
+          <p class="mt-5 text-lg font-semibold text-stone-900">
+            {{ step.title }}
+          </p>
+          <p class="mt-1 leading-7 text-stone-600">
+            {{ step.body }}
+          </p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="mx-auto mt-24 max-w-6xl px-5 sm:px-8">
+      <div class="relative overflow-hidden rounded-[2rem] bg-olive-800 px-8 py-14 text-center sm:px-16">
+        <BrandLogo
+          variant="mark"
+          reversed
+          class="absolute -right-6 -top-6 rotate-12 text-[10rem] opacity-10"
+        />
+        <h2 class="mx-auto max-w-2xl font-serif text-4xl leading-tight text-sand-50 sm:text-5xl">
+          Fill your pantry with something worth keeping.
+        </h2>
+        <div class="mt-8 flex flex-wrap justify-center gap-3">
           <NuxtLink
-            v-for="product in previewProducts"
-            :key="product.id"
-            :to="`/catalog/${product.slug}`"
-            class="group"
+            to="/catalog"
+            class="inline-flex items-center gap-2 rounded-full bg-saffron-400 px-7 py-4 font-semibold text-olive-950 transition hover:bg-saffron-300"
           >
-            <div class="arch border-[1.5px] border-amber-600/40 bg-gradient-to-b from-amber-50 to-stone-100 p-2.5 transition group-hover:border-terra-600/60 group-hover:shadow-[0_28px_50px_-30px_rgba(42,29,18,0.5)]">
-              <div class="arch-inner aspect-[4/5] overflow-hidden bg-stone-100">
-                <img
-                  :src="product.image.src"
-                  :alt="product.image.alt"
-                  class="size-full object-cover transition duration-500 group-hover:scale-[1.03]"
-                >
-              </div>
-            </div>
-            <p class="mt-3 px-1 font-[family:var(--font-serif)] text-2xl text-stone-900">{{ product.name }}</p>
-            <p class="px-1 font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.16em] text-stone-500">{{ product.subtitle }}</p>
+            Shop the pantry
+            <UIcon
+              name="i-lucide-arrow-right"
+              class="size-5"
+            />
           </NuxtLink>
-        </div>
-      </div>
-    </section>
-
-    <!-- The subscription -->
-    <section class="border-y border-amber-600/15 bg-amber-50/40">
-      <div class="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
-        <div class="max-w-2xl space-y-4">
-          <p class="font-[family:var(--font-mono)] text-[0.7rem] uppercase tracking-[0.3em] text-indigo-700">
-            The subscription
-          </p>
-          <h2 class="font-[family:var(--font-serif)] text-4xl leading-tight text-stone-900">
-            A fixed structure with room to choose.
-          </h2>
-        </div>
-
-        <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          <article
-            v-for="plan in subscriptionPlans"
-            :key="plan.id"
-            class="flex flex-col rounded-md border border-amber-600/25 bg-[#f4ecdd] p-7"
+          <NuxtLink
+            to="/subscribe"
+            class="inline-flex items-center rounded-full px-7 py-4 font-semibold text-sand-50 ring-1 ring-sand-50/40 transition hover:bg-white/10"
           >
-            <div class="flex items-start justify-between gap-3">
-              <p class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.2em] text-terra-600">
-                {{ plan.cadence }}
-              </p>
-              <p class="font-[family:var(--font-mono)] text-sm text-indigo-700">
-                {{ plan.price.amount }} {{ plan.price.currency }}
-              </p>
-            </div>
-            <h3 class="mt-3 font-[family:var(--font-serif)] text-3xl text-stone-900">
-              {{ plan.name }}
-            </h3>
-            <p class="mt-3 flex-1 text-sm leading-7 text-stone-600">
-              {{ plan.summary }}
-            </p>
-            <NuxtLink
-              to="/subscribe"
-              class="mt-6 inline-flex items-center gap-2 font-[family:var(--font-mono)] text-xs uppercase tracking-[0.16em] text-indigo-700 transition hover:gap-3"
-            >
-              Shape this box
-              <UIcon
-                name="i-lucide-arrow-right"
-                class="size-4"
-              />
-            </NuxtLink>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- Protocol -->
-    <section class="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
-      <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
-        <div>
-          <p class="font-[family:var(--font-mono)] text-[0.7rem] uppercase tracking-[0.3em] text-indigo-700">
-            Why illi?
-          </p>
-          <h2 class="mt-4 font-[family:var(--font-serif)] text-4xl leading-tight text-stone-900">
-            Short ingredient lists, local sourcing, and food that can be trusted.
-          </h2>
-        </div>
-        <div class="grid gap-8 sm:grid-cols-3">
-          <div
-            v-for="step in protocolSteps"
-            :key="step.id"
-            class="border-t border-amber-600/30 pt-5"
-          >
-            <p class="font-[family:var(--font-serif)] text-5xl font-light text-amber-300">
-              {{ step.id }}
-            </p>
-            <h3 class="mt-3 font-[family:var(--font-serif)] text-2xl text-stone-900">
-              {{ step.title }}
-            </h3>
-            <p class="mt-2 text-sm leading-7 text-stone-600">
-              {{ step.body }}
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Closing CTA -->
-    <section class="mx-auto max-w-6xl px-5 pb-20 sm:px-8">
-      <div class="maghreb-wash relative overflow-hidden rounded-lg border border-amber-600/25 bg-indigo-600 px-8 py-14 sm:px-14">
-        <div class="grid gap-10 lg:grid-cols-[1fr_auto] lg:items-center">
-          <div class="space-y-5">
-            <p class="font-[family:var(--font-mono)] text-[0.7rem] uppercase tracking-[0.3em] text-amber-200/80">
-              Inquire
-            </p>
-            <h2 class="max-w-2xl font-[family:var(--font-serif)] text-4xl leading-tight text-amber-50">
-              The storefront is ready for a branded subscription journey.
-            </h2>
-            <p class="max-w-xl text-base leading-8 text-indigo-100">
-              Browse the collection, shape a subscription, then check out in crypto — all in the
-              same experience.
-            </p>
-            <div class="flex flex-wrap gap-3 pt-1">
-              <NuxtLink
-                to="/catalog"
-                class="inline-flex items-center gap-2 rounded-sm bg-terra-600 px-6 py-3.5 text-sm font-semibold text-amber-50 transition hover:bg-terra-700"
-              >
-                View collection
-                <UIcon
-                  name="i-lucide-arrow-right"
-                  class="size-4"
-                />
-              </NuxtLink>
-              <NuxtLink
-                to="/subscribe"
-                class="inline-flex items-center gap-2 rounded-sm border border-amber-200/50 px-6 py-3.5 text-sm font-semibold text-amber-50 transition hover:bg-amber-50/10"
-              >
-                Start subscription
-              </NuxtLink>
-            </div>
-          </div>
-          <div class="wax-seal stamp-in justify-self-center [--seal-size:8.5rem]">
-            <span>illi<br>·<br>small<br>batch</span>
-          </div>
+            Build a box
+          </NuxtLink>
         </div>
       </div>
     </section>

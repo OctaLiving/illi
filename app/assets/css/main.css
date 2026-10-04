@@ -2,60 +2,60 @@
 @import "@nuxt/ui";
 
 @theme static {
-  --font-sans: 'Public Sans', system-ui, sans-serif;
-  --font-serif: 'Fraunces', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
-  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
+  --font-sans: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-serif: 'DM Serif Display', 'Iowan Old Style', Georgia, serif;
+  --font-mono: 'DM Sans', system-ui, sans-serif; /* labels share the brand sans */
 
-  /* Warm clay scale — used by Nuxt UI `primary` and as the surface tone. */
-  --color-amber-50: #fffbf4;
-  --color-amber-100: #f7eddc;
-  --color-amber-200: #ecd6b0;
-  --color-amber-300: #ddb883;
-  --color-amber-400: #c69a6c;
-  --color-amber-500: #af7d4f;
-  --color-amber-600: #8d623e;
-  --color-amber-700: #6c4b32;
-  --color-amber-800: #4b3425;
-  --color-amber-900: #2f2118;
-  --color-amber-950: #18110d;
+  /* Sand — warm paper neutrals for surfaces and hairlines. */
+  --color-sand-50: #fffdf9;
+  --color-sand-100: #f7f2ea;
+  --color-sand-200: #ede4d4;
+  --color-sand-300: #dfd0b5;
+  --color-sand-400: #c9b48e;
+  --color-sand-500: #ad956a;
+  --color-sand-600: #8a744d;
+  --color-sand-700: #6a5939;
+  --color-sand-800: #4a3e29;
+  --color-sand-900: #2e271b;
+  --color-sand-950: #19150e;
 
-  /* Bone / taupe neutral — used by Nuxt UI `neutral`. */
-  --color-stone-50: #faf7f2;
-  --color-stone-100: #efe7dc;
-  --color-stone-200: #ddd1c1;
-  --color-stone-300: #c7b7a0;
-  --color-stone-400: #a8957c;
-  --color-stone-500: #8a7761;
-  --color-stone-600: #6e5e4c;
-  --color-stone-700: #554739;
-  --color-stone-800: #3c3228;
-  --color-stone-900: #261f18;
-  --color-stone-950: #15110d;
+  /* Stone — warm ink greys for text. */
+  --color-stone-50: #faf8f5;
+  --color-stone-100: #f0ece6;
+  --color-stone-200: #ded7cd;
+  --color-stone-300: #c5bbae;
+  --color-stone-400: #a39788;
+  --color-stone-500: #827667;
+  --color-stone-600: #665c4f;
+  --color-stone-700: #4e463c;
+  --color-stone-800: #36302a;
+  --color-stone-900: #221e1a;
+  --color-stone-950: #13110e;
 
-  /* Terracotta — the bright warm accent (headline emphasis, wax seal). */
-  --color-terra-50: #fdf3ee;
-  --color-terra-100: #f9e0d2;
-  --color-terra-200: #f0bda3;
-  --color-terra-300: #e6926a;
-  --color-terra-400: #d96a3c;
-  --color-terra-500: #d4542a;
-  --color-terra-600: #c2410c;
-  --color-terra-700: #9a3309;
-  --color-terra-800: #74270b;
-  --color-terra-900: #4f1c0b;
+  /* Olive — the brand colour: buttons, links, the logo. Nuxt UI `primary`. */
+  --color-olive-50: #f2f5f0;
+  --color-olive-100: #e1e9dd;
+  --color-olive-200: #c3d3ba;
+  --color-olive-300: #9bb68d;
+  --color-olive-400: #729463;
+  --color-olive-500: #557747;
+  --color-olive-600: #3d5c34;
+  --color-olive-700: #2f4a29;
+  --color-olive-800: #253b21;
+  --color-olive-900: #1b2c19;
+  --color-olive-950: #0f190e;
 
-  /* Indigo — the sharp secondary (buttons, rules, tags). Maghreb blue. */
-  --color-indigo-50: #eef2f7;
-  --color-indigo-100: #d6e0eb;
-  --color-indigo-200: #aec5dc;
-  --color-indigo-300: #7f9fc0;
-  --color-indigo-400: #4f76a0;
-  --color-indigo-500: #2f567f;
-  --color-indigo-600: #1e3a5f;
-  --color-indigo-700: #18304e;
-  --color-indigo-800: #13253c;
-  --color-indigo-900: #0e1a2b;
-  --color-indigo-950: #08101b;
+  /* Saffron — the warm accent: prices, badges, highlights. */
+  --color-saffron-50: #fdf7ec;
+  --color-saffron-100: #fbebcd;
+  --color-saffron-200: #f6d596;
+  --color-saffron-300: #f0b95c;
+  --color-saffron-400: #e9a032;
+  --color-saffron-500: #d9861b;
+  --color-saffron-600: #b86a12;
+  --color-saffron-700: #925212;
+  --color-saffron-800: #744215;
+  --color-saffron-900: #5c3614;
 }
 
 :root {
@@ -63,38 +63,38 @@
 }
 
 body {
-  background: #f4ecdd;
+  background: var(--color-sand-100);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
 }
 
 /* ============================================================= */
-/* Maghreb Modern motifs                                         */
+/* Brand motifs                                                  */
 /* ============================================================= */
 
-/* Subtle woven lattice — terracotta + indigo hairlines on a 45° grid. */
+/* Kept for older screens: now a plain paper surface. */
 .maghreb-lattice {
-  background-image:
-    repeating-linear-gradient(45deg, transparent 0 26px, rgba(194, 65, 12, 0.05) 26px 27px),
-    repeating-linear-gradient(-45deg, transparent 0 26px, rgba(30, 58, 95, 0.055) 26px 27px);
+  background-image: none;
 }
 
-/* Warm atmospheric wash for full-page backgrounds. */
+/* Soft warm light for hero backgrounds. */
 .maghreb-wash {
   background-image:
-    radial-gradient(120% 80% at 88% -10%, rgba(194, 65, 12, 0.14), transparent 46%),
-    radial-gradient(90% 70% at 0% 110%, rgba(30, 58, 95, 0.08), transparent 50%);
+    radial-gradient(90% 70% at 90% 0%, rgba(233, 160, 50, 0.16), transparent 55%),
+    radial-gradient(80% 60% at 0% 100%, rgba(61, 92, 52, 0.08), transparent 55%);
 }
 
-/* Horseshoe arch — the recurring Maghreb frame shape. */
+/* Arch — a soft nod to Moroccan doorways, used for feature images. */
 .arch {
-  border-radius: 50% 50% 0.5rem 0.5rem / 42% 42% 0.5rem 0.5rem;
+  border-radius: 999px 999px 1.25rem 1.25rem;
 }
 .arch-inner {
-  border-radius: 50% 50% 0.35rem 0.35rem / 42% 42% 0.35rem 0.35rem;
+  border-radius: 999px 999px 1rem 1rem;
 }
 
-/* The wax seal — illi's stamp, borrowed from Larder Ledger. */
+/* Round badge stamp (e.g. "Made in Casablanca"). */
 .wax-seal {
-  --seal-size: 7.25rem;
+  --seal-size: 6.5rem;
   position: relative;
   display: grid;
   place-items: center;
@@ -102,31 +102,39 @@ body {
   width: var(--seal-size);
   height: var(--seal-size);
   border-radius: 50%;
-  border: 2px solid var(--color-terra-600);
-  color: var(--color-terra-700);
-  background:
-    radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.55), transparent 60%),
-    var(--color-terra-50);
-  box-shadow:
-    0 12px 24px -12px rgba(154, 51, 9, 0.55),
-    inset 0 0 0 1px rgba(194, 65, 12, 0.18);
+  color: var(--color-olive-900);
+  background: var(--color-saffron-300);
+  box-shadow: 0 14px 28px -16px rgba(146, 82, 18, 0.7);
 }
 .wax-seal::before {
   content: "";
   position: absolute;
-  inset: 0.45rem;
-  border: 1px solid var(--color-terra-600);
+  inset: 0.4rem;
+  border: 1px dashed rgba(27, 44, 25, 0.45);
   border-radius: 50%;
-  opacity: 0.7;
 }
 .wax-seal span {
-  font-family: var(--font-mono);
-  font-size: 0.58rem;
-  font-weight: 500;
-  letter-spacing: 0.2em;
+  font-family: var(--font-sans);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  line-height: 1.6;
+  line-height: 1.5;
 }
+
+/* Eyebrow label above headings. */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-saffron-700);
+}
+
+/* Hide scrollbars on horizontal chip rows while keeping them scrollable. */
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
 
 /* Load-in motion (staggered via inline animation-delay on each element). */
 @keyframes mg-rise {

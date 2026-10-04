@@ -43,7 +43,7 @@ useSeoMeta({ title: 'Operator console · illi', robots: 'noindex, nofollow' })
   <section>
     <div class="flex flex-wrap items-end justify-between gap-4">
       <div>
-        <p class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.28em] text-terra-600">
+        <p class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.28em] text-saffron-600">
           Operator console
         </p>
         <h1 class="mt-2 font-[family:var(--font-serif)] text-4xl text-stone-900 sm:text-5xl">
@@ -52,11 +52,11 @@ useSeoMeta({ title: 'Operator console · illi', robots: 'noindex, nofollow' })
       </div>
     </div>
 
-    <div class="mt-8 grid gap-px overflow-hidden rounded-md border border-amber-600/30 bg-amber-600/30 sm:grid-cols-3">
+    <div class="mt-8 grid gap-px overflow-hidden rounded-md border border-sand-600/30 bg-sand-600/30 sm:grid-cols-3">
       <div
         v-for="kpi in kpis"
         :key="kpi.label"
-        class="bg-[#f4ecdd] p-6"
+        class="bg-sand-100 p-6"
       >
         <p class="font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.16em] text-stone-500">
           {{ kpi.label }}
@@ -64,13 +64,13 @@ useSeoMeta({ title: 'Operator console · illi', robots: 'noindex, nofollow' })
         <p class="mt-3 font-[family:var(--font-serif)] text-4xl text-stone-900">
           {{ kpi.value }}
         </p>
-        <p class="mt-1 font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.14em] text-terra-600">
+        <p class="mt-1 font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.14em] text-saffron-600">
           {{ kpi.note }}
         </p>
       </div>
     </div>
 
-    <div class="mt-6 rounded-md border border-amber-600/25 bg-[#f4ecdd] p-6">
+    <div class="mt-6 rounded-md border border-sand-600/25 bg-sand-100 p-6">
       <p class="font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.16em] text-stone-500">
         Products per category
       </p>
@@ -83,9 +83,9 @@ useSeoMeta({ title: 'Operator console · illi', robots: 'noindex, nofollow' })
           <span class="w-44 shrink-0 truncate font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.12em] text-stone-600">
             {{ row.name }}
           </span>
-          <div class="h-2 flex-1 overflow-hidden rounded-full bg-amber-600/10">
+          <div class="h-2 flex-1 overflow-hidden rounded-full bg-sand-600/10">
             <div
-              class="h-full rounded-full bg-indigo-600 transition-all duration-500"
+              class="h-full rounded-full bg-olive-600 transition-all duration-500"
               :style="`width:${products.length ? (row.count / products.length) * 100 : 0}%`"
             />
           </div>

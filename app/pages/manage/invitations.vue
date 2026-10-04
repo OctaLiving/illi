@@ -55,9 +55,9 @@ useSeoMeta({ title: 'Invitations · illi ops', robots: 'noindex, nofollow' })
 
 <template>
   <section>
-    <div class="flex flex-wrap items-end justify-between gap-3 border-b border-amber-600/20 pb-4">
+    <div class="flex flex-wrap items-end justify-between gap-3 border-b border-sand-600/20 pb-4">
       <div>
-        <p class="font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.24em] text-terra-600">
+        <p class="font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.24em] text-saffron-600">
           {{ pendingInviteCount }} pending · invitation-only access
         </p>
         <h1 class="mt-1 font-[family:var(--font-serif)] text-3xl text-stone-900">
@@ -68,7 +68,7 @@ useSeoMeta({ title: 'Invitations · illi ops', robots: 'noindex, nofollow' })
 
     <!-- Issue form -->
     <form
-      class="mt-6 flex flex-wrap items-end gap-3 rounded-md border border-amber-600/25 bg-amber-50/50 p-4"
+      class="mt-6 flex flex-wrap items-end gap-3 rounded-md border border-sand-600/25 bg-sand-50/50 p-4"
       @submit.prevent="issueInvite"
     >
       <div class="flex-1 basis-56">
@@ -77,7 +77,7 @@ useSeoMeta({ title: 'Invitations · illi ops', robots: 'noindex, nofollow' })
           v-model="inviteEmail"
           type="email"
           placeholder="guest@example.com"
-          class="w-full rounded-sm border border-amber-600/30 bg-[#f4ecdd] px-3 py-2 text-sm text-stone-900 focus:border-indigo-600 focus:outline-none"
+          class="w-full rounded-sm border border-sand-600/30 bg-sand-100 px-3 py-2 text-sm text-stone-900 focus:border-olive-600 focus:outline-none"
         >
       </div>
       <div class="w-28">
@@ -87,12 +87,12 @@ useSeoMeta({ title: 'Invitations · illi ops', robots: 'noindex, nofollow' })
           type="number"
           min="1"
           placeholder="∞"
-          class="w-full rounded-sm border border-amber-600/30 bg-[#f4ecdd] px-3 py-2 text-sm text-stone-900 focus:border-indigo-600 focus:outline-none"
+          class="w-full rounded-sm border border-sand-600/30 bg-sand-100 px-3 py-2 text-sm text-stone-900 focus:border-olive-600 focus:outline-none"
         >
       </div>
       <button
         type="submit"
-        class="inline-flex items-center gap-2 rounded-sm bg-indigo-600 px-4 py-2.5 font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.14em] text-amber-50 transition hover:bg-indigo-700 disabled:opacity-50"
+        class="inline-flex items-center gap-2 rounded-sm bg-olive-600 px-4 py-2.5 font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.14em] text-sand-50 transition hover:bg-olive-700 disabled:opacity-50"
         :disabled="issuing"
       >
         <UIcon
@@ -103,16 +103,16 @@ useSeoMeta({ title: 'Invitations · illi ops', robots: 'noindex, nofollow' })
       </button>
       <p
         v-if="inviteError"
-        class="w-full font-[family:var(--font-mono)] text-[0.62rem] text-terra-700"
+        class="w-full font-[family:var(--font-mono)] text-[0.62rem] text-saffron-700"
       >
         {{ inviteError }}
       </p>
     </form>
 
-    <div class="mt-4 overflow-x-auto rounded-md border border-amber-600/25 bg-[#f4ecdd]">
+    <div class="mt-4 overflow-x-auto rounded-md border border-sand-600/25 bg-sand-100">
       <table class="w-full border-collapse text-left">
         <thead>
-          <tr class="border-b border-amber-600/25 font-[family:var(--font-mono)] text-[0.56rem] uppercase tracking-[0.14em] text-stone-500">
+          <tr class="border-b border-sand-600/25 font-[family:var(--font-mono)] text-[0.56rem] uppercase tracking-[0.14em] text-stone-500">
             <th class="px-5 py-3 font-medium">
               Code
             </th>
@@ -142,7 +142,7 @@ useSeoMeta({ title: 'Invitations · illi ops', robots: 'noindex, nofollow' })
           <tr
             v-for="invite in invitations"
             :key="invite.id"
-            class="border-b border-amber-600/10 last:border-0"
+            class="border-b border-sand-600/10 last:border-0"
           >
             <td class="px-5 py-3 font-[family:var(--font-mono)] text-sm text-stone-900">
               {{ invite.code }}
@@ -165,7 +165,7 @@ useSeoMeta({ title: 'Invitations · illi ops', robots: 'noindex, nofollow' })
               <button
                 v-if="invite.status !== 'redeemed'"
                 type="button"
-                class="rounded-sm p-1.5 text-stone-500 transition hover:bg-terra-600/10 hover:text-terra-700"
+                class="rounded-sm p-1.5 text-stone-500 transition hover:bg-saffron-600/10 hover:text-saffron-700"
                 title="Delete"
                 @click="revokeInvite(invite.id)"
               >

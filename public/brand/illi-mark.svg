@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 150" role="img" aria-label="illi">
+  <path d="M0 150V60a60 60 0 0 1 120 0v90z" fill="#2f4a29"/>
+  <g stroke="#f7f2ea" stroke-width="9" stroke-linecap="round" fill="none">
+    <path d="M30 88V124"/>
+    <path d="M50 58V124"/>
+    <path d="M70 58V124"/>
+    <path d="M90 88V124"/>
+  </g>
+  <circle cx="30" cy="69" r="6.5" fill="#e9a032"/>
+  <circle cx="90" cy="69" r="6.5" fill="#e9a032"/>
+</svg>
