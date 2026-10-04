@@ -97,9 +97,9 @@ useSeoMeta({ title: 'Plans · illi ops', robots: 'noindex, nofollow' })
 <template>
   <div>
     <section>
-      <div class="flex flex-wrap items-end justify-between gap-3 border-b border-amber-600/20 pb-4">
+      <div class="flex flex-wrap items-end justify-between gap-3 border-b border-sand-600/20 pb-4">
         <div>
-          <p class="font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.24em] text-terra-600">
+          <p class="font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.24em] text-saffron-600">
             {{ plans.length }} boxes
           </p>
           <h1 class="mt-1 font-[family:var(--font-serif)] text-3xl text-stone-900">
@@ -108,7 +108,7 @@ useSeoMeta({ title: 'Plans · illi ops', robots: 'noindex, nofollow' })
         </div>
         <button
           type="button"
-          class="inline-flex items-center gap-2 rounded-sm bg-indigo-600 px-4 py-2.5 font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.14em] text-amber-50 transition hover:bg-indigo-700"
+          class="inline-flex items-center gap-2 rounded-sm bg-olive-600 px-4 py-2.5 font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.14em] text-sand-50 transition hover:bg-olive-700"
           @click="newPlan"
         >
           <UIcon
@@ -123,18 +123,18 @@ useSeoMeta({ title: 'Plans · illi ops', robots: 'noindex, nofollow' })
         <article
           v-for="plan in plans"
           :key="plan.id"
-          class="flex flex-col rounded-md border border-amber-600/25 bg-[#f4ecdd] p-6"
+          class="flex flex-col rounded-md border border-sand-600/25 bg-sand-100 p-6"
         >
           <div class="flex items-start justify-between gap-3">
             <div>
-              <p class="font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.18em] text-terra-600">
+              <p class="font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.18em] text-saffron-600">
                 {{ plan.cadence }}
               </p>
               <h3 class="mt-1 font-[family:var(--font-serif)] text-2xl text-stone-900">
                 {{ plan.name }}
               </h3>
             </div>
-            <span class="shrink-0 rounded-sm bg-indigo-600 px-2.5 py-1 font-[family:var(--font-mono)] text-[0.62rem] text-amber-50">
+            <span class="shrink-0 rounded-sm bg-olive-600 px-2.5 py-1 font-[family:var(--font-mono)] text-[0.62rem] text-sand-50">
               {{ plan.price.amount }} {{ plan.price.currency }}
             </span>
           </div>
@@ -143,7 +143,7 @@ useSeoMeta({ title: 'Plans · illi ops', robots: 'noindex, nofollow' })
             {{ plan.summary }}
           </p>
 
-          <ul class="mt-5 space-y-2 border-t border-amber-600/15 pt-4">
+          <ul class="mt-5 space-y-2 border-t border-sand-600/15 pt-4">
             <li
               v-for="slot in plan.includedSlots"
               :key="slot.id"
@@ -152,7 +152,7 @@ useSeoMeta({ title: 'Plans · illi ops', robots: 'noindex, nofollow' })
               <span class="flex items-center gap-2 text-stone-700">
                 <span
                   class="size-1.5 rounded-full"
-                  :class="slot.required ? 'bg-terra-600' : 'bg-amber-600/40'"
+                  :class="slot.required ? 'bg-saffron-600' : 'bg-sand-600/40'"
                 />
                 {{ slot.slotType }}
               </span>
@@ -162,10 +162,10 @@ useSeoMeta({ title: 'Plans · illi ops', robots: 'noindex, nofollow' })
             </li>
           </ul>
 
-          <div class="mt-5 flex gap-2 border-t border-amber-600/15 pt-4">
+          <div class="mt-5 flex gap-2 border-t border-sand-600/15 pt-4">
             <button
               type="button"
-              class="flex flex-1 items-center justify-center gap-2 rounded-sm border border-indigo-600/40 py-2 font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.14em] text-indigo-700 transition hover:bg-indigo-600/8"
+              class="flex flex-1 items-center justify-center gap-2 rounded-sm border border-olive-600/40 py-2 font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.14em] text-olive-700 transition hover:bg-olive-600/8"
               @click="editPlan(plan)"
             >
               <UIcon
@@ -176,7 +176,7 @@ useSeoMeta({ title: 'Plans · illi ops', robots: 'noindex, nofollow' })
             </button>
             <button
               type="button"
-              class="flex items-center justify-center gap-2 rounded-sm border border-terra-600/40 px-3 py-2 font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.14em] text-terra-700 transition hover:bg-terra-600/8"
+              class="flex items-center justify-center gap-2 rounded-sm border border-saffron-600/40 px-3 py-2 font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.14em] text-saffron-700 transition hover:bg-saffron-600/8"
               @click="removePlan(plan)"
             >
               <UIcon
@@ -196,13 +196,13 @@ useSeoMeta({ title: 'Plans · illi ops', robots: 'noindex, nofollow' })
         class="fixed inset-0 z-50"
       >
         <div
-          class="absolute inset-0 bg-indigo-950/40 backdrop-blur-sm"
+          class="absolute inset-0 bg-olive-950/40 backdrop-blur-sm"
           @click="showPlanForm = false"
         />
-        <div class="absolute inset-y-0 right-0 flex w-full max-w-lg flex-col bg-[#f4ecdd] shadow-2xl">
-          <header class="flex items-center justify-between border-b border-amber-600/20 px-6 py-5">
+        <div class="absolute inset-y-0 right-0 flex w-full max-w-lg flex-col bg-sand-100 shadow-2xl">
+          <header class="flex items-center justify-between border-b border-sand-600/20 px-6 py-5">
             <div>
-              <p class="font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.2em] text-terra-600">
+              <p class="font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.2em] text-saffron-600">
                 {{ editingPlanId ? 'Edit plan' : 'New plan' }}
               </p>
               <h3 class="mt-1 font-[family:var(--font-serif)] text-2xl text-stone-900">
@@ -211,7 +211,7 @@ useSeoMeta({ title: 'Plans · illi ops', robots: 'noindex, nofollow' })
             </div>
             <button
               type="button"
-              class="rounded-sm p-1.5 text-stone-500 hover:bg-amber-600/10"
+              class="rounded-sm p-1.5 text-stone-500 hover:bg-sand-600/10"
               @click="showPlanForm = false"
             >
               <UIcon
@@ -249,7 +249,7 @@ useSeoMeta({ title: 'Plans · illi ops', robots: 'noindex, nofollow' })
                 </select>
               </div>
               <div>
-                <label :class="labelText">Price (USDT)</label>
+                <label :class="labelText">Price (MAD)</label>
                 <input
                   v-model.number="planForm.amount"
                   type="number"
@@ -267,12 +267,12 @@ useSeoMeta({ title: 'Plans · illi ops', robots: 'noindex, nofollow' })
               />
             </div>
 
-            <div class="border-t border-amber-600/20 pt-4">
+            <div class="border-t border-sand-600/20 pt-4">
               <div class="flex items-center justify-between">
                 <label :class="labelText">Slots</label>
                 <button
                   type="button"
-                  class="inline-flex items-center gap-1.5 font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.14em] text-indigo-700 transition hover:gap-2"
+                  class="inline-flex items-center gap-1.5 font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.14em] text-olive-700 transition hover:gap-2"
                   @click="addSlot"
                 >
                   <UIcon
@@ -287,13 +287,13 @@ useSeoMeta({ title: 'Plans · illi ops', robots: 'noindex, nofollow' })
                 <div
                   v-for="(slot, i) in planForm.includedSlots"
                   :key="i"
-                  class="rounded-sm border border-amber-600/25 bg-amber-50/40 p-3"
+                  class="rounded-sm border border-sand-600/25 bg-sand-50/40 p-3"
                 >
                   <div class="flex items-center justify-between gap-2">
                     <span class="font-[family:var(--font-mono)] text-[0.56rem] uppercase tracking-[0.14em] text-stone-400">Slot {{ i + 1 }}</span>
                     <button
                       type="button"
-                      class="rounded-sm p-1 text-stone-400 transition hover:bg-terra-600/10 hover:text-terra-700"
+                      class="rounded-sm p-1 text-stone-400 transition hover:bg-saffron-600/10 hover:text-saffron-700"
                       @click="removeSlot(i)"
                     >
                       <UIcon
@@ -333,14 +333,14 @@ useSeoMeta({ title: 'Plans · illi ops', robots: 'noindex, nofollow' })
                         v-model.number="slot.maxQuantity"
                         type="number"
                         min="1"
-                        class="w-16 rounded-sm border border-amber-600/30 bg-[#f4ecdd] px-2 py-1 text-sm"
+                        class="w-16 rounded-sm border border-sand-600/30 bg-sand-100 px-2 py-1 text-sm"
                       >
                     </label>
                     <label class="flex items-center gap-2">
                       <input
                         v-model="slot.required"
                         type="checkbox"
-                        class="size-4 accent-indigo-600"
+                        class="size-4 accent-olive-600"
                       >
                       <span class="font-[family:var(--font-mono)] text-[0.56rem] uppercase tracking-[0.12em] text-stone-500">Required</span>
                     </label>
@@ -350,17 +350,17 @@ useSeoMeta({ title: 'Plans · illi ops', robots: 'noindex, nofollow' })
             </div>
           </div>
 
-          <footer class="space-y-3 border-t border-amber-600/20 px-6 py-5">
+          <footer class="space-y-3 border-t border-sand-600/20 px-6 py-5">
             <p
               v-if="planError"
-              class="rounded-sm bg-terra-600/10 px-3 py-2 text-sm text-terra-700"
+              class="rounded-sm bg-saffron-600/10 px-3 py-2 text-sm text-saffron-700"
             >
               {{ planError }}
             </p>
             <div class="flex gap-3">
               <button
                 type="button"
-                class="flex-1 rounded-sm bg-indigo-600 py-3 font-[family:var(--font-mono)] text-[0.64rem] uppercase tracking-[0.16em] text-amber-50 transition hover:bg-indigo-700 disabled:opacity-50"
+                class="flex-1 rounded-sm bg-olive-600 py-3 font-[family:var(--font-mono)] text-[0.64rem] uppercase tracking-[0.16em] text-sand-50 transition hover:bg-olive-700 disabled:opacity-50"
                 :disabled="savingPlan"
                 @click="submitPlan"
               >
@@ -368,7 +368,7 @@ useSeoMeta({ title: 'Plans · illi ops', robots: 'noindex, nofollow' })
               </button>
               <button
                 type="button"
-                class="rounded-sm border border-amber-600/40 px-5 font-[family:var(--font-mono)] text-[0.64rem] uppercase tracking-[0.16em] text-stone-600 transition hover:bg-amber-600/8"
+                class="rounded-sm border border-sand-600/40 px-5 font-[family:var(--font-mono)] text-[0.64rem] uppercase tracking-[0.16em] text-stone-600 transition hover:bg-sand-600/8"
                 @click="showPlanForm = false"
               >
                 Cancel

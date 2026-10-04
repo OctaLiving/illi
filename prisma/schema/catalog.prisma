@@ -35,6 +35,8 @@ model Product {
   isAvailable       Boolean  @default(true)
   // Category slugs this product can fill. Currently always its own category.
   eligibleSlotTypes String[]
+  // One-time purchase price in MAD (plans carry their own subscription price).
+  priceAmount       Int      @default(0)
   sortOrder         Int      @default(0)
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
@@ -47,7 +49,7 @@ model Plan {
   cadence       String
   summary       String
   priceAmount   Int
-  priceCurrency String     @default("USDT")
+  priceCurrency String     @default("MAD")
   sortOrder     Int        @default(0)
   includedSlots PlanSlot[]
   createdAt     DateTime   @default(now())

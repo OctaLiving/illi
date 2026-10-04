@@ -71,9 +71,9 @@ useSeoMeta({ title: 'Settings · illi ops', robots: 'noindex, nofollow' })
 
 <template>
   <section>
-    <div class="flex flex-wrap items-end justify-between gap-3 border-b border-amber-600/20 pb-4">
+    <div class="flex flex-wrap items-end justify-between gap-3 border-b border-sand-600/20 pb-4">
       <div>
-        <p class="font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.24em] text-terra-600">
+        <p class="font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.24em] text-saffron-600">
           {{ settings?.paymentMode }} mode · {{ settings?.smtpHost ? 'SMTP configured' : 'SMTP off' }}
         </p>
         <h1 class="mt-1 font-[family:var(--font-serif)] text-3xl text-stone-900">
@@ -85,7 +85,7 @@ useSeoMeta({ title: 'Settings · illi ops', robots: 'noindex, nofollow' })
     <div class="mt-6 grid gap-6 lg:grid-cols-2">
       <!-- Payment -->
       <form
-        class="space-y-4 rounded-md border border-amber-600/25 bg-[#f4ecdd] p-6"
+        class="space-y-4 rounded-md border border-sand-600/25 bg-sand-100 p-6"
         @submit.prevent="saveSettings('payment')"
       >
         <div class="flex items-center justify-between">
@@ -94,7 +94,7 @@ useSeoMeta({ title: 'Settings · illi ops', robots: 'noindex, nofollow' })
           </h2>
           <span
             v-if="settingsSaved === 'payment'"
-            class="inline-flex items-center gap-1.5 font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.14em] text-indigo-700"
+            class="inline-flex items-center gap-1.5 font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.14em] text-olive-700"
           >
             <UIcon
               name="i-lucide-check"
@@ -170,7 +170,7 @@ useSeoMeta({ title: 'Settings · illi ops', robots: 'noindex, nofollow' })
         </div>
         <button
           type="submit"
-          class="rounded-sm bg-indigo-600 px-5 py-2.5 font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.14em] text-amber-50 transition hover:bg-indigo-700 disabled:opacity-50"
+          class="rounded-sm bg-olive-600 px-5 py-2.5 font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.14em] text-sand-50 transition hover:bg-olive-700 disabled:opacity-50"
           :disabled="savingSettings"
         >
           Save payment settings
@@ -179,7 +179,7 @@ useSeoMeta({ title: 'Settings · illi ops', robots: 'noindex, nofollow' })
 
       <!-- Email -->
       <form
-        class="space-y-4 rounded-md border border-amber-600/25 bg-[#f4ecdd] p-6"
+        class="space-y-4 rounded-md border border-sand-600/25 bg-sand-100 p-6"
         @submit.prevent="saveSettings('email')"
       >
         <div class="flex items-center justify-between">
@@ -188,7 +188,7 @@ useSeoMeta({ title: 'Settings · illi ops', robots: 'noindex, nofollow' })
           </h2>
           <span
             v-if="settingsSaved === 'email'"
-            class="inline-flex items-center gap-1.5 font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.14em] text-indigo-700"
+            class="inline-flex items-center gap-1.5 font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.14em] text-olive-700"
           >
             <UIcon
               name="i-lucide-check"
@@ -218,7 +218,7 @@ useSeoMeta({ title: 'Settings · illi ops', robots: 'noindex, nofollow' })
             <input
               v-model="emailForm.smtpSecure"
               type="checkbox"
-              class="size-4 accent-indigo-600"
+              class="size-4 accent-olive-600"
             >
             <span class="font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.12em] text-stone-600">Secure (TLS)</span>
           </label>
@@ -251,7 +251,7 @@ useSeoMeta({ title: 'Settings · illi ops', robots: 'noindex, nofollow' })
         </div>
         <button
           type="submit"
-          class="rounded-sm bg-indigo-600 px-5 py-2.5 font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.14em] text-amber-50 transition hover:bg-indigo-700 disabled:opacity-50"
+          class="rounded-sm bg-olive-600 px-5 py-2.5 font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.14em] text-sand-50 transition hover:bg-olive-700 disabled:opacity-50"
           :disabled="savingSettings"
         >
           Save email settings

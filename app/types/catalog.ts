@@ -13,7 +13,19 @@ export type BundleSlotType = typeof bundleSlotTypes[number]
 export const subscriptionCadences = ['weekly', 'biweekly', 'monthly'] as const
 export type SubscriptionCadence = typeof subscriptionCadences[number]
 
-export type PaymentCurrency = 'USDT'
+// Prices are set in Moroccan dirhams; customers pay in crypto via the gateway.
+export type PaymentCurrency = 'MAD'
+
+/** Starting one-time price (MAD) for a new product, by category. Operators adjust per product. */
+export const defaultProductPrice: Record<BundleSlotType, number> = {
+  beverages: 130,
+  dairy: 170,
+  vegetables: 140,
+  spreads: 170,
+  jams: 150,
+  seafood: 280,
+  sauces: 140
+}
 
 export interface ProductImage {
   src: string
@@ -44,6 +56,13 @@ export interface CatalogProduct {
   nutrition: ProductNutrition
   isAvailable: boolean
   eligibleSlotTypes: BundleSlotType[]
+  /** One-time purchase price, outside any subscription. */
+  price: ProductPrice
+}
+
+export interface ProductPrice {
+  amount: number
+  currency: PaymentCurrency
 }
 
 /** A product category, used to group the collection. The slug is a slot type. */

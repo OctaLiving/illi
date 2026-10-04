@@ -16,7 +16,7 @@ export default defineNuxtConfig({
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         {
           rel: 'stylesheet',
-          href: 'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600;700&display=swap'
+          href: 'https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..500&family=DM+Serif+Display:ital@0;1&display=swap'
         }
       ]
     }
@@ -24,7 +24,7 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
-  // Maghreb Modern is a committed light aesthetic — lock the color mode.
+  // The brand is a committed light aesthetic — lock the color mode.
   colorMode: {
     preference: 'light',
     fallback: 'light'

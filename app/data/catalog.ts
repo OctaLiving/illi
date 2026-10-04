@@ -28,7 +28,8 @@ export const catalogProducts: CatalogProduct[] = [
     shelfLifeDays: 30,
     nutrition: { proteins: 0, fats: 0, carbs: 100, summary: 'Energy: 180 kcal, Protein: 0.2 g, Carbohydrates: 44 g, Fat: 0 g, Fiber: 0.2 g, Vitamin C: 8 mg' },
     isAvailable: true,
-    eligibleSlotTypes: ['beverages']
+    eligibleSlotTypes: ['beverages'],
+    price: { amount: 130, currency: 'MAD' }
   },
   {
     id: 'prod-kombucha',
@@ -45,7 +46,8 @@ export const catalogProducts: CatalogProduct[] = [
     shelfLifeDays: 90,
     nutrition: { proteins: 0, fats: 0, carbs: 100, summary: 'Energy: 18 kcal, Protein: 0 g, Carbohydrates: 4.5 g, Fat: 0 g, Fiber: 0 g, Vitamin C: 2 mg' },
     isAvailable: true,
-    eligibleSlotTypes: ['beverages']
+    eligibleSlotTypes: ['beverages'],
+    price: { amount: 130, currency: 'MAD' }
   },
   {
     id: 'prod-leben',
@@ -62,7 +64,8 @@ export const catalogProducts: CatalogProduct[] = [
     shelfLifeDays: 14,
     nutrition: { proteins: 30, fats: 30, carbs: 40, summary: 'Energy: 65 kcal, Protein: 3.3 g, Carbohydrates: 4.7 g, Fat: 3.6 g, Calcium: 120 mg, Beneficial bacteria: ~1x10^8 CFU' },
     isAvailable: true,
-    eligibleSlotTypes: ['beverages']
+    eligibleSlotTypes: ['beverages'],
+    price: { amount: 130, currency: 'MAD' }
   },
   {
     id: 'prod-milk-kefir',
@@ -79,7 +82,8 @@ export const catalogProducts: CatalogProduct[] = [
     shelfLifeDays: 14,
     nutrition: { proteins: 20, fats: 25, carbs: 55, summary: 'Energy: 65 kcal, Protein: 3.3 g, Carbohydrates: 4.5 g, Fat: 3.6 g, Calcium: 120 mg, Probiotic bacteria: ~1x10^9 CFU' },
     isAvailable: true,
-    eligibleSlotTypes: ['beverages']
+    eligibleSlotTypes: ['beverages'],
+    price: { amount: 130, currency: 'MAD' }
   },
   {
     id: 'prod-water-kefir',
@@ -96,7 +100,8 @@ export const catalogProducts: CatalogProduct[] = [
     shelfLifeDays: 7,
     nutrition: { proteins: 1, fats: 0, carbs: 99, summary: 'Energy: 30 kcal, Protein: 0.2 g, Carbohydrates: 7 g, Fat: 0 g, Fiber: 0.2 g, Vitamin C: 4 mg' },
     isAvailable: true,
-    eligibleSlotTypes: ['beverages']
+    eligibleSlotTypes: ['beverages'],
+    price: { amount: 130, currency: 'MAD' }
   },
   {
     id: 'prod-hard-cheese',
@@ -113,7 +118,8 @@ export const catalogProducts: CatalogProduct[] = [
     shelfLifeDays: 180,
     nutrition: { proteins: 25, fats: 33, carbs: 2, summary: 'Energy: 400 kcal, Protein: 25 g, Carbohydrates: 2 g, Fat: 33 g, Calcium: 800 mg' },
     isAvailable: true,
-    eligibleSlotTypes: ['dairy']
+    eligibleSlotTypes: ['dairy'],
+    price: { amount: 170, currency: 'MAD' }
   },
   {
     id: 'prod-jben',
@@ -130,7 +136,8 @@ export const catalogProducts: CatalogProduct[] = [
     shelfLifeDays: 7,
     nutrition: { proteins: 25, fats: 25, carbs: 50, summary: 'Energy: 220 kcal, Protein: 14 g, Carbohydrates: 3 g, Fat: 16 g, Calcium: 400 mg' },
     isAvailable: true,
-    eligibleSlotTypes: ['dairy']
+    eligibleSlotTypes: ['dairy'],
+    price: { amount: 170, currency: 'MAD' }
   },
   {
     id: 'prod-smen',
@@ -147,7 +154,8 @@ export const catalogProducts: CatalogProduct[] = [
     shelfLifeDays: 365,
     nutrition: { proteins: 1, fats: 99, carbs: 0, summary: 'Energy: 720 kcal, Protein: 0.5 g, Carbohydrates: 1 g, Fat: 80 g, Fiber: 0 g, Sodium: 1500 mg' },
     isAvailable: true,
-    eligibleSlotTypes: ['dairy']
+    eligibleSlotTypes: ['dairy'],
+    price: { amount: 170, currency: 'MAD' }
   },
   {
     id: 'prod-spread-cheese',
@@ -164,7 +172,8 @@ export const catalogProducts: CatalogProduct[] = [
     shelfLifeDays: 14,
     nutrition: { proteins: 15, fats: 55, carbs: 30, summary: 'Energy: 320 kcal, Protein: 13 g, Carbohydrates: 4 g, Fat: 28 g, Fiber: 1 g, Calcium: 500 mg' },
     isAvailable: true,
-    eligibleSlotTypes: ['dairy']
+    eligibleSlotTypes: ['dairy'],
+    price: { amount: 170, currency: 'MAD' }
   },
   {
     id: 'prod-marinated-eggplants',
@@ -181,7 +190,8 @@ export const catalogProducts: CatalogProduct[] = [
     shelfLifeDays: 90,
     nutrition: { proteins: 3, fats: 10, carbs: 87, summary: 'Energy: 110 kcal, Protein: 1.2 g, Carbohydrates: 5 g, Fat: 8 g, Fiber: 3 g, Potassium: 200 mg' },
     isAvailable: true,
-    eligibleSlotTypes: ['vegetables']
+    eligibleSlotTypes: ['vegetables'],
+    price: { amount: 140, currency: 'MAD' }
   },
   {
     id: 'prod-marinated-olives',
@@ -198,7 +208,8 @@ export const catalogProducts: CatalogProduct[] = [
     shelfLifeDays: 180,
     nutrition: { proteins: 2, fats: 85, carbs: 13, summary: 'Energy: 210 kcal, Protein: 1.2 g, Carbohydrates: 6 g, Fat: 21 g, Fiber: 3 g, Sodium: 1200 mg' },
     isAvailable: true,
-    eligibleSlotTypes: ['vegetables']
+    eligibleSlotTypes: ['vegetables'],
+    price: { amount: 140, currency: 'MAD' }
   },
   {
     id: 'prod-seasonal-fermented-vegetables',
@@ -215,7 +226,8 @@ export const catalogProducts: CatalogProduct[] = [
     shelfLifeDays: 180,
     nutrition: { proteins: 5, fats: 2, carbs: 93, summary: 'Energy: 40 kcal, Protein: 1.2 g, Carbohydrates: 8 g, Fat: 0.3 g, Fiber: 2.5 g, Vitamin C: 18 mg, Beneficial bacteria (Lactobacillus): present' },
     isAvailable: true,
-    eligibleSlotTypes: ['vegetables']
+    eligibleSlotTypes: ['vegetables'],
+    price: { amount: 140, currency: 'MAD' }
   },
   {
     id: 'prod-amlou',
@@ -232,7 +244,8 @@ export const catalogProducts: CatalogProduct[] = [
     shelfLifeDays: 180,
     nutrition: { proteins: 10, fats: 60, carbs: 30, summary: 'Energy: 570 kcal, Protein: 13 g, Carbohydrates: 25 g, Fat: 45 g, Fiber: 7 g, Vitamin E: 20 mg' },
     isAvailable: true,
-    eligibleSlotTypes: ['spreads']
+    eligibleSlotTypes: ['spreads'],
+    price: { amount: 170, currency: 'MAD' }
   },
   {
     id: 'prod-peanut-butter',
@@ -249,7 +262,8 @@ export const catalogProducts: CatalogProduct[] = [
     shelfLifeDays: 180,
     nutrition: { proteins: 25, fats: 50, carbs: 25, summary: 'Energy: 600 kcal, Protein: 22 g, Carbohydrates: 18 g, Fat: 50 g, Fiber: 6 g, Vitamin E: 7 mg' },
     isAvailable: true,
-    eligibleSlotTypes: ['spreads']
+    eligibleSlotTypes: ['spreads'],
+    price: { amount: 170, currency: 'MAD' }
   },
   {
     id: 'prod-pistachio-butter',
@@ -266,7 +280,8 @@ export const catalogProducts: CatalogProduct[] = [
     shelfLifeDays: 180,
     nutrition: { proteins: 20, fats: 70, carbs: 10, summary: 'Energy: 600 kcal, Protein: 18 g, Carbohydrates: 20 g, Fat: 52 g, Fiber: 8 g, Vitamin E: 6 mg' },
     isAvailable: true,
-    eligibleSlotTypes: ['spreads']
+    eligibleSlotTypes: ['spreads'],
+    price: { amount: 170, currency: 'MAD' }
   },
   {
     id: 'prod-pumpkin-seed-butter',
@@ -283,7 +298,8 @@ export const catalogProducts: CatalogProduct[] = [
     shelfLifeDays: 180,
     nutrition: { proteins: 25, fats: 55, carbs: 20, summary: 'Energy: 600 kcal, Protein: 25 g, Carbohydrates: 15 g, Fat: 50 g, Fiber: 6 g, Magnesium: 400 mg' },
     isAvailable: true,
-    eligibleSlotTypes: ['spreads']
+    eligibleSlotTypes: ['spreads'],
+    price: { amount: 170, currency: 'MAD' }
   },
   {
     id: 'prod-jams',
@@ -300,7 +316,8 @@ export const catalogProducts: CatalogProduct[] = [
     shelfLifeDays: 180,
     nutrition: { proteins: 1, fats: 0, carbs: 99, summary: 'Energy: 260 kcal, Protein: 0.5 g, Carbohydrates: 65 g, Fat: 0.2 g, Fiber: 1.5 g, Vitamin C: 8 mg' },
     isAvailable: true,
-    eligibleSlotTypes: ['jams']
+    eligibleSlotTypes: ['jams'],
+    price: { amount: 150, currency: 'MAD' }
   },
   {
     id: 'prod-pomegranate-concentrate',
@@ -317,7 +334,8 @@ export const catalogProducts: CatalogProduct[] = [
     shelfLifeDays: 365,
     nutrition: { proteins: 1, fats: 0, carbs: 99, summary: 'Energy: 260 kcal, Protein: 1 g, Carbohydrates: 65 g, Fat: 0 g, Fiber: 1 g, Potassium: 250 mg' },
     isAvailable: true,
-    eligibleSlotTypes: ['jams']
+    eligibleSlotTypes: ['jams'],
+    price: { amount: 150, currency: 'MAD' }
   },
   {
     id: 'prod-sun-dried-tomatoes',
@@ -334,7 +352,8 @@ export const catalogProducts: CatalogProduct[] = [
     shelfLifeDays: 180,
     nutrition: { proteins: 14, fats: 7, carbs: 79, summary: 'Energy: 180 kcal, Protein: 4 g, Carbohydrates: 30 g, Fat: 6 g, Fiber: 7 g, Potassium: 1100 mg' },
     isAvailable: true,
-    eligibleSlotTypes: ['jams']
+    eligibleSlotTypes: ['jams'],
+    price: { amount: 150, currency: 'MAD' }
   },
   {
     id: 'prod-marinated-anchovies',
@@ -351,7 +370,8 @@ export const catalogProducts: CatalogProduct[] = [
     shelfLifeDays: 14,
     nutrition: { proteins: 25, fats: 20, carbs: 55, summary: 'Energy: 210 kcal, Protein: 18 g, Carbohydrates: 1 g, Fat: 15 g, Fiber: 0 g, Sodium: 1500 mg' },
     isAvailable: true,
-    eligibleSlotTypes: ['seafood']
+    eligibleSlotTypes: ['seafood'],
+    price: { amount: 280, currency: 'MAD' }
   },
   {
     id: 'prod-marinated-octopus',
@@ -368,7 +388,8 @@ export const catalogProducts: CatalogProduct[] = [
     shelfLifeDays: 14,
     nutrition: { proteins: 25, fats: 10, carbs: 65, summary: 'Energy: 120 kcal, Protein: 16 g, Carbohydrates: 2 g, Fat: 5 g, Fiber: 0.5 g, Iron: 4 mg' },
     isAvailable: true,
-    eligibleSlotTypes: ['seafood']
+    eligibleSlotTypes: ['seafood'],
+    price: { amount: 280, currency: 'MAD' }
   },
   {
     id: 'prod-marinated-sardines',
@@ -385,7 +406,8 @@ export const catalogProducts: CatalogProduct[] = [
     shelfLifeDays: 14,
     nutrition: { proteins: 45, fats: 50, carbs: 5, summary: 'Energy: 210 kcal, Protein: 22 g, Carbohydrates: 0 g, Fat: 14 g, Fiber: 0 g, Calcium: 250 mg' },
     isAvailable: true,
-    eligibleSlotTypes: ['seafood']
+    eligibleSlotTypes: ['seafood'],
+    price: { amount: 280, currency: 'MAD' }
   },
   {
     id: 'prod-marinated-tuna',
@@ -402,7 +424,8 @@ export const catalogProducts: CatalogProduct[] = [
     shelfLifeDays: 14,
     nutrition: { proteins: 60, fats: 30, carbs: 10, summary: 'Energy: 180 kcal, Protein: 23 g, Carbohydrates: 1 g, Fat: 9 g, Fiber: 0.5 g, Iron: 1.2 mg' },
     isAvailable: true,
-    eligibleSlotTypes: ['seafood']
+    eligibleSlotTypes: ['seafood'],
+    price: { amount: 280, currency: 'MAD' }
   },
   {
     id: 'prod-sardine-kefta-in-tomato-sauce',
@@ -419,7 +442,8 @@ export const catalogProducts: CatalogProduct[] = [
     shelfLifeDays: 7,
     nutrition: { proteins: 35, fats: 30, carbs: 35, summary: 'Energy: 160 kcal, Protein: 15 g, Carbohydrates: 4 g, Fat: 9 g, Fiber: 1 g, Calcium: 250 mg' },
     isAvailable: true,
-    eligibleSlotTypes: ['seafood']
+    eligibleSlotTypes: ['seafood'],
+    price: { amount: 280, currency: 'MAD' }
   },
   {
     id: 'prod-whiting-kefta-in-tomato-sauce',
@@ -436,7 +460,8 @@ export const catalogProducts: CatalogProduct[] = [
     shelfLifeDays: 7,
     nutrition: { proteins: 30, fats: 20, carbs: 50, summary: 'Energy: 110 kcal, Protein: 13 g, Carbohydrates: 5 g, Fat: 4 g, Fiber: 1 g, Vitamin C: 10 mg' },
     isAvailable: true,
-    eligibleSlotTypes: ['seafood']
+    eligibleSlotTypes: ['seafood'],
+    price: { amount: 280, currency: 'MAD' }
   },
   {
     id: 'prod-b-chamel-sauce',
@@ -453,7 +478,8 @@ export const catalogProducts: CatalogProduct[] = [
     shelfLifeDays: 1,
     nutrition: { proteins: 10, fats: 35, carbs: 55, summary: 'Energy: 120 kcal, Protein: 3 g, Carbohydrates: 8 g, Fat: 8 g, Calcium: 110 mg' },
     isAvailable: true,
-    eligibleSlotTypes: ['sauces']
+    eligibleSlotTypes: ['sauces'],
+    price: { amount: 140, currency: 'MAD' }
   },
   {
     id: 'prod-bolognese-sauce',
@@ -470,7 +496,8 @@ export const catalogProducts: CatalogProduct[] = [
     shelfLifeDays: 1,
     nutrition: { proteins: 15, fats: 25, carbs: 60, summary: 'Energy: 110 kcal, Protein: 5 g, Carbohydrates: 7 g, Fat: 6 g, Fiber: 2 g, Iron: 1.2 mg' },
     isAvailable: true,
-    eligibleSlotTypes: ['sauces']
+    eligibleSlotTypes: ['sauces'],
+    price: { amount: 140, currency: 'MAD' }
   },
   {
     id: 'prod-mayonnaise',
@@ -487,7 +514,8 @@ export const catalogProducts: CatalogProduct[] = [
     shelfLifeDays: 90,
     nutrition: { proteins: 1, fats: 80, carbs: 19, summary: 'Energy: 700 kcal, Protein: 2 g, Carbohydrates: 1 g, Fat: 76 g, Fiber: 0 g, Vitamin E: 15 mg' },
     isAvailable: true,
-    eligibleSlotTypes: ['sauces']
+    eligibleSlotTypes: ['sauces'],
+    price: { amount: 140, currency: 'MAD' }
   },
   {
     id: 'prod-tomato-sauce',
@@ -504,7 +532,8 @@ export const catalogProducts: CatalogProduct[] = [
     shelfLifeDays: 365,
     nutrition: { proteins: 5, fats: 5, carbs: 90, summary: 'Energy: 60 kcal, Protein: 1.5 g, Carbohydrates: 7 g, Fat: 2.5 g, Fiber: 1.5 g, Vitamin C: 12 mg' },
     isAvailable: true,
-    eligibleSlotTypes: ['sauces']
+    eligibleSlotTypes: ['sauces'],
+    price: { amount: 140, currency: 'MAD' }
   },
   {
     id: 'prod-wholegrain-mustard',
@@ -521,7 +550,8 @@ export const catalogProducts: CatalogProduct[] = [
     shelfLifeDays: 365,
     nutrition: { proteins: 7, fats: 8, carbs: 85, summary: 'Energy: 120 kcal, Protein: 6 g, Carbohydrates: 8 g, Fat: 7 g, Fiber: 5 g, Iron: 1.5 mg' },
     isAvailable: true,
-    eligibleSlotTypes: ['sauces']
+    eligibleSlotTypes: ['sauces'],
+    price: { amount: 140, currency: 'MAD' }
   }
 ]
 
@@ -532,7 +562,7 @@ export const subscriptionPlans: SubscriptionPlan[] = [
     name: 'Pantry Box',
     cadence: 'monthly',
     summary: 'Shelf-stable staples for the cupboard — a spread, a fruit product and a sauce, with room for one more.',
-    price: { amount: 64, currency: 'USDT' },
+    price: { amount: 600, currency: 'MAD' },
     includedSlots: [
       { id: 'pantry-spread', slotType: 'spreads', label: 'Spread', description: 'Choose a nut or seed butter.', minQuantity: 1, maxQuantity: 1, required: true },
       { id: 'pantry-jam', slotType: 'jams', label: 'Fruit product', description: 'Choose a jam, concentrate or preserve.', minQuantity: 1, maxQuantity: 1, required: true },
@@ -546,7 +576,7 @@ export const subscriptionPlans: SubscriptionPlan[] = [
     name: 'Living Box',
     cadence: 'weekly',
     summary: 'Fresh, refrigerated ferments — a live drink, a cultured dairy and a fermented vegetable each week.',
-    price: { amount: 58, currency: 'USDT' },
+    price: { amount: 540, currency: 'MAD' },
     includedSlots: [
       { id: 'living-beverage', slotType: 'beverages', label: 'Fermented drink', description: 'Choose a live, fermented beverage.', minQuantity: 1, maxQuantity: 1, required: true },
       { id: 'living-dairy', slotType: 'dairy', label: 'Cultured dairy', description: 'Choose a cheese or cultured dairy.', minQuantity: 1, maxQuantity: 1, required: true },
@@ -560,7 +590,7 @@ export const subscriptionPlans: SubscriptionPlan[] = [
     name: 'Coastal Box',
     cadence: 'biweekly',
     summary: 'Sea and table — two marinated fish, a sauce to serve them with, and an optional vegetable.',
-    price: { amount: 88, currency: 'USDT' },
+    price: { amount: 820, currency: 'MAD' },
     includedSlots: [
       { id: 'coastal-fish-1', slotType: 'seafood', label: 'Fish 1', description: 'Choose a marinated or kefta-style fish.', minQuantity: 1, maxQuantity: 1, required: true },
       { id: 'coastal-fish-2', slotType: 'seafood', label: 'Fish 2', description: 'Choose a second fish for the box.', minQuantity: 1, maxQuantity: 1, required: true },

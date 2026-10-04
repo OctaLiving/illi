@@ -40,6 +40,7 @@ async function main() {
       nutritionSummary: p.nutrition.summary,
       isAvailable: p.isAvailable,
       eligibleSlotTypes: p.eligibleSlotTypes,
+      priceAmount: p.price.amount,
       sortOrder: i
     }
     await prisma.product.upsert({ where: { id: p.id }, create: { id: p.id, ...data }, update: data })

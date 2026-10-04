@@ -32,7 +32,8 @@ function product(id: string, slotTypes: BundleSlotType[], isAvailable = true): C
     shelfLifeDays: 0,
     nutrition: { proteins: 0, fats: 0, carbs: 0, summary: '' },
     isAvailable,
-    eligibleSlotTypes: slotTypes
+    eligibleSlotTypes: slotTypes,
+    price: { amount: 100, currency: 'MAD' }
   }
 }
 
@@ -42,7 +43,7 @@ const plan: SubscriptionPlan = {
   name: 'Test Box',
   cadence: 'weekly',
   summary: '',
-  price: { amount: 50, currency: 'USDT' },
+  price: { amount: 500, currency: 'MAD' },
   includedSlots: [
     { id: 'slot-spread', slotType: 'spreads', label: 'Spread', description: '', minQuantity: 1, maxQuantity: 1, required: true },
     { id: 'slot-jam', slotType: 'jams', label: 'Jam', description: '', minQuantity: 1, maxQuantity: 1, required: true },

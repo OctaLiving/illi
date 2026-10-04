@@ -1,7 +1,7 @@
 # Context
 
-The domain language for **illi** — an invitation-only, additive-free food
-subscription store with USDT-only checkout (planned). Use these terms exactly
+The domain language for **illi** — an additive-free food
+subscription store with crypto checkout (planned). Use these terms exactly
 in code and conversation. Architecture terms (module, seam, depth, locality)
 follow the deepening skill's vocabulary.
 
@@ -24,7 +24,8 @@ follow the deepening skill's vocabulary.
   `vegetables`, `spreads`, `jams`, `seafood`, `sauces`. **Slot type = category** —
   a product fills slots of its own category.
 - **Plan** (`SubscriptionPlan`) — a base subscription. Defines cadence, a price
-  anchor (in USDT), and the **slots** it includes.
+  anchor (in MAD — Moroccan dirhams; payment itself settles in crypto), and
+  the **slots** it includes.
 - **Slot** (`BundleSlotRule`) — a fillable position in a plan, with a slot type,
   required/optional flag, and min/max quantity.
 - **Eligibility** — whether a product may fill a slot: it must be available and

@@ -3,6 +3,8 @@ import type { H3Event } from 'h3'
 export interface CreatePaymentInput {
   orderId: string
   amount: number
+  /** Currency the amount is priced in (e.g. MAD); the gateway converts to the pay currency. */
+  currency: string
   description: string
   successUrl: string
   cancelUrl: string

@@ -20,7 +20,7 @@ defineProps<{ items: Crumb[] }>()
       <NuxtLink
         v-if="item.to"
         :to="item.to"
-        class="text-stone-500 transition hover:text-terra-700"
+        class="text-stone-500 transition hover:text-saffron-700"
       >
         {{ item.label }}
       </NuxtLink>
@@ -34,7 +34,7 @@ defineProps<{ items: Crumb[] }>()
       <UIcon
         v-if="i < items.length - 1"
         name="i-lucide-chevron-right"
-        class="size-3 shrink-0 text-amber-600/50"
+        class="size-3 shrink-0 text-sand-600/50"
       />
     </template>
   </nav>

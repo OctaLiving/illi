@@ -40,28 +40,28 @@ useSeoMeta({ title: 'Pay · illi', robots: 'noindex' })
         class="mb-6"
         :items="[{ label: 'Home', to: '/' }, { label: 'Account', to: '/account' }, { label: 'Pay invoice' }]"
       />
-      <div class="w-full rounded-md border border-amber-600/25 bg-[#f4ecdd] p-7 text-center">
-        <p class="font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.2em] text-terra-600">
-          Simulated USDT payment
+      <div class="w-full rounded-3xl bg-white ring-1 ring-sand-200 p-7 text-center">
+        <p class="font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.2em] text-saffron-600">
+          Simulated crypto payment
         </p>
         <h1 class="mt-3 font-[family:var(--font-serif)] text-4xl text-stone-900">
           {{ order ? `${order.amount} ${order.currency}` : 'Order' }}
         </h1>
         <p class="mt-3 text-sm leading-7 text-stone-600">
           This is a stand-in for the NOWPayments hosted page. In production you'd be redirected to
-          NOWPayments to send USDT; here, confirm to simulate a completed payment.
+          NOWPayments to pay in crypto; here, confirm to simulate a completed payment.
         </p>
 
         <p
           v-if="error"
-          class="mt-4 rounded-sm bg-terra-600/10 px-3 py-2 text-sm text-terra-700"
+          class="mt-4 rounded-lg bg-saffron-600/10 px-3 py-2 text-sm text-saffron-700"
         >
           {{ error }}
         </p>
 
         <button
           type="button"
-          class="mt-6 w-full rounded-sm bg-terra-600 py-3 font-[family:var(--font-mono)] text-[0.64rem] uppercase tracking-[0.16em] text-amber-50 transition hover:bg-terra-700 disabled:opacity-50"
+          class="mt-6 w-full rounded-lg bg-saffron-600 py-3 text-sm font-semibold text-sand-50 transition hover:bg-saffron-700 disabled:opacity-50"
           :disabled="paying || !order"
           @click="confirm"
         >

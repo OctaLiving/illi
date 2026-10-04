@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const { data: catalog } = await useCatalog()
+const categoryName = (slug: string) => catalog.value.categories.find(c => c.slug === slug)?.name ?? slug
 
 const {
   products,
@@ -38,7 +39,7 @@ function slotIsFilled(slotId: string) {
 }
 
 // Checkout is the gate: browsing and building are open, but proceeding requires
-// an account (which only exists via a redeemed invitation).
+// an account.
 const { data: me } = useMe()
 
 function proceedToCheckout() {
@@ -46,8 +47,8 @@ function proceedToCheckout() {
 }
 
 useSeoMeta({
-  title: 'The subscription',
-  description: 'Choose a base plan and fill the allowed bundle slots with compatible products from the illi collection.'
+  title: 'Build your box',
+  description: 'Choose an illi box — Pantry, Living or Coastal — and fill it with your favourite small-batch products, prepared again on your schedule.'
 })
 </script>
 
@@ -58,36 +59,36 @@ useSeoMeta({
       <section class="grid items-end gap-10 lg:grid-cols-[1.15fr_0.85fr]">
         <div>
           <p
-            class="reveal inline-flex items-center gap-3 font-[family:var(--font-mono)] text-[0.7rem] uppercase tracking-[0.3em] text-indigo-700"
+            class="reveal inline-flex items-center gap-3 font-[family:var(--font-mono)] text-[0.7rem] uppercase tracking-[0.3em] text-olive-700"
             style="animation-delay:.05s"
           >
-            <span class="h-px w-8 bg-terra-600" />
-            The subscription
+            <span class="h-px w-8 bg-saffron-600" />
+            Boxes on repeat
           </p>
           <h1
             class="reveal mt-6 max-w-3xl font-[family:var(--font-serif)] text-5xl font-normal leading-[1.0] tracking-tight text-stone-900 sm:text-6xl"
             style="animation-delay:.16s"
           >
-            A curated pantry with room to <em class="italic text-terra-600">choose.</em>
+            Build your <em class="italic text-olive-700">box.</em>
           </h1>
           <p
             class="reveal mt-6 max-w-2xl text-lg leading-8 text-stone-700"
             style="animation-delay:.26s"
           >
-            Start with a fixed plan, then fill the allowed slots with products from the current collection.
-            The builder keeps the logic strict — the experience should still feel like curation.
+            Pick a box, choose a product for each spot, and we'll prepare it again on your schedule.
+            Each cycle is paid separately — no lock-in.
           </p>
         </div>
 
         <!-- Progress card -->
         <div
-          class="reveal rounded-md border p-7 transition-colors duration-500"
-          :class="isReady ? 'border-indigo-600/40 bg-indigo-600/[0.04]' : 'border-amber-600/30 bg-amber-50/60'"
+          class="reveal rounded-3xl border p-7 transition-colors duration-500"
+          :class="isReady ? 'border-olive-600/40 bg-olive-600/[0.04]' : 'border-sand-600/30 bg-sand-50/60'"
           style="animation-delay:.3s"
         >
           <div class="flex items-center justify-between">
-            <p class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.2em] text-terra-600">
-              Bundle progress
+            <p class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.2em] text-saffron-600">
+              Your progress
             </p>
             <p class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.16em] text-stone-500">
               {{ requiredFilled }} / {{ requiredTotal }}
@@ -100,7 +101,7 @@ useSeoMeta({
               v-for="(seg, i) in requiredSlotStates"
               :key="seg.id"
               class="h-1.5 flex-1 rounded-full transition-colors duration-500"
-              :class="seg.filled ? 'bg-indigo-600' : 'bg-amber-600/20'"
+              :class="seg.filled ? 'bg-olive-600' : 'bg-sand-600/20'"
               :style="`transition-delay:${i * 60}ms`"
             />
           </div>
@@ -113,7 +114,7 @@ useSeoMeta({
               <span>ready</span>
             </div>
             <p class="text-sm leading-6 text-stone-700">
-              The bundle satisfies the plan structure. Ready to seal and hand off to checkout.
+              Your box is complete. Continue to checkout whenever you're ready.
             </p>
           </div>
           <div
@@ -124,7 +125,7 @@ useSeoMeta({
               {{ remainingRequiredSlots }}
             </p>
             <p class="mt-2 font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.16em] text-stone-500">
-              required slot{{ remainingRequiredSlots === 1 ? '' : 's' }} left to fill
+              spot{{ remainingRequiredSlots === 1 ? '' : 's' }} left to fill
             </p>
           </div>
         </div>
@@ -133,9 +134,9 @@ useSeoMeta({
       <!-- Step 1 -->
       <section class="space-y-6">
         <div class="flex items-baseline gap-4">
-          <span class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.24em] text-terra-600">Step 1</span>
+          <span class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.24em] text-saffron-600">Step 1</span>
           <h2 class="font-[family:var(--font-serif)] text-4xl text-stone-900">
-            Choose the base plan.
+            Choose your box
           </h2>
         </div>
 
@@ -144,15 +145,15 @@ useSeoMeta({
             v-for="plan in plans"
             :key="plan.id"
             type="button"
-            class="rounded-md border p-7 text-left transition"
+            class="rounded-3xl border p-7 text-left transition"
             :class="selectedPlanId === plan.id
-              ? 'border-indigo-600 bg-indigo-600/[0.04] shadow-[0_20px_40px_-30px_rgba(30,58,95,0.6)]'
-              : 'border-amber-600/30 bg-[#f4ecdd] hover:border-terra-600/50'"
+              ? 'border-olive-600 bg-olive-600/[0.04] shadow-[0_20px_40px_-30px_rgba(30,58,95,0.6)]'
+              : 'border-sand-600/30 bg-white hover:border-saffron-600/50'"
             @click="setPlan(plan.id)"
           >
             <div class="flex flex-wrap items-start justify-between gap-4">
               <div class="space-y-3">
-                <p class="font-[family:var(--font-mono)] text-[0.64rem] uppercase tracking-[0.2em] text-terra-600">
+                <p class="font-[family:var(--font-mono)] text-[0.64rem] uppercase tracking-[0.2em] text-saffron-600">
                   {{ plan.cadence }}
                 </p>
                 <h3 class="font-[family:var(--font-serif)] text-3xl text-stone-900">
@@ -163,8 +164,8 @@ useSeoMeta({
                 </p>
               </div>
               <span
-                class="shrink-0 rounded-sm px-3 py-1.5 font-[family:var(--font-mono)] text-xs"
-                :class="selectedPlanId === plan.id ? 'bg-indigo-600 text-amber-50' : 'bg-amber-600/10 text-stone-600'"
+                class="shrink-0 rounded-lg px-3 py-1.5 font-[family:var(--font-mono)] text-xs"
+                :class="selectedPlanId === plan.id ? 'bg-olive-600 text-sand-50' : 'bg-sand-600/10 text-stone-600'"
               >
                 {{ plan.price.amount }} {{ plan.price.currency }}
               </span>
@@ -180,9 +181,9 @@ useSeoMeta({
       >
         <div class="space-y-6">
           <div class="flex items-baseline gap-4">
-            <span class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.24em] text-terra-600">Step 2</span>
+            <span class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.24em] text-saffron-600">Step 2</span>
             <h2 class="font-[family:var(--font-serif)] text-4xl text-stone-900">
-              Fill the {{ selectedPlan.name }}.
+              Fill your {{ selectedPlan.name }}
             </h2>
           </div>
 
@@ -190,16 +191,16 @@ useSeoMeta({
             <section
               v-for="slot in selectedPlan.includedSlots"
               :key="slot.id"
-              class="rounded-md border p-6 transition-colors duration-300"
-              :class="slotIsFilled(slot.id) ? 'border-indigo-600/40 bg-indigo-600/[0.02]' : 'border-amber-600/25 bg-[#f4ecdd]'"
+              class="rounded-3xl border p-6 transition-colors duration-300"
+              :class="slotIsFilled(slot.id) ? 'border-olive-600/40 bg-olive-600/[0.02]' : 'border-sand-600/25 bg-white'"
             >
               <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                 <div class="space-y-3">
                   <div class="flex flex-wrap gap-2 font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.16em]">
-                    <span class="rounded-sm bg-terra-600/10 px-2 py-1 text-terra-700">{{ slot.slotType }} slot</span>
+                    <span class="rounded-lg bg-saffron-600/10 px-2 py-1 text-saffron-700">{{ categoryName(slot.slotType) }}</span>
                     <span
-                      class="rounded-sm px-2 py-1"
-                      :class="slot.required ? 'bg-indigo-600/10 text-indigo-700' : 'bg-amber-600/10 text-stone-500'"
+                      class="rounded-lg px-2 py-1"
+                      :class="slot.required ? 'bg-olive-600/10 text-olive-700' : 'bg-sand-600/10 text-stone-500'"
                     >
                       {{ slot.required ? 'Required' : 'Optional' }}
                     </span>
@@ -210,7 +211,7 @@ useSeoMeta({
                       <UIcon
                         v-if="slotIsFilled(slot.id)"
                         name="i-lucide-check"
-                        class="size-5 text-indigo-600"
+                        class="size-5 text-olive-600"
                       />
                     </h3>
                     <p class="mt-2 max-w-md text-sm leading-7 text-stone-600">
@@ -223,7 +224,7 @@ useSeoMeta({
                   <span>{{ getSelectedProductIds(slot.id).length }} / {{ slot.maxQuantity }}</span>
                   <button
                     type="button"
-                    class="rounded-sm px-2.5 py-1.5 text-indigo-700 transition hover:bg-indigo-600/8 disabled:opacity-30 disabled:hover:bg-transparent"
+                    class="rounded-lg px-2.5 py-1.5 text-olive-700 transition hover:bg-olive-600/8 disabled:opacity-30 disabled:hover:bg-transparent"
                     :disabled="getSelectedProductIds(slot.id).length === 0"
                     @click="clearSlot(slot.id)"
                   >
@@ -237,14 +238,14 @@ useSeoMeta({
                   v-for="product in getEligibleProductsForSlot(products, slot)"
                   :key="`${slot.id}-${product.id}`"
                   type="button"
-                  class="group/card rounded-md border p-3 text-left transition active:scale-[0.99]"
+                  class="group/card rounded-3xl border p-3 text-left transition active:scale-[0.99]"
                   :class="isSelected(slot.id, product.id)
-                    ? 'border-terra-600 bg-terra-600/[0.06] shadow-[0_18px_34px_-26px_rgba(194,65,12,0.7)] ring-1 ring-terra-600/30'
-                    : 'border-amber-600/25 bg-amber-50/40 hover:border-terra-600/50'"
+                    ? 'border-saffron-600 bg-saffron-600/[0.06] shadow-[0_18px_34px_-26px_rgba(194,65,12,0.7)] ring-1 ring-saffron-600/30'
+                    : 'border-sand-600/25 bg-sand-50/40 hover:border-saffron-600/50'"
                   @click="toggleProduct(slot, product.id)"
                 >
                   <div class="flex gap-4">
-                    <div class="arch-inner h-24 w-20 shrink-0 overflow-hidden border border-amber-600/30 bg-stone-100">
+                    <div class="arch-inner h-24 w-20 shrink-0 overflow-hidden border border-sand-600/30 bg-stone-100">
                       <img
                         :src="product.image.src"
                         :alt="product.image.alt"
@@ -259,7 +260,7 @@ useSeoMeta({
                         <UIcon
                           v-if="isSelected(slot.id, product.id)"
                           name="i-lucide-check"
-                          class="size-4 shrink-0 text-terra-600"
+                          class="size-4 shrink-0 text-saffron-600"
                         />
                       </div>
                       <p class="font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.14em] text-stone-500">
@@ -270,9 +271,9 @@ useSeoMeta({
                       </p>
                       <p
                         class="font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.16em] transition"
-                        :class="isSelected(slot.id, product.id) ? 'text-terra-700' : 'text-transparent group-hover/card:text-stone-400'"
+                        :class="isSelected(slot.id, product.id) ? 'text-saffron-700' : 'text-transparent group-hover/card:text-stone-400'"
                       >
-                        {{ isSelected(slot.id, product.id) ? '✓ in the box' : 'tap to add' }}
+                        {{ isSelected(slot.id, product.id) ? '✓ In your box' : 'Tap to add' }}
                       </p>
                     </div>
                   </div>
@@ -287,14 +288,14 @@ useSeoMeta({
           id="bundle-summary"
           class="scroll-mt-28 space-y-6 xl:sticky xl:top-28"
         >
-          <section class="rounded-md border border-amber-600/30 bg-amber-50/60 p-6">
+          <section class="rounded-3xl border border-sand-600/30 bg-sand-50/60 p-6">
             <div class="flex items-start justify-between gap-3">
               <div>
-                <p class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.2em] text-terra-600">
-                  Live summary
+                <p class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.2em] text-saffron-600">
+                  Summary
                 </p>
                 <h2 class="mt-2 font-[family:var(--font-serif)] text-3xl text-stone-900">
-                  Current bundle
+                  Your box
                 </h2>
               </div>
               <div
@@ -309,7 +310,7 @@ useSeoMeta({
               v-if="bundleSummary"
               class="mt-6 space-y-4"
             >
-              <div class="rounded-md border border-amber-600/25 bg-[#f4ecdd] p-4">
+              <div class="rounded-3xl bg-white ring-1 ring-sand-200 p-4">
                 <div class="flex flex-wrap items-start justify-between gap-3">
                   <div>
                     <p class="font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.18em] text-stone-500">
@@ -318,13 +319,13 @@ useSeoMeta({
                     <p class="mt-1.5 font-[family:var(--font-serif)] text-2xl text-stone-900">
                       {{ bundleSummary.planName }}
                     </p>
-                    <p class="mt-1 font-[family:var(--font-mono)] text-sm text-indigo-700">
+                    <p class="mt-1 font-[family:var(--font-mono)] text-sm text-olive-700">
                       {{ bundleSummary.basePriceAmount }} {{ bundleSummary.currency }}
                     </p>
                   </div>
                   <span
-                    class="rounded-sm px-2.5 py-1 font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.14em]"
-                    :class="isReady ? 'bg-indigo-600 text-amber-50' : 'bg-terra-600/15 text-terra-700'"
+                    class="rounded-lg px-2.5 py-1 font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.14em]"
+                    :class="isReady ? 'bg-olive-600 text-sand-50' : 'bg-saffron-600/15 text-saffron-700'"
                   >
                     {{ isReady ? 'Ready' : 'In progress' }}
                   </span>
@@ -334,7 +335,7 @@ useSeoMeta({
               <div
                 v-for="item in bundleSummary.selectionItems"
                 :key="item.slotId"
-                class="rounded-md border border-amber-600/20 bg-amber-50/40 p-4"
+                class="rounded-3xl border border-sand-600/20 bg-sand-50/40 p-4"
               >
                 <div class="flex items-start justify-between gap-3">
                   <div>
@@ -342,12 +343,12 @@ useSeoMeta({
                       {{ item.slotLabel }}
                     </p>
                     <p class="font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.14em] text-stone-500">
-                      {{ item.slotType }} slot
+                      {{ categoryName(item.slotType) }}
                     </p>
                   </div>
                   <span
-                    class="rounded-sm px-2 py-0.5 font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.12em]"
-                    :class="item.isComplete ? 'bg-indigo-600/10 text-indigo-700' : 'bg-terra-600/10 text-terra-700'"
+                    class="rounded-lg px-2 py-0.5 font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.12em]"
+                    :class="item.isComplete ? 'bg-olive-600/10 text-olive-700' : 'bg-saffron-600/10 text-saffron-700'"
                   >
                     {{ item.isComplete ? 'Filled' : item.required ? 'Required' : 'Optional' }}
                   </span>
@@ -367,7 +368,7 @@ useSeoMeta({
                   >
                     <UIcon
                       name="i-lucide-check"
-                      class="mt-1 size-4 shrink-0 text-terra-600"
+                      class="mt-1 size-4 shrink-0 text-saffron-600"
                     />
                     <span>{{ productName }}</span>
                   </li>
@@ -378,10 +379,10 @@ useSeoMeta({
               <div class="space-y-2 pt-1">
                 <button
                   type="button"
-                  class="flex w-full items-center justify-center gap-2 rounded-sm px-5 py-3.5 font-[family:var(--font-mono)] text-xs uppercase tracking-[0.16em] transition"
+                  class="flex w-full items-center justify-center gap-2 rounded-lg px-5 py-3.5 font-[family:var(--font-mono)] text-xs uppercase tracking-[0.16em] transition"
                   :class="isReady
-                    ? 'bg-terra-600 text-amber-50 hover:bg-terra-700'
-                    : 'cursor-not-allowed bg-amber-600/10 text-stone-400'"
+                    ? 'bg-saffron-600 text-sand-50 hover:bg-saffron-700'
+                    : 'cursor-not-allowed bg-sand-600/10 text-stone-400'"
                   :disabled="!isReady"
                   @click="proceedToCheckout"
                 >
@@ -393,7 +394,7 @@ useSeoMeta({
                   />
                 </button>
                 <p class="text-center font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.12em] text-stone-400">
-                  Members only · USDT checkout is the next phase
+                  Secure payment in crypto · Prices in MAD
                 </p>
               </div>
             </div>
@@ -401,13 +402,13 @@ useSeoMeta({
 
           <section
             v-if="validationIssues.length > 0"
-            class="rounded-md border border-terra-600/30 bg-terra-50/70 p-6"
+            class="rounded-3xl border border-saffron-600/30 bg-saffron-50/70 p-6"
           >
-            <p class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.2em] text-terra-700">
-              Guardrails
+            <p class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.2em] text-saffron-700">
+              Almost there
             </p>
             <h2 class="mt-2 font-[family:var(--font-serif)] text-2xl text-stone-900">
-              Finish the missing pieces.
+              Still to choose
             </h2>
             <ul class="mt-4 space-y-3 text-sm leading-7 text-stone-700">
               <li
@@ -417,7 +418,7 @@ useSeoMeta({
               >
                 <UIcon
                   name="i-lucide-alert-circle"
-                  class="mt-1 size-4 shrink-0 text-terra-600"
+                  class="mt-1 size-4 shrink-0 text-saffron-600"
                 />
                 <span>{{ issue.message }}</span>
               </li>
@@ -430,7 +431,7 @@ useSeoMeta({
     <!-- Mobile sticky finish bar -->
     <div
       v-if="selectedPlan"
-      class="fixed inset-x-0 bottom-0 z-30 border-t border-amber-600/20 bg-[#f4ecdd]/95 px-5 py-3 backdrop-blur-md xl:hidden"
+      class="fixed inset-x-0 bottom-0 z-30 border-t border-sand-600/20 bg-white/95 px-5 py-3 backdrop-blur-md xl:hidden"
     >
       <div class="mx-auto flex max-w-6xl items-center justify-between gap-4">
         <div class="min-w-0 flex-1">
@@ -439,17 +440,17 @@ useSeoMeta({
               v-for="seg in requiredSlotStates"
               :key="seg.id"
               class="h-1 flex-1 rounded-full transition-colors duration-500"
-              :class="seg.filled ? 'bg-indigo-600' : 'bg-amber-600/20'"
+              :class="seg.filled ? 'bg-olive-600' : 'bg-sand-600/20'"
             />
           </div>
           <p class="mt-1.5 font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.14em] text-stone-500">
-            {{ requiredFilled }} / {{ requiredTotal }} required filled
+            {{ requiredFilled }} / {{ requiredTotal }} chosen
           </p>
         </div>
         <a
           href="#bundle-summary"
-          class="shrink-0 rounded-sm px-4 py-2.5 font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.14em] transition"
-          :class="isReady ? 'bg-terra-600 text-amber-50' : 'bg-indigo-600 text-amber-50'"
+          class="shrink-0 rounded-lg px-4 py-2.5 font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.14em] transition"
+          :class="isReady ? 'bg-saffron-600 text-sand-50' : 'bg-olive-600 text-sand-50'"
         >
           {{ isReady ? 'Ready · review' : `${remainingRequiredSlots} left` }}
         </a>

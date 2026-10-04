@@ -11,250 +11,326 @@ const product = computed(() => {
   if (!foundProduct) {
     throw createError({
       statusCode: 404,
-      statusMessage: 'Catalog product not found'
+      statusMessage: 'Product not found'
     })
   }
 
   return foundProduct
 })
 
+const categorySlug = computed(() => product.value.eligibleSlotTypes[0])
 const compatiblePlans = computed(() => getEligiblePlansForProduct(product.value, catalog.value.plans))
+const related = computed(() => {
+  const same = catalog.value.products.filter(p => p.id !== product.value.id && p.isAvailable && p.eligibleSlotTypes.includes(categorySlug.value!))
+  const others = catalog.value.products.filter(p => p.id !== product.value.id && p.isAvailable && !same.includes(p))
+  return [...same, ...others].slice(0, 4)
+})
+
+const canBuy = computed(() => product.value.isAvailable && product.value.price.amount > 0)
+const quantity = ref(1)
+watch(productSlug, () => {
+  quantity.value = 1
+})
+
+const { add } = useCart()
+const { checkout, pending: buying, error: buyError } = useCheckout()
+
+function addToCart() {
+  add(product.value.id, quantity.value)
+}
+function buyNow() {
+  checkout([{ productId: product.value.id, quantity: quantity.value }])
+}
+
+const cadenceLabel: Record<string, string> = { weekly: 'every week', biweekly: 'every two weeks', monthly: 'every month' }
 
 useSeoMeta({
-  title: () => `${product.value.name} · Collection`,
-  description: () => product.value.description
+  title: () => product.value.name,
+  description: () => product.value.description,
+  ogImage: () => product.value.image.src
 })
 </script>
 
 <template>
-  <div class="maghreb-wash">
-    <div class="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
-      <NuxtLink
-        to="/catalog"
-        class="inline-flex items-center gap-2 font-[family:var(--font-mono)] text-[0.7rem] uppercase tracking-[0.22em] text-stone-500 transition hover:text-terra-700"
+  <div class="pb-28 md:pb-0">
+    <div class="mx-auto max-w-6xl px-5 py-8 sm:px-8 sm:py-12">
+      <nav
+        class="flex flex-wrap items-center gap-1.5 text-sm text-stone-500"
+        aria-label="Breadcrumb"
       >
+        <NuxtLink
+          to="/catalog"
+          class="hover:text-olive-700"
+        >Shop</NuxtLink>
         <UIcon
-          name="i-lucide-arrow-left"
-          class="size-4"
+          name="i-lucide-chevron-right"
+          class="size-3.5"
         />
-        Back to collection
-      </NuxtLink>
+        <NuxtLink
+          :to="`/catalog?category=${categorySlug}`"
+          class="hover:text-olive-700"
+        >{{ product.category }}</NuxtLink>
+        <UIcon
+          name="i-lucide-chevron-right"
+          class="size-3.5"
+        />
+        <span class="text-stone-800">{{ product.name }}</span>
+      </nav>
 
-      <section class="mt-10 grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start lg:gap-14">
-        <!-- Arched product frame -->
-        <div
-          class="reveal relative mx-auto w-full max-w-sm lg:sticky lg:top-28"
-          style="animation-delay:.1s"
-        >
-          <div class="arch border-[1.5px] border-amber-600/60 bg-gradient-to-b from-amber-50 to-stone-100 p-3.5 shadow-[0_36px_70px_-34px_rgba(42,29,18,0.55)]">
-            <div class="arch-inner aspect-[3/4] overflow-hidden bg-stone-100">
-              <img
-                :src="product.image.src"
-                :alt="product.image.alt"
-                class="size-full object-cover"
-              >
-            </div>
-          </div>
-          <div
-            class="wax-seal stamp-in absolute -bottom-5 -right-4 [--seal-size:5.5rem]"
-            style="animation-delay:.5s"
-          >
-            <span>illi<br>·<br>by<br>invitation</span>
-          </div>
-        </div>
-
-        <div class="space-y-8">
-          <div class="space-y-5">
-            <div class="flex flex-wrap gap-2 font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.18em]">
-              <span
-                v-for="slotType in product.eligibleSlotTypes"
-                :key="slotType"
-                class="rounded-sm bg-terra-600/10 px-2.5 py-1 text-terra-700"
-              >
-                {{ slotType }} slot
-              </span>
-            </div>
-
-            <p class="font-[family:var(--font-mono)] text-[0.7rem] uppercase tracking-[0.3em] text-indigo-700">
-              The product
-            </p>
-            <h1 class="font-[family:var(--font-serif)] text-5xl font-normal leading-[1.0] tracking-tight text-stone-900 sm:text-6xl">
-              {{ product.name }}
-            </h1>
-            <p class="font-[family:var(--font-mono)] text-xs uppercase tracking-[0.18em] text-stone-500">
-              {{ product.subtitle }}
-            </p>
-            <p class="max-w-2xl text-lg leading-8 text-stone-700">
-              {{ product.description }}
-            </p>
-
-            <div class="flex flex-wrap gap-3 pt-1">
-              <NuxtLink
-                to="/subscribe"
-                class="inline-flex items-center gap-2 rounded-sm bg-indigo-600 px-6 py-3.5 text-sm font-semibold text-amber-50 transition hover:bg-indigo-700"
-              >
-                Add through subscription
-                <UIcon
-                  name="i-lucide-arrow-right"
-                  class="size-4"
-                />
-              </NuxtLink>
-              <NuxtLink
-                to="/catalog"
-                class="inline-flex items-center gap-2 rounded-sm border border-indigo-600 px-6 py-3.5 text-sm font-semibold text-indigo-700 transition hover:bg-indigo-600/8"
-              >
-                Full collection
-              </NuxtLink>
-            </div>
-          </div>
-
-          <div class="grid grid-cols-2 gap-px overflow-hidden rounded-md border border-amber-600/40 bg-amber-600/40">
-            <div class="bg-[#f4ecdd] p-6">
-              <p class="font-[family:var(--font-mono)] text-[0.64rem] uppercase tracking-[0.16em] text-terra-600">
-                Pack format
-              </p>
-              <p class="mt-2 font-[family:var(--font-serif)] text-3xl text-stone-900">
-                {{ product.defaultUnitLabel }}
-              </p>
-            </div>
-            <div class="bg-[#f4ecdd] p-6">
-              <p class="font-[family:var(--font-mono)] text-[0.64rem] uppercase tracking-[0.16em] text-terra-600">
-                Keeps
-              </p>
-              <p class="mt-2 font-[family:var(--font-serif)] text-3xl text-stone-900">
-                {{ product.shelfLifeDays }} days
-              </p>
-            </div>
-            <div class="bg-[#f4ecdd] p-6">
-              <p class="font-[family:var(--font-mono)] text-[0.64rem] uppercase tracking-[0.16em] text-terra-600">
-                Storage
-              </p>
-              <p class="mt-2 font-[family:var(--font-serif)] text-3xl text-stone-900">
-                {{ product.storage }}
-              </p>
-            </div>
-            <div class="bg-[#f4ecdd] p-6">
-              <p class="font-[family:var(--font-mono)] text-[0.64rem] uppercase tracking-[0.16em] text-terra-600">
-                Subscription fit
-              </p>
-              <p class="mt-2 font-[family:var(--font-serif)] text-3xl text-stone-900">
-                {{ compatiblePlans.length }} plans
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Nutrition -->
-      <section class="mt-16 rounded-md border border-amber-600/25 bg-[#f4ecdd] p-8">
-        <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p class="font-[family:var(--font-mono)] text-[0.7rem] uppercase tracking-[0.3em] text-indigo-700">
-              Nutrition
-            </p>
-            <h2 class="mt-3 font-[family:var(--font-serif)] text-4xl text-stone-900">
-              Macro split.
-            </h2>
-          </div>
-          <div class="flex gap-6 font-[family:var(--font-mono)] text-[0.64rem] uppercase tracking-[0.14em]">
-            <span class="flex items-center gap-2 text-stone-600">
-              <span class="size-2.5 rounded-full bg-indigo-600" />Protein {{ product.nutrition.proteins }}%
-            </span>
-            <span class="flex items-center gap-2 text-stone-600">
-              <span class="size-2.5 rounded-full bg-terra-600" />Fat {{ product.nutrition.fats }}%
-            </span>
-            <span class="flex items-center gap-2 text-stone-600">
-              <span class="size-2.5 rounded-full bg-amber-400" />Carbs {{ product.nutrition.carbs }}%
-            </span>
+      <section class="mt-6 grid gap-8 lg:grid-cols-2 lg:gap-14">
+        <!-- Photo -->
+        <div class="lg:sticky lg:top-28 lg:self-start">
+          <div class="relative overflow-hidden rounded-[2rem] bg-white ring-1 ring-sand-200">
+            <img
+              :src="product.image.src"
+              :alt="product.image.alt"
+              class="aspect-square w-full object-cover"
+            >
+            <span
+              v-if="product.storage === 'Refrigerated'"
+              class="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1.5 text-xs font-semibold text-olive-800 shadow-sm"
+            >Fresh · keep chilled</span>
           </div>
         </div>
 
-        <div class="mt-6 flex h-3.5 overflow-hidden rounded-full border border-amber-600/20">
-          <div
-            class="bg-indigo-600"
-            :style="`width:${product.nutrition.proteins}%`"
-          />
-          <div
-            class="bg-terra-600"
-            :style="`width:${product.nutrition.fats}%`"
-          />
-          <div
-            class="bg-amber-400"
-            :style="`width:${product.nutrition.carbs}%`"
-          />
-        </div>
-
-        <p
-          v-if="product.nutrition.summary"
-          class="mt-6 font-[family:var(--font-mono)] text-xs leading-6 text-stone-500"
-        >
-          {{ product.nutrition.summary }}
-        </p>
-      </section>
-
-      <section class="mt-16 grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
-        <!-- Ingredients -->
-        <div class="rounded-md border border-amber-600/25 bg-amber-50/50 p-8">
-          <p class="font-[family:var(--font-mono)] text-[0.7rem] uppercase tracking-[0.3em] text-indigo-700">
-            Ingredients
+        <!-- Buy box -->
+        <div>
+          <p class="eyebrow">
+            {{ product.category }}
           </p>
-          <h2 class="mt-3 font-[family:var(--font-serif)] text-4xl text-stone-900">
-            Short and traceable.
-          </h2>
-          <ul class="mt-6 space-y-3 text-base leading-7 text-stone-700">
-            <li
-              v-for="ingredient in product.ingredients"
-              :key="ingredient"
-              class="flex items-start gap-3"
+          <h1 class="mt-2 font-serif text-4xl leading-[1.05] text-stone-900 sm:text-6xl">
+            {{ product.name }}
+          </h1>
+          <p class="mt-5 text-lg leading-8 text-stone-600">
+            {{ product.description }}
+          </p>
+
+          <div class="mt-7 flex items-baseline gap-3">
+            <span class="font-serif text-5xl text-stone-900">{{ product.price.amount }} MAD</span>
+            <span class="text-stone-500">per {{ product.defaultUnitLabel }}</span>
+          </div>
+
+          <div class="mt-6 flex flex-wrap items-center gap-3">
+            <QuantityStepper v-model="quantity" />
+            <button
+              type="button"
+              class="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-olive-700 px-7 py-3.5 text-base font-semibold text-sand-50 shadow-[0_14px_30px_-14px_rgba(47,74,41,0.8)] transition hover:bg-olive-800 disabled:cursor-not-allowed disabled:opacity-50 sm:flex-none"
+              :disabled="!canBuy"
+              @click="addToCart"
             >
               <UIcon
-                name="i-lucide-check"
-                class="mt-1 size-4 shrink-0 text-terra-600"
+                name="i-lucide-shopping-bag"
+                class="size-5"
               />
-              <span>{{ ingredient }}</span>
+              <template v-if="canBuy">
+                Add to cart<span class="hidden sm:inline"> · {{ product.price.amount * quantity }} MAD</span>
+              </template>
+              <template v-else>
+                Back soon
+              </template>
+            </button>
+          </div>
+          <button
+            v-if="canBuy"
+            type="button"
+            class="mt-3 w-full rounded-full bg-white px-7 py-3.5 text-base font-semibold text-olive-800 ring-1 ring-sand-300 transition hover:ring-olive-600 disabled:opacity-60 sm:w-auto"
+            :disabled="buying"
+            @click="buyNow"
+          >
+            {{ buying ? 'Starting checkout…' : 'Buy now' }}
+          </button>
+          <p
+            v-if="buyError"
+            class="mt-3 rounded-xl bg-saffron-50 px-3 py-2 text-sm text-saffron-800"
+          >
+            {{ buyError }}
+          </p>
+
+          <ul class="mt-8 grid grid-cols-3 gap-3 text-sm">
+            <li class="rounded-2xl bg-white p-4 ring-1 ring-sand-200">
+              <UIcon
+                :name="product.storage === 'Refrigerated' ? 'i-lucide-snowflake' : 'i-lucide-sun'"
+                class="size-5 text-olive-600"
+              />
+              <p class="mt-2 font-semibold text-stone-900">
+                {{ product.storage === 'Refrigerated' ? 'Refrigerated' : 'Room temp' }}
+              </p>
+              <p class="text-xs text-stone-500">
+                Storage
+              </p>
+            </li>
+            <li class="rounded-2xl bg-white p-4 ring-1 ring-sand-200">
+              <UIcon
+                name="i-lucide-calendar-check"
+                class="size-5 text-olive-600"
+              />
+              <p class="mt-2 font-semibold text-stone-900">
+                {{ product.shelfLifeDays }} days
+              </p>
+              <p class="text-xs text-stone-500">
+                Keeps for
+              </p>
+            </li>
+            <li class="rounded-2xl bg-white p-4 ring-1 ring-sand-200">
+              <UIcon
+                name="i-lucide-map-pin"
+                class="size-5 text-olive-600"
+              />
+              <p class="mt-2 font-semibold text-stone-900">
+                Casablanca
+              </p>
+              <p class="text-xs text-stone-500">
+                Made in
+              </p>
             </li>
           </ul>
-        </div>
 
-        <!-- Subscription fit -->
-        <div class="rounded-md border border-amber-600/25 bg-[#f4ecdd] p-8">
-          <p class="font-[family:var(--font-mono)] text-[0.7rem] uppercase tracking-[0.3em] text-indigo-700">
-            Subscription fit
-          </p>
-          <h2 class="mt-3 font-[family:var(--font-serif)] text-4xl text-stone-900">
-            Where this product belongs.
-          </h2>
+          <NuxtLink
+            v-if="compatiblePlans[0]"
+            to="/subscribe"
+            class="mt-6 flex items-center gap-4 rounded-2xl bg-saffron-50 p-4 ring-1 ring-saffron-200 transition hover:ring-saffron-400"
+          >
+            <span class="grid size-11 shrink-0 place-items-center rounded-full bg-saffron-300 text-olive-950">
+              <UIcon
+                name="i-lucide-repeat"
+                class="size-5"
+              />
+            </span>
+            <span class="text-sm leading-6 text-stone-700">
+              <strong class="text-stone-900">Want it on repeat?</strong> Add it to the {{ compatiblePlans[0].plan.name }},
+              delivered {{ cadenceLabel[compatiblePlans[0].plan.cadence] ?? compatiblePlans[0].plan.cadence }} —
+              {{ compatiblePlans[0].plan.price.amount }} MAD.
+            </span>
+            <UIcon
+              name="i-lucide-arrow-right"
+              class="ml-auto size-5 shrink-0 text-saffron-700"
+            />
+          </NuxtLink>
 
-          <div class="mt-6 space-y-4">
-            <div
-              v-for="entry in compatiblePlans"
-              :key="entry.plan.id"
-              class="rounded-md border border-amber-600/25 p-5"
+          <!-- Details -->
+          <div class="mt-10 divide-y divide-sand-200 border-y border-sand-200">
+            <details
+              class="group py-5"
+              open
             >
-              <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                <div class="space-y-2">
-                  <h3 class="font-[family:var(--font-serif)] text-2xl text-stone-900">
-                    {{ entry.plan.name }}
-                  </h3>
-                  <p class="text-sm leading-7 text-stone-600">
-                    {{ entry.plan.summary }}
-                  </p>
-                </div>
-                <span class="shrink-0 font-[family:var(--font-mono)] text-[0.64rem] uppercase tracking-[0.16em] text-terra-600">{{ entry.plan.cadence }}</span>
-              </div>
-              <div class="mt-4 flex flex-wrap gap-2">
-                <span
-                  v-for="slot in entry.matchingSlots"
-                  :key="slot.id"
-                  class="rounded-sm border border-indigo-600/40 px-2.5 py-1 font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.14em] text-indigo-700"
+              <summary class="flex cursor-pointer list-none items-center justify-between font-semibold text-stone-900">
+                Ingredients
+                <UIcon
+                  name="i-lucide-chevron-down"
+                  class="size-5 transition group-open:rotate-180"
+                />
+              </summary>
+              <ul class="mt-4 flex flex-wrap gap-2">
+                <li
+                  v-for="ingredient in product.ingredients"
+                  :key="ingredient"
+                  class="rounded-full bg-white px-3 py-1.5 text-sm text-stone-700 ring-1 ring-sand-200"
                 >
-                  {{ slot.label }}
-                </span>
+                  {{ ingredient }}
+                </li>
+              </ul>
+              <p
+                v-if="product.ingredients.length"
+                class="mt-3 text-sm text-stone-500"
+              >
+                {{ product.ingredients.length }} ingredients. Nothing else.
+              </p>
+            </details>
+            <details class="group py-5">
+              <summary class="flex cursor-pointer list-none items-center justify-between font-semibold text-stone-900">
+                Nutrition
+                <UIcon
+                  name="i-lucide-chevron-down"
+                  class="size-5 transition group-open:rotate-180"
+                />
+              </summary>
+              <div class="mt-4 flex h-3 overflow-hidden rounded-full bg-sand-200">
+                <div
+                  class="bg-olive-600"
+                  :style="`width:${product.nutrition.proteins}%`"
+                />
+                <div
+                  class="bg-saffron-400"
+                  :style="`width:${product.nutrition.fats}%`"
+                />
+                <div
+                  class="bg-sand-400"
+                  :style="`width:${product.nutrition.carbs}%`"
+                />
               </div>
-            </div>
+              <div class="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-sm text-stone-600">
+                <span class="flex items-center gap-2"><span class="size-2.5 rounded-full bg-olive-600" />Protein {{ product.nutrition.proteins }}%</span>
+                <span class="flex items-center gap-2"><span class="size-2.5 rounded-full bg-saffron-400" />Fat {{ product.nutrition.fats }}%</span>
+                <span class="flex items-center gap-2"><span class="size-2.5 rounded-full bg-sand-400" />Carbs {{ product.nutrition.carbs }}%</span>
+              </div>
+              <p
+                v-if="product.nutrition.summary"
+                class="mt-3 text-sm leading-6 text-stone-500"
+              >
+                {{ product.nutrition.summary }}
+              </p>
+            </details>
+            <details class="group py-5">
+              <summary class="flex cursor-pointer list-none items-center justify-between font-semibold text-stone-900">
+                Storage & shelf life
+                <UIcon
+                  name="i-lucide-chevron-down"
+                  class="size-5 transition group-open:rotate-180"
+                />
+              </summary>
+              <p class="mt-3 leading-7 text-stone-600">
+                {{ product.storage === 'Refrigerated' ? 'Keep refrigerated.' : 'Store in a cool, dry place; refrigerate after opening.' }}
+                Best within {{ product.shelfLifeDays }} days. Sold by the {{ product.defaultUnitLabel }}.
+              </p>
+            </details>
           </div>
         </div>
       </section>
+
+      <!-- Related -->
+      <section
+        v-if="related.length"
+        class="mt-20"
+      >
+        <h2 class="font-serif text-3xl text-stone-900 sm:text-4xl">
+          You may also like
+        </h2>
+        <div class="mt-6 grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4">
+          <CatalogProductCard
+            v-for="p in related"
+            :key="p.id"
+            :product="p"
+          />
+        </div>
+      </section>
+    </div>
+
+    <!-- Mobile buy bar -->
+    <div
+      v-if="canBuy"
+      class="fixed inset-x-0 bottom-0 z-30 border-t border-sand-200 bg-white/95 px-4 py-3 backdrop-blur md:hidden"
+    >
+      <div class="flex items-center gap-3">
+        <div class="min-w-0 flex-1 leading-tight">
+          <p class="truncate text-sm font-semibold text-stone-900">
+            {{ product.name }}
+          </p>
+          <p class="text-sm text-stone-500">
+            {{ product.price.amount }} MAD
+          </p>
+        </div>
+        <button
+          type="button"
+          class="inline-flex items-center gap-2 rounded-full bg-olive-700 px-5 py-3 text-sm font-semibold text-sand-50"
+          @click="addToCart"
+        >
+          <UIcon
+            name="i-lucide-shopping-bag"
+            class="size-4"
+          />
+          Add to cart
+        </button>
+      </div>
     </div>
   </div>
 </template>

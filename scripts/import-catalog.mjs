@@ -75,6 +75,17 @@ const SLOT_UNIT = {
   sauces: 'jar'
 }
 
+// Starting one-time prices in MAD — keep in sync with defaultProductPrice in app/types/catalog.ts.
+const SLOT_PRICE = {
+  beverages: 130,
+  dairy: 170,
+  vegetables: 140,
+  spreads: 170,
+  jams: 150,
+  seafood: 280,
+  sauces: 140
+}
+
 const SLOT_BLURB = {
   beverages: 'Live, fermented drinks — kombucha, kefirs, ginger beer.',
   dairy: 'Raw-milk cheeses and cultured dairy, aged and spreadable.',
@@ -96,7 +107,7 @@ const PLANS = [
     name: 'Pantry Box',
     cadence: 'monthly',
     summary: 'Shelf-stable staples for the cupboard — a spread, a fruit product and a sauce, with room for one more.',
-    price: { amount: 64, currency: 'USDT' },
+    price: { amount: 600, currency: 'MAD' },
     includedSlots: [
       { id: 'pantry-spread', slotType: 'spreads', label: 'Spread', description: 'Choose a nut or seed butter.', minQuantity: 1, maxQuantity: 1, required: true },
       { id: 'pantry-jam', slotType: 'jams', label: 'Fruit product', description: 'Choose a jam, concentrate or preserve.', minQuantity: 1, maxQuantity: 1, required: true },
@@ -110,7 +121,7 @@ const PLANS = [
     name: 'Living Box',
     cadence: 'weekly',
     summary: 'Fresh, refrigerated ferments — a live drink, a cultured dairy and a fermented vegetable each week.',
-    price: { amount: 58, currency: 'USDT' },
+    price: { amount: 540, currency: 'MAD' },
     includedSlots: [
       { id: 'living-beverage', slotType: 'beverages', label: 'Fermented drink', description: 'Choose a live, fermented beverage.', minQuantity: 1, maxQuantity: 1, required: true },
       { id: 'living-dairy', slotType: 'dairy', label: 'Cultured dairy', description: 'Choose a cheese or cultured dairy.', minQuantity: 1, maxQuantity: 1, required: true },
@@ -124,7 +135,7 @@ const PLANS = [
     name: 'Coastal Box',
     cadence: 'biweekly',
     summary: 'Sea and table — two marinated fish, a sauce to serve them with, and an optional vegetable.',
-    price: { amount: 88, currency: 'USDT' },
+    price: { amount: 820, currency: 'MAD' },
     includedSlots: [
       { id: 'coastal-fish-1', slotType: 'seafood', label: 'Fish 1', description: 'Choose a marinated or kefta-style fish.', minQuantity: 1, maxQuantity: 1, required: true },
       { id: 'coastal-fish-2', slotType: 'seafood', label: 'Fish 2', description: 'Choose a second fish for the box.', minQuantity: 1, maxQuantity: 1, required: true },
@@ -212,6 +223,7 @@ for (const row of rows) {
     nutrition: { proteins, fats, carbs, summary: nutritionSummary },
     isAvailable: true,
     eligibleSlotTypes: [slotType],
+    price: { amount: SLOT_PRICE[slotType], currency: 'MAD' },
     _order: categoryOrder.indexOf(category)
   })
 }
@@ -246,7 +258,8 @@ function emitProduct(p) {
     shelfLifeDays: ${p.shelfLifeDays},
     nutrition: { proteins: ${p.nutrition.proteins}, fats: ${p.nutrition.fats}, carbs: ${p.nutrition.carbs}, summary: ${j(p.nutrition.summary)} },
     isAvailable: ${p.isAvailable},
-    eligibleSlotTypes: ${arr(p.eligibleSlotTypes)}
+    eligibleSlotTypes: ${arr(p.eligibleSlotTypes)},
+    price: { amount: ${p.price.amount}, currency: ${j(p.price.currency)} }
   }`
 }
 
