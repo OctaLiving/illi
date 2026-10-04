@@ -52,6 +52,18 @@ export function orderConfirmationEmail(name: string, planName: string, amount: n
   }
 }
 
+export function purchaseConfirmationEmail(name: string, productName: string, amount: number, currency: string) {
+  return {
+    subject: `Your illi order is confirmed — ${productName}`,
+    text: `Hi ${name}, your order for ${productName} (${amount} ${currency}) is paid and confirmed.`,
+    html: shell('Your order is confirmed.', `
+      <p>Hi ${name},</p>
+      <p>Your order for <strong>${productName}</strong> is paid and confirmed.</p>
+      <p style="margin:20px 0;font-size:20px;color:${INK};">${amount} ${currency} <span style="font-size:13px;color:#8a7761;">one-time</span></p>
+      <p>We'll be in touch when it's on its way.</p>`)
+  }
+}
+
 export function renewalEmail(name: string, planName: string, amount: number, currency: string, payUrl: string) {
   return {
     subject: `Time to renew — ${planName}`,

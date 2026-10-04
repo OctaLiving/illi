@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { defaultProductPrice } from '~/types/catalog'
 import type { CatalogProduct } from '~/types/catalog'
 import { field, labelText, errMessage } from '~/utils/manage'
 
@@ -27,7 +28,8 @@ const productForm = reactive({
   fats: 0,
   carbs: 0,
   summary: '',
-  isAvailable: true
+  isAvailable: true,
+  price: 150
 })
 
 function newProduct() {
@@ -47,7 +49,8 @@ function newProduct() {
     fats: 0,
     carbs: 0,
     summary: '',
-    isAvailable: true
+    isAvailable: true,
+    price: defaultProductPrice[categories.value[0]?.slug ?? 'jams']
   })
   showProductForm.value = true
 }
@@ -69,7 +72,8 @@ function editProduct(p: CatalogProduct) {
     fats: p.nutrition.fats,
     carbs: p.nutrition.carbs,
     summary: p.nutrition.summary,
-    isAvailable: p.isAvailable
+    isAvailable: p.isAvailable,
+    price: p.price.amount
   })
   showProductForm.value = true
 }
@@ -94,7 +98,8 @@ async function submitProduct() {
         carbs: productForm.carbs,
         summary: productForm.summary
       },
-      isAvailable: productForm.isAvailable
+      isAvailable: productForm.isAvailable,
+      price: { amount: productForm.price }
     }
     if (editingProductId.value) {
       await $fetch(`/api/products/${editingProductId.value}`, { method: 'PUT', body })
@@ -323,13 +328,24 @@ useSeoMeta({ title: 'Catalog · illi ops', robots: 'noindex, nofollow' })
                 >
               </div>
             </div>
-            <div>
-              <label :class="labelText">Unit of sale</label>
-              <input
-                v-model="productForm.defaultUnitLabel"
-                :class="field"
-                placeholder="jar"
-              >
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label :class="labelText">Unit of sale</label>
+                <input
+                  v-model="productForm.defaultUnitLabel"
+                  :class="field"
+                  placeholder="jar"
+                >
+              </div>
+              <div>
+                <label :class="labelText">Price (MAD)</label>
+                <input
+                  v-model.number="productForm.price"
+                  type="number"
+                  min="0"
+                  :class="field"
+                >
+              </div>
             </div>
             <div>
               <label :class="labelText">Image URL</label>

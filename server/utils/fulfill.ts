@@ -2,7 +2,7 @@ import { prisma } from '~~/server/utils/db/client'
 
 const CADENCE_DAYS: Record<string, number> = { weekly: 7, biweekly: 14, monthly: 30 }
 
-// Idempotent: marks an order paid and activates its subscription. Safe to call
+// Idempotent: marks an order paid and activates its subscription (if it has one). Safe to call
 // from a webhook that may be retried — a second call on an already-paid order
 // is a no-op.
 export async function fulfillOrder(orderId: string, rawEvent?: unknown) {
@@ -39,6 +39,17 @@ export async function fulfillOrder(orderId: string, rawEvent?: unknown) {
       } catch (err) {
         console.error('[fulfill] confirmation email failed:', err)
       }
+    }
+  } else if (order.user) {
+    // One-time product purchase — no subscription to activate, just confirm.
+    try {
+      const { productName } = JSON.parse(order.snapshot) as { productName?: string }
+      await sendMail({
+        to: order.user.email,
+        ...purchaseConfirmationEmail(order.user.name, productName ?? 'your order', order.amount, order.currency)
+      })
+    } catch (err) {
+      console.error('[fulfill] purchase confirmation email failed:', err)
     }
   }
 

@@ -32,7 +32,8 @@ function product(id: string, slotTypes: BundleSlotType[], isAvailable = true): C
     shelfLifeDays: 0,
     nutrition: { proteins: 0, fats: 0, carbs: 0, summary: '' },
     isAvailable,
-    eligibleSlotTypes: slotTypes
+    eligibleSlotTypes: slotTypes,
+    price: { amount: 100, currency: 'MAD' }
   }
 }
 

@@ -75,6 +75,17 @@ const SLOT_UNIT = {
   sauces: 'jar'
 }
 
+// Starting one-time prices in MAD — keep in sync with defaultProductPrice in app/types/catalog.ts.
+const SLOT_PRICE = {
+  beverages: 130,
+  dairy: 170,
+  vegetables: 140,
+  spreads: 170,
+  jams: 150,
+  seafood: 280,
+  sauces: 140
+}
+
 const SLOT_BLURB = {
   beverages: 'Live, fermented drinks — kombucha, kefirs, ginger beer.',
   dairy: 'Raw-milk cheeses and cultured dairy, aged and spreadable.',
@@ -212,6 +223,7 @@ for (const row of rows) {
     nutrition: { proteins, fats, carbs, summary: nutritionSummary },
     isAvailable: true,
     eligibleSlotTypes: [slotType],
+    price: { amount: SLOT_PRICE[slotType], currency: 'MAD' },
     _order: categoryOrder.indexOf(category)
   })
 }
@@ -246,7 +258,8 @@ function emitProduct(p) {
     shelfLifeDays: ${p.shelfLifeDays},
     nutrition: { proteins: ${p.nutrition.proteins}, fats: ${p.nutrition.fats}, carbs: ${p.nutrition.carbs}, summary: ${j(p.nutrition.summary)} },
     isAvailable: ${p.isAvailable},
-    eligibleSlotTypes: ${arr(p.eligibleSlotTypes)}
+    eligibleSlotTypes: ${arr(p.eligibleSlotTypes)},
+    price: { amount: ${p.price.amount}, currency: ${j(p.price.currency)} }
   }`
 }
 

@@ -1,5 +1,6 @@
 import {
   bundleSlotTypes,
+  defaultProductPrice,
   subscriptionCadences
 } from '~/types/catalog'
 import type {
@@ -36,6 +37,7 @@ export interface ProductInput {
   tags?: string[]
   nutrition?: { proteins?: number, fats?: number, carbs?: number, summary?: string }
   isAvailable?: boolean
+  price?: { amount?: number }
 }
 
 export interface PlanSlotInput {
@@ -98,7 +100,8 @@ function toProduct(row: ProductRow): CatalogProduct {
     shelfLifeDays: row.shelfLifeDays,
     nutrition: { proteins: row.proteins, fats: row.fats, carbs: row.carbs, summary: row.nutritionSummary },
     isAvailable: row.isAvailable,
-    eligibleSlotTypes: row.eligibleSlotTypes as BundleSlotType[]
+    eligibleSlotTypes: row.eligibleSlotTypes as BundleSlotType[],
+    price: { amount: row.priceAmount, currency: 'MAD' }
   }
 }
 
@@ -180,7 +183,8 @@ function normalizeProduct(input: ProductInput): NormalizedProduct {
 
 // The columns shared by create + update. `category` (display name) is resolved
 // from the Category table so it stays consistent with the chosen slot type.
-function productData(n: NormalizedProduct, input: ProductInput, category: string) {
+function productData(n: NormalizedProduct, input: ProductInput, category: string, currentPrice?: number) {
+  const price = Number(input.price?.amount)
   return {
     name: n.name,
     subtitle: input.subtitle?.trim() || `${n.storage === 'Refrigerated' ? 'Refrigerated' : 'Room temp'} · ${n.shelfLifeDays}-day shelf`,
@@ -198,7 +202,10 @@ function productData(n: NormalizedProduct, input: ProductInput, category: string
     carbs: Math.max(0, Math.round(Number(input.nutrition?.carbs) || 0)),
     nutritionSummary: input.nutrition?.summary?.trim() ?? '',
     isAvailable: input.isAvailable ?? true,
-    eligibleSlotTypes: [n.slotType]
+    eligibleSlotTypes: [n.slotType],
+    priceAmount: Number.isFinite(price) && input.price?.amount !== undefined
+      ? Math.max(0, Math.round(price))
+      : currentPrice ?? defaultProductPrice[n.slotType]
   }
 }
 
@@ -230,7 +237,7 @@ export async function updateProduct(id: string, input: ProductInput): Promise<Ca
   const n = normalizeProduct(input)
   const row = await prisma.product.update({
     where: { id },
-    data: productData(n, input, await categoryName(n.slotType))
+    data: productData(n, input, await categoryName(n.slotType), current.priceAmount)
   })
   return toProduct(row)
 }

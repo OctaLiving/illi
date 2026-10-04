@@ -20,6 +20,34 @@ const product = computed(() => {
 
 const compatiblePlans = computed(() => getEligiblePlansForProduct(product.value, catalog.value.plans))
 
+// One-time purchase: sign in first if needed, then open the payment page.
+const { data: me } = useMe()
+const buying = ref(false)
+const buyError = ref('')
+
+async function buyNow() {
+  if (!me.value?.user) {
+    return navigateTo(`/login?next=${encodeURIComponent(route.fullPath)}`)
+  }
+  buying.value = true
+  buyError.value = ''
+  try {
+    const { payUrl } = await $fetch<{ payUrl: string }>('/api/checkout/product', {
+      method: 'POST',
+      body: { productId: product.value.id }
+    })
+    if (/^https?:\/\//.test(payUrl)) {
+      window.location.href = payUrl // external hosted page (NOWPayments)
+    } else {
+      await navigateTo(payUrl) // internal simulated page
+    }
+  } catch (err) {
+    const e = err as { data?: { statusMessage?: string } }
+    buyError.value = e?.data?.statusMessage ?? 'Could not start checkout.'
+    buying.value = false
+  }
+}
+
 useSeoMeta({
   title: () => `${product.value.name} · Collection`,
   description: () => product.value.description
@@ -88,24 +116,37 @@ useSeoMeta({
               {{ product.description }}
             </p>
 
+            <p class="font-[family:var(--font-serif)] text-4xl text-stone-900">
+              {{ product.price.amount }} {{ product.price.currency }}
+              <span class="font-[family:var(--font-mono)] text-xs uppercase tracking-[0.16em] text-stone-500">per {{ product.defaultUnitLabel }}</span>
+            </p>
+
             <div class="flex flex-wrap gap-3 pt-1">
-              <NuxtLink
-                to="/subscribe"
-                class="inline-flex items-center gap-2 rounded-sm bg-indigo-600 px-6 py-3.5 text-sm font-semibold text-amber-50 transition hover:bg-indigo-700"
+              <button
+                type="button"
+                class="inline-flex items-center gap-2 rounded-sm bg-indigo-600 px-6 py-3.5 text-sm font-semibold text-amber-50 transition hover:bg-indigo-700 disabled:opacity-50"
+                :disabled="buying || !product.isAvailable || product.price.amount <= 0"
+                @click="buyNow"
               >
-                Add through subscription
+                {{ buying ? 'Starting checkout…' : product.isAvailable ? 'Buy now' : 'Unavailable' }}
                 <UIcon
                   name="i-lucide-arrow-right"
                   class="size-4"
                 />
-              </NuxtLink>
+              </button>
               <NuxtLink
-                to="/catalog"
+                to="/subscribe"
                 class="inline-flex items-center gap-2 rounded-sm border border-indigo-600 px-6 py-3.5 text-sm font-semibold text-indigo-700 transition hover:bg-indigo-600/8"
               >
-                Full collection
+                Add through subscription
               </NuxtLink>
             </div>
+            <p
+              v-if="buyError"
+              class="rounded-sm bg-terra-600/10 px-3 py-2 text-sm text-terra-700"
+            >
+              {{ buyError }}
+            </p>
           </div>
 
           <div class="grid grid-cols-2 gap-px overflow-hidden rounded-md border border-amber-600/40 bg-amber-600/40">

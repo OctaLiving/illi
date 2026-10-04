@@ -45,7 +45,7 @@ const { product, matchedPlanCount = 0 } = defineProps<{
       <p class="line-clamp-2 text-sm leading-6 text-stone-600">{{ product.description }}</p>
 
       <div class="flex items-center justify-between border-t border-amber-600/20 pt-3 font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.14em] text-stone-500">
-        <span>{{ product.defaultUnitLabel }}</span>
+        <span>{{ product.price.amount }} {{ product.price.currency }} · {{ product.defaultUnitLabel }}</span>
         <span>{{ matchedPlanCount }} plan{{ matchedPlanCount === 1 ? '' : 's' }}</span>
       </div>
     </div>

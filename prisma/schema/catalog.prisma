@@ -35,6 +35,8 @@ model Product {
   isAvailable       Boolean  @default(true)
   // Category slugs this product can fill. Currently always its own category.
   eligibleSlotTypes String[]
+  // One-time purchase price in MAD (plans carry their own subscription price).
+  priceAmount       Int      @default(0)
   sortOrder         Int      @default(0)
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
