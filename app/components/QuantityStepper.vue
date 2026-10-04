@@ -15,7 +15,7 @@ const quantity = defineModel<number>({ required: true })
       class="grid h-full place-items-center rounded-full text-stone-600 transition hover:bg-sand-100 hover:text-stone-900 disabled:opacity-30"
       :class="size === 'sm' ? 'w-9' : 'w-12'"
       :disabled="quantity <= min"
-      aria-label="Decrease quantity"
+      :aria-label="$t('qty.decrease')"
       @click="quantity = Math.max(min, quantity - 1)"
     >
       <UIcon
@@ -33,7 +33,7 @@ const quantity = defineModel<number>({ required: true })
       class="grid h-full place-items-center rounded-full text-stone-600 transition hover:bg-sand-100 hover:text-stone-900 disabled:opacity-30"
       :class="size === 'sm' ? 'w-9' : 'w-12'"
       :disabled="quantity >= MAX_QUANTITY"
-      aria-label="Increase quantity"
+      :aria-label="$t('qty.increase')"
       @click="quantity = Math.min(MAX_QUANTITY, quantity + 1)"
     >
       <UIcon

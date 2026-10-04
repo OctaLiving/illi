@@ -2,9 +2,14 @@
 const { data: catalog } = await useCatalog()
 const route = useRoute()
 const router = useRouter()
+const { t } = useI18n()
+const { tr, price } = useLocalized()
 
 const activeCategory = computed(() => (typeof route.query.category === 'string' ? route.query.category : ''))
-const activeName = computed(() => catalog.value.categories.find(c => c.slug === activeCategory.value)?.name)
+const activeName = computed(() => {
+  const category = catalog.value.categories.find(c => c.slug === activeCategory.value)
+  return category ? tr(category, 'name') : undefined
+})
 
 const products = computed(() => {
   const list = activeCategory.value
@@ -24,8 +29,8 @@ function selectCategory(slug: string) {
 }
 
 useSeoMeta({
-  title: () => (activeName.value ? `${activeName.value} — Shop` : 'Shop the pantry'),
-  description: 'Ferments, cheeses, nut butters, jams, marinated fish and sauces — made in small batches in Casablanca. Buy a single jar or build a box.'
+  title: () => (activeName.value ? t('shop.metaCategory', { name: activeName.value }) : t('shop.metaAll')),
+  description: () => t('shop.metaDescription')
 })
 </script>
 
@@ -34,14 +39,13 @@ useSeoMeta({
     <section class="maghreb-wash border-b border-sand-200">
       <div class="mx-auto max-w-6xl px-5 pb-8 pt-12 sm:px-8 sm:pt-16">
         <p class="eyebrow">
-          The pantry
+          {{ $t('shop.eyebrow') }}
         </p>
         <h1 class="mt-3 max-w-3xl font-serif text-4xl leading-[1.05] text-stone-900 sm:text-6xl">
-          {{ activeName ?? 'Everything we make' }}
+          {{ activeName ?? $t('shop.titleAll') }}
         </h1>
         <p class="mt-4 max-w-2xl text-lg leading-8 text-stone-600">
-          Small batches, short ingredient lists, nothing added that shouldn't be. Add any jar to your cart —
-          no subscription needed.
+          {{ $t('shop.intro') }}
         </p>
 
         <div class="no-scrollbar -mx-5 mt-8 flex gap-2 overflow-x-auto px-5 pb-1 sm:mx-0 sm:flex-wrap sm:px-0">
@@ -51,7 +55,7 @@ useSeoMeta({
             :class="!activeCategory ? 'bg-olive-700 text-sand-50' : 'bg-white text-stone-700 ring-1 ring-sand-300 hover:ring-olive-600'"
             @click="selectCategory('')"
           >
-            All <span class="opacity-70">{{ catalog.products.length }}</span>
+            {{ $t('shop.all') }} <span class="opacity-70">{{ catalog.products.length }}</span>
           </button>
           <button
             v-for="category in catalog.categories"
@@ -61,7 +65,7 @@ useSeoMeta({
             :class="activeCategory === category.slug ? 'bg-olive-700 text-sand-50' : 'bg-white text-stone-700 ring-1 ring-sand-300 hover:ring-olive-600'"
             @click="selectCategory(category.slug)"
           >
-            {{ category.name }} <span class="opacity-70">{{ counts[category.slug] }}</span>
+            {{ tr(category, 'name') }} <span class="opacity-70">{{ counts[category.slug] }}</span>
           </button>
         </div>
       </div>
@@ -74,30 +78,30 @@ useSeoMeta({
           :key="product.id"
         >
           <CatalogProductCard :product="product" />
-          <NuxtLink
+          <NuxtLinkLocale
             v-if="i === 5 && catalog.plans.length"
             to="/subscribe"
             class="col-span-2 flex flex-col justify-between gap-6 rounded-3xl bg-olive-800 p-6 text-sand-100 transition hover:bg-olive-900 sm:p-8 lg:col-span-1"
           >
             <div>
               <p class="text-xs font-bold uppercase tracking-[0.18em] text-saffron-300">
-                Boxes on repeat
+                {{ $t('shop.boxesEyebrow') }}
               </p>
               <p class="mt-3 font-serif text-3xl leading-tight text-sand-50">
-                Choose your favourites once — we refill them on your schedule.
+                {{ $t('shop.boxesTitle') }}
               </p>
             </div>
             <p class="flex items-center justify-between text-sm font-semibold">
-              From {{ lowestPlan }} MAD
+              {{ $t('shop.boxesFrom', { price: price(lowestPlan) }) }}
               <span class="inline-flex items-center gap-1 rounded-full bg-saffron-400 px-4 py-2 text-olive-950">
-                Build a box
+                {{ $t('shop.buildBox') }}
                 <UIcon
                   name="i-lucide-arrow-right"
-                  class="size-4"
+                  class="flip-rtl size-4"
                 />
               </span>
             </p>
-          </NuxtLink>
+          </NuxtLinkLocale>
         </template>
       </div>
 
@@ -105,7 +109,7 @@ useSeoMeta({
         v-if="products.length === 0"
         class="rounded-3xl bg-white p-10 text-center text-stone-600 ring-1 ring-sand-200"
       >
-        Nothing here yet — try another category.
+        {{ $t('shop.empty') }}
       </p>
     </section>
   </div>

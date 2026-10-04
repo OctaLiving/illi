@@ -1,6 +1,8 @@
 <script setup lang="ts">
 definePageMeta({ middleware: 'auth' })
 
+const { t } = useI18n()
+
 interface Profile {
   name: string
   email: string
@@ -46,13 +48,13 @@ async function save() {
     saved.value = true
   } catch (err) {
     const e = err as { data?: { statusMessage?: string } }
-    error.value = e?.data?.statusMessage ?? 'Could not save your information.'
+    error.value = e?.data?.statusMessage ?? t('profile.error')
   } finally {
     saving.value = false
   }
 }
 
-useSeoMeta({ title: 'Your information · illi', robots: 'noindex' })
+useSeoMeta({ title: () => t('profile.title'), robots: 'noindex' })
 </script>
 
 <template>
@@ -60,18 +62,17 @@ useSeoMeta({ title: 'Your information · illi', robots: 'noindex' })
     <div class="mx-auto max-w-2xl px-5 py-16 sm:px-8">
       <AppBreadcrumbs
         class="mb-8"
-        :items="[{ label: 'Home', to: '/' }, { label: 'Account', to: '/account' }, { label: 'Information' }]"
+        :items="[{ label: $t('profile.crumbHome'), to: '/' }, { label: $t('profile.crumbAccount'), to: '/account' }, { label: $t('profile.crumbInfo') }]"
       />
 
       <p class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.3em] text-saffron-600">
-        Your information
+        {{ $t('profile.title') }}
       </p>
       <h1 class="mt-2 font-[family:var(--font-serif)] text-4xl text-stone-900 sm:text-5xl">
-        Contact & delivery
+        {{ $t('profile.heading') }}
       </h1>
       <p class="mt-3 max-w-lg text-sm leading-7 text-stone-600">
-        Where your boxes go and how we reach you. This is the address each subscription delivery
-        is sent to.
+        {{ $t('profile.intro') }}
       </p>
 
       <form
@@ -80,14 +81,14 @@ useSeoMeta({ title: 'Your information · illi', robots: 'noindex' })
       >
         <div class="grid gap-4 sm:grid-cols-2">
           <div>
-            <label :class="labelText">Name</label>
+            <label :class="labelText">{{ $t('profile.name') }}</label>
             <input
               v-model="form.name"
               :class="field"
             >
           </div>
           <div>
-            <label :class="labelText">Email</label>
+            <label :class="labelText">{{ $t('profile.email') }}</label>
             <input
               :value="profile?.email"
               disabled
@@ -97,7 +98,7 @@ useSeoMeta({ title: 'Your information · illi', robots: 'noindex' })
         </div>
 
         <div>
-          <label :class="labelText">Phone</label>
+          <label :class="labelText">{{ $t('profile.phone') }}</label>
           <input
             v-model="form.phone"
             type="tel"
@@ -107,7 +108,7 @@ useSeoMeta({ title: 'Your information · illi', robots: 'noindex' })
         </div>
 
         <div>
-          <label :class="labelText">Address line 1</label>
+          <label :class="labelText">{{ $t('profile.address1') }}</label>
           <input
             v-model="form.addressLine1"
             autocomplete="address-line1"
@@ -115,7 +116,7 @@ useSeoMeta({ title: 'Your information · illi', robots: 'noindex' })
           >
         </div>
         <div>
-          <label :class="labelText">Address line 2</label>
+          <label :class="labelText">{{ $t('profile.address2') }}</label>
           <input
             v-model="form.addressLine2"
             autocomplete="address-line2"
@@ -125,7 +126,7 @@ useSeoMeta({ title: 'Your information · illi', robots: 'noindex' })
 
         <div class="grid gap-4 sm:grid-cols-3">
           <div>
-            <label :class="labelText">City</label>
+            <label :class="labelText">{{ $t('profile.city') }}</label>
             <input
               v-model="form.city"
               autocomplete="address-level2"
@@ -133,7 +134,7 @@ useSeoMeta({ title: 'Your information · illi', robots: 'noindex' })
             >
           </div>
           <div>
-            <label :class="labelText">Postal code</label>
+            <label :class="labelText">{{ $t('profile.postal') }}</label>
             <input
               v-model="form.postalCode"
               autocomplete="postal-code"
@@ -141,7 +142,7 @@ useSeoMeta({ title: 'Your information · illi', robots: 'noindex' })
             >
           </div>
           <div>
-            <label :class="labelText">Country</label>
+            <label :class="labelText">{{ $t('profile.country') }}</label>
             <input
               v-model="form.country"
               autocomplete="country-name"
@@ -151,11 +152,11 @@ useSeoMeta({ title: 'Your information · illi', robots: 'noindex' })
         </div>
 
         <div>
-          <label :class="labelText">Delivery notes</label>
+          <label :class="labelText">{{ $t('profile.notes') }}</label>
           <textarea
             v-model="form.deliveryNotes"
             rows="2"
-            placeholder="Gate code, drop-off preference…"
+            :placeholder="$t('profile.notesPlaceholder')"
             :class="field"
           />
         </div>
@@ -173,7 +174,7 @@ useSeoMeta({ title: 'Your information · illi', robots: 'noindex' })
             class="rounded-full bg-olive-700 px-6 py-3 text-sm font-semibold text-sand-50 transition hover:bg-olive-800 disabled:opacity-50"
             :disabled="saving"
           >
-            {{ saving ? 'Saving…' : 'Save information' }}
+            {{ saving ? $t('profile.saving') : $t('profile.save') }}
           </button>
           <span
             v-if="saved"
@@ -183,7 +184,7 @@ useSeoMeta({ title: 'Your information · illi', robots: 'noindex' })
               name="i-lucide-check"
               class="size-4"
             />
-            Saved
+            {{ $t('profile.saved') }}
           </span>
         </div>
       </form>

@@ -42,7 +42,7 @@ follow the deepening skill's vocabulary.
   consumes).
 - **Checkout** — delivery details (`Shipping`) plus a **payment method**: `cod`
   (cash on delivery, Morocco only, confirmed at once and marked paid when the
-  courier collects), `crypto` (NOWPayments) or `card` (via **Solutio**, our own
+  courier collects), `crypto` (NOWPayments) or `card` (via **Exsolution**, our own
   hosted checkout, not connected yet). One `placeOrder` path in
   `server/utils/checkout.ts` serves both the cart and boxes; a box keeps its
   method and address for every renewal.

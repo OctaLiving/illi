@@ -3,7 +3,7 @@ import { prisma } from '~~/server/utils/db/client'
 import { getPaymentProvider } from '~~/server/utils/payments'
 
 // Checkout = delivery details + a payment method. Card payments will run through
-// Solutio (our own checkout) once it is connected; crypto runs through
+// Exsolution (our own checkout) once it is connected; crypto runs through
 // NOWPayments; cash on delivery needs no gateway and is collected by the courier.
 
 export const paymentMethods = ['card', 'crypto', 'cod'] as const
@@ -65,13 +65,13 @@ export function normalizeShipping(input: Partial<Shipping> | undefined): Shippin
     notes: clean(input?.notes, 500)
   }
   if (!shipping.name || !shipping.address || !shipping.city) {
-    throw createError({ statusCode: 400, statusMessage: 'Please enter your name, address and city.' })
+    throw createError({ statusCode: 400, statusMessage: 'Please enter your name, address and city.', data: { code: 'address' } })
   }
   if (!/^\+?[\d\s().-]{6,}$/.test(shipping.phone) || shipping.phone.replace(/\D/g, '').length < 6) {
-    throw createError({ statusCode: 400, statusMessage: 'Please enter a phone number the courier can call.' })
+    throw createError({ statusCode: 400, statusMessage: 'Please enter a phone number the courier can call.', data: { code: 'phone' } })
   }
   if (!deliveryCountries[shipping.country]) {
-    throw createError({ statusCode: 400, statusMessage: 'We don\'t deliver to that country yet.' })
+    throw createError({ statusCode: 400, statusMessage: 'We don\'t deliver to that country yet.', data: { code: 'country' } })
   }
   return shipping
 }
@@ -79,13 +79,13 @@ export function normalizeShipping(input: Partial<Shipping> | undefined): Shippin
 export async function resolveMethod(method: unknown, shipping: Shipping): Promise<PaymentMethod> {
   const option = (await getPaymentOptions()).find(o => o.id === method)
   if (!option) {
-    throw createError({ statusCode: 400, statusMessage: 'Choose how you want to pay.' })
+    throw createError({ statusCode: 400, statusMessage: 'Choose how you want to pay.', data: { code: 'method' } })
   }
   if (!option.available) {
-    throw createError({ statusCode: 400, statusMessage: option.reason ?? 'That payment method is not available.' })
+    throw createError({ statusCode: 400, statusMessage: option.reason ?? 'That payment method is not available.', data: { code: `${option.id}Unavailable` } })
   }
   if (option.id === 'cod' && !COD_COUNTRIES.includes(shipping.country)) {
-    throw createError({ statusCode: 400, statusMessage: 'Cash on delivery is only available in Morocco.' })
+    throw createError({ statusCode: 400, statusMessage: 'Cash on delivery is only available in Morocco.', data: { code: 'codCountry' } })
   }
   return option.id
 }
@@ -125,7 +125,7 @@ export async function placeOrder(event: H3Event, input: PlaceOrderInput): Promis
     return { orderId: order.id, nextUrl: `/orders/${order.id}` }
   }
 
-  // Online payment (crypto today; card once Solutio is connected).
+  // Online payment (crypto today; card once Exsolution is connected).
   const provider = await getPaymentProvider()
   const order = await prisma.order.create({
     data: {

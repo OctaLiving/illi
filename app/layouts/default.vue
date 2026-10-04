@@ -1,11 +1,18 @@
 <script setup lang="ts">
 import { authClient } from '~/utils/auth-client'
 
-const nav = [
-  { label: 'Shop', to: '/catalog' },
-  { label: 'Boxes', to: '/subscribe' },
-  { label: 'Our story', to: '/#story' }
-]
+const { t, locale, locales } = useI18n()
+const switchLocalePath = useSwitchLocalePath()
+const localePath = useLocalePath()
+const { tr, price } = useLocalized()
+
+const nav = computed(() => [
+  { label: t('nav.shop'), to: '/catalog' },
+  { label: t('nav.boxes'), to: '/subscribe' },
+  { label: t('nav.story'), to: '/#story' }
+])
+// The other language, for the one-tap switch in the header.
+const otherLocale = computed(() => locales.value.find(l => l.code !== locale.value))
 
 const { data: me } = useMe()
 const { data: catalog } = await useCatalog()
@@ -20,28 +27,28 @@ watch(() => route.fullPath, () => {
 async function signOut() {
   await authClient.signOut()
   await refreshNuxtData('me')
-  await navigateTo('/')
+  await navigateTo(localePath('/'))
 }
 </script>
 
 <template>
   <div class="min-h-screen bg-sand-100 text-stone-900">
     <div class="bg-olive-800 px-4 py-2 text-center text-xs font-medium tracking-wide text-sand-100 sm:text-sm">
-      Made in small batches in Casablanca · Buy any jar on its own, or get a box on repeat
+      {{ $t('layout.announcement') }}
     </div>
 
     <header class="sticky top-0 z-40 border-b border-sand-200 bg-sand-100/90 backdrop-blur-md">
       <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3.5 sm:px-8">
-        <NuxtLink
+        <NuxtLinkLocale
           to="/"
           class="text-olive-800 text-[2.1rem] leading-none"
-          aria-label="illi — home"
+          :aria-label="$t('nav.home')"
         >
           <BrandLogo />
-        </NuxtLink>
+        </NuxtLinkLocale>
 
         <nav class="hidden items-center gap-1 md:flex">
-          <NuxtLink
+          <NuxtLinkLocale
             v-for="item in nav"
             :key="item.to"
             :to="item.to"
@@ -49,7 +56,7 @@ async function signOut() {
             active-class="text-olive-700"
           >
             {{ item.label }}
-          </NuxtLink>
+          </NuxtLinkLocale>
         </nav>
 
         <div class="flex items-center gap-1">
@@ -58,9 +65,9 @@ async function signOut() {
             to="/manage"
             class="hidden rounded-full px-3 py-2 text-sm font-semibold text-saffron-700 transition hover:bg-saffron-50 sm:block"
           >
-            Console
+            {{ $t('nav.console') }}
           </NuxtLink>
-          <NuxtLink
+          <NuxtLinkLocale
             :to="me?.user ? '/account' : '/login'"
             class="hidden items-center gap-2 rounded-full px-3 py-2 text-sm font-semibold text-stone-700 transition hover:bg-sand-200 sm:flex"
           >
@@ -68,19 +75,28 @@ async function signOut() {
               name="i-lucide-user-round"
               class="size-5"
             />
-            {{ me?.user ? 'Account' : 'Sign in' }}
+            {{ me?.user ? $t('nav.account') : $t('nav.signIn') }}
+          </NuxtLinkLocale>
+          <NuxtLink
+            v-if="otherLocale"
+            :to="switchLocalePath(otherLocale.code)"
+            class="rounded-full px-3 py-2 text-sm font-semibold text-stone-700 transition hover:bg-sand-200"
+            :lang="otherLocale.code"
+            :title="$t('nav.language')"
+          >
+            {{ otherLocale.name }}
           </NuxtLink>
           <button
             type="button"
             class="relative flex items-center gap-2 rounded-full bg-olive-700 px-4 py-2.5 text-sm font-semibold text-sand-50 transition hover:bg-olive-800"
-            aria-label="Open cart"
+            :aria-label="$t('nav.openCart')"
             @click="cartOpen = true"
           >
             <UIcon
               name="i-lucide-shopping-bag"
               class="size-5"
             />
-            <span class="hidden sm:inline">Cart</span>
+            <span class="hidden sm:inline">{{ $t('nav.cart') }}</span>
             <ClientOnly>
               <span
                 v-if="count > 0"
@@ -92,7 +108,7 @@ async function signOut() {
             type="button"
             class="grid size-11 place-items-center rounded-full text-stone-700 transition hover:bg-sand-200 md:hidden"
             :aria-expanded="menuOpen"
-            aria-label="Menu"
+            :aria-label="$t('nav.menu')"
             @click="menuOpen = !menuOpen"
           >
             <UIcon
@@ -107,26 +123,26 @@ async function signOut() {
         v-if="menuOpen"
         class="border-t border-sand-200 bg-sand-50 px-5 py-3 md:hidden"
       >
-        <NuxtLink
+        <NuxtLinkLocale
           v-for="item in nav"
           :key="item.to"
           :to="item.to"
           class="block rounded-xl px-3 py-3 text-base font-semibold text-stone-800 hover:bg-sand-200"
         >
           {{ item.label }}
-        </NuxtLink>
-        <NuxtLink
+        </NuxtLinkLocale>
+        <NuxtLinkLocale
           :to="me?.user ? '/account' : '/login'"
           class="block rounded-xl px-3 py-3 text-base font-semibold text-stone-800 hover:bg-sand-200"
         >
-          {{ me?.user ? 'Account' : 'Sign in' }}
-        </NuxtLink>
+          {{ me?.user ? $t('nav.account') : $t('nav.signIn') }}
+        </NuxtLinkLocale>
         <NuxtLink
           v-if="me?.user?.role === 'operator'"
           to="/manage"
           class="block rounded-xl px-3 py-3 text-base font-semibold text-saffron-700 hover:bg-sand-200"
         >
-          Console
+          {{ $t('nav.console') }}
         </NuxtLink>
         <button
           v-if="me?.user"
@@ -134,7 +150,7 @@ async function signOut() {
           class="block w-full rounded-xl px-3 py-3 text-left text-base font-semibold text-stone-500 hover:bg-sand-200"
           @click="signOut"
         >
-          Sign out
+          {{ $t('nav.signOut') }}
         </button>
       </nav>
     </header>
@@ -151,79 +167,84 @@ async function signOut() {
             class="text-[2.6rem] text-sand-50"
           />
           <p class="max-w-xs text-sm leading-7 text-sand-300">
-            A small-batch Moroccan pantry. Ferments, nut butters, marinated fish and slow-cooked sauces —
-            short ingredient lists, made in Casablanca.
+            {{ $t('footer.about') }}
           </p>
         </div>
 
         <div>
           <p class="text-xs font-bold uppercase tracking-[0.18em] text-saffron-300">
-            Shop
+            {{ $t('footer.shop') }}
           </p>
           <ul class="mt-4 space-y-2.5 text-sm">
             <li
               v-for="category in catalog.categories"
               :key="category.slug"
             >
-              <NuxtLink
+              <NuxtLinkLocale
                 :to="`/catalog?category=${category.slug}`"
                 class="hover:text-sand-50"
               >
-                {{ category.name }}
-              </NuxtLink>
+                {{ tr(category, 'name') }}
+              </NuxtLinkLocale>
             </li>
           </ul>
         </div>
 
         <div>
           <p class="text-xs font-bold uppercase tracking-[0.18em] text-saffron-300">
-            Boxes
+            {{ $t('footer.boxes') }}
           </p>
           <ul class="mt-4 space-y-2.5 text-sm">
             <li
               v-for="plan in catalog.plans"
               :key="plan.id"
             >
-              <NuxtLink
+              <NuxtLinkLocale
                 to="/subscribe"
                 class="hover:text-sand-50"
               >
-                {{ plan.name }} · {{ plan.price.amount }} MAD
-              </NuxtLink>
+                {{ tr(plan, 'name') }} · {{ price(plan.price.amount) }}
+              </NuxtLinkLocale>
             </li>
           </ul>
         </div>
 
         <div>
           <p class="text-xs font-bold uppercase tracking-[0.18em] text-saffron-300">
-            Account
+            {{ $t('footer.account') }}
           </p>
           <ul class="mt-4 space-y-2.5 text-sm">
             <li>
-              <NuxtLink
+              <NuxtLinkLocale
                 :to="me?.user ? '/account' : '/login'"
                 class="hover:text-sand-50"
-              >{{ me?.user ? 'Your account' : 'Sign in' }}</NuxtLink>
+              >
+                {{ me?.user ? $t('footer.yourAccount') : $t('nav.signIn') }}
+              </NuxtLinkLocale>
             </li>
             <li v-if="!me?.user">
-              <NuxtLink
+              <NuxtLinkLocale
                 to="/join"
                 class="hover:text-sand-50"
-              >Create an account</NuxtLink>
+              >
+                {{ $t('footer.createAccount') }}
+              </NuxtLinkLocale>
             </li>
             <li>
-              <NuxtLink
+              <NuxtLinkLocale
                 to="/cart"
                 class="hover:text-sand-50"
-              >Your cart</NuxtLink>
+              >
+                {{ $t('footer.yourCart') }}
+              </NuxtLinkLocale>
             </li>
           </ul>
         </div>
       </div>
       <div class="border-t border-olive-800">
         <div class="mx-auto flex max-w-6xl flex-col gap-2 px-5 py-6 text-xs text-sand-400 sm:flex-row sm:justify-between sm:px-8">
-          <p>© {{ new Date().getFullYear() }} illi · Made in Casablanca</p>
-          <p>Prices in Moroccan dirhams · Cash on delivery or secure online payment</p>
+          <p>{{ $t('footer.copyright', { year: new Date().getFullYear() }) }}</p>
+          <p>{{ $t('footer.payments') }}</p>
         </div>
       </div>
     </footer>

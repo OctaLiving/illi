@@ -5,6 +5,7 @@ import {
 } from '~/types/catalog'
 import type {
   BundleSlotRule,
+  Translations,
   BundleSlotType,
   CatalogProduct,
   ProductCategory,
@@ -38,6 +39,7 @@ export interface ProductInput {
   nutrition?: { proteins?: number, fats?: number, carbs?: number, summary?: string }
   isAvailable?: boolean
   price?: { amount?: number }
+  translations?: Translations
 }
 
 export interface PlanSlotInput {
@@ -47,6 +49,7 @@ export interface PlanSlotInput {
   minQuantity?: number
   maxQuantity?: number
   required?: boolean
+  translations?: Translations
 }
 
 export interface PlanInput {
@@ -55,6 +58,7 @@ export interface PlanInput {
   summary?: string
   price?: { amount?: number, currency?: string }
   includedSlots?: PlanSlotInput[]
+  translations?: Translations
 }
 
 // Row types derived from the client so we never import generated names directly.
@@ -78,10 +82,35 @@ function uniqueSlug(base: string, taken: Set<string>) {
   return slug
 }
 
+// Keeps only known languages and fields, trimmed; empty values are dropped so the
+// storefront falls back to English. Returns undefined when nothing was sent.
+const LANGS = ['ar'] as const
+function cleanTranslations(input: unknown, fields: string[]): Translations | undefined {
+  if (!input || typeof input !== 'object') return undefined
+  const out: Translations = {}
+  for (const lang of LANGS) {
+    const src = (input as Record<string, unknown>)[lang]
+    if (!src || typeof src !== 'object') continue
+    const entry: Record<string, string | string[]> = {}
+    for (const field of fields) {
+      const value = (src as Record<string, unknown>)[field]
+      if (Array.isArray(value)) {
+        const list = value.map(v => String(v).trim()).filter(Boolean)
+        if (list.length) entry[field] = list
+      } else if (typeof value === 'string' && value.trim()) {
+        entry[field] = value.trim()
+      }
+    }
+    if (Object.keys(entry).length) out[lang] = entry
+  }
+  return out
+}
+const asTranslations = (value: unknown) => (value && typeof value === 'object' ? value as Translations : undefined)
+
 // --- Row → contract shape ---
 
 function toCategory(row: CategoryRow): ProductCategory {
-  return { slug: row.slug as BundleSlotType, name: row.name, blurb: row.blurb }
+  return { slug: row.slug as BundleSlotType, name: row.name, blurb: row.blurb, translations: asTranslations(row.translations) }
 }
 
 function toProduct(row: ProductRow): CatalogProduct {
@@ -101,7 +130,8 @@ function toProduct(row: ProductRow): CatalogProduct {
     nutrition: { proteins: row.proteins, fats: row.fats, carbs: row.carbs, summary: row.nutritionSummary },
     isAvailable: row.isAvailable,
     eligibleSlotTypes: row.eligibleSlotTypes as BundleSlotType[],
-    price: { amount: row.priceAmount, currency: 'MAD' }
+    price: { amount: row.priceAmount, currency: 'MAD' },
+    translations: asTranslations(row.translations)
   }
 }
 
@@ -113,7 +143,8 @@ function toSlot(row: PlanSlotRow): BundleSlotRule {
     description: row.description,
     minQuantity: row.minQuantity,
     maxQuantity: row.maxQuantity,
-    required: row.required
+    required: row.required,
+    translations: asTranslations(row.translations)
   }
 }
 
@@ -131,7 +162,8 @@ function toPlan(row: PlanRow): SubscriptionPlan {
     cadence: row.cadence as SubscriptionCadence,
     summary: row.summary,
     price: { amount: toMad(row), currency: 'MAD' },
-    includedSlots: row.includedSlots.map(toSlot)
+    includedSlots: row.includedSlots.map(toSlot),
+    translations: asTranslations(row.translations)
   }
 }
 
@@ -183,8 +215,12 @@ function normalizeProduct(input: ProductInput): NormalizedProduct {
 
 // The columns shared by create + update. `category` (display name) is resolved
 // from the Category table so it stays consistent with the chosen slot type.
-function productData(n: NormalizedProduct, input: ProductInput, category: string, currentPrice?: number) {
+function productData(n: NormalizedProduct, input: ProductInput, names: CategoryNames, currentPrice?: number) {
   const price = Number(input.price?.amount)
+  const category = names.name
+  // The Arabic category label always follows the chosen category.
+  const translations = cleanTranslations(input.translations, ['name', 'description', 'ingredients', 'nutritionSummary'])
+  if (translations && names.ar) translations.ar = { ...translations.ar, category: names.ar }
   return {
     name: n.name,
     subtitle: input.subtitle?.trim() || `${n.storage === 'Refrigerated' ? 'Refrigerated' : 'Room temp'} · ${n.shelfLifeDays}-day shelf`,
@@ -205,13 +241,17 @@ function productData(n: NormalizedProduct, input: ProductInput, category: string
     eligibleSlotTypes: [n.slotType],
     priceAmount: Number.isFinite(price) && input.price?.amount !== undefined
       ? Math.max(0, Math.round(price))
-      : currentPrice ?? defaultProductPrice[n.slotType]
+      : currentPrice ?? defaultProductPrice[n.slotType],
+    translations
   }
 }
 
-async function categoryName(slotType: BundleSlotType): Promise<string> {
+interface CategoryNames { name: string, ar?: string }
+
+async function categoryName(slotType: BundleSlotType): Promise<CategoryNames> {
   const category = await prisma.category.findUnique({ where: { slug: slotType } })
-  return category?.name ?? slotType
+  const ar = asTranslations(category?.translations)?.ar?.name
+  return { name: category?.name ?? slotType, ar: typeof ar === 'string' ? ar : undefined }
 }
 
 export async function createProduct(input: ProductInput): Promise<CatalogProduct> {
@@ -290,6 +330,7 @@ function slotRows(slots: PlanSlotInput[], slug: string) {
       minQuantity,
       maxQuantity,
       required: slot.required ?? true,
+      translations: cleanTranslations(slot.translations, ['label', 'description']),
       sortOrder: i
     }
   })
@@ -310,6 +351,7 @@ export async function createPlan(input: PlanInput): Promise<SubscriptionPlan> {
       summary: input.summary?.trim() ?? '',
       priceAmount: planAmount(input),
       priceCurrency: 'MAD',
+      translations: cleanTranslations(input.translations, ['name', 'summary']),
       sortOrder: existing.length,
       includedSlots: { create: slotRows(n.slots, slug) }
     },
@@ -335,6 +377,7 @@ export async function updatePlan(id: string, input: PlanInput): Promise<Subscrip
         cadence: n.cadence,
         summary: input.summary?.trim() ?? '',
         priceAmount: planAmount(input),
+        translations: cleanTranslations(input.translations, ['name', 'summary']),
         includedSlots: { create: slots }
       },
       include: { includedSlots: { orderBy: { sortOrder: 'asc' } } }

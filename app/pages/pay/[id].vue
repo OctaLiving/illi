@@ -5,6 +5,9 @@ interface OrderRow { id: string, amount: number, currency: string, status: strin
 interface AccountData { orders: OrderRow[] }
 
 const route = useRoute()
+const { t } = useI18n()
+const { price } = useLocalized()
+const localePath = useLocalePath()
 const orderId = computed(() => String(route.params.id ?? ''))
 
 const { data: account } = await useFetch<AccountData>('/api/account', {
@@ -22,15 +25,15 @@ async function confirm() {
   error.value = ''
   try {
     await $fetch(`/api/payments/${orderId.value}/simulate`, { method: 'POST' })
-    await navigateTo(`/orders/${orderId.value}`)
+    await navigateTo(localePath(`/orders/${orderId.value}`))
   } catch (err) {
     const e = err as { data?: { statusMessage?: string } }
-    error.value = e?.data?.statusMessage ?? 'Could not confirm the payment.'
+    error.value = e?.data?.statusMessage ?? t('pay.error')
     paying.value = false
   }
 }
 
-useSeoMeta({ title: 'Pay · illi', robots: 'noindex' })
+useSeoMeta({ title: () => t('pay.title'), robots: 'noindex' })
 </script>
 
 <template>
@@ -38,18 +41,17 @@ useSeoMeta({ title: 'Pay · illi', robots: 'noindex' })
     <div class="mx-auto max-w-sm">
       <AppBreadcrumbs
         class="mb-6"
-        :items="[{ label: 'Home', to: '/' }, { label: 'Account', to: '/account' }, { label: 'Pay invoice' }]"
+        :items="[{ label: $t('pay.crumbHome'), to: '/' }, { label: $t('pay.crumbAccount'), to: '/account' }, { label: $t('pay.crumbInvoice') }]"
       />
       <div class="w-full rounded-3xl bg-white ring-1 ring-sand-200 p-7 text-center">
         <p class="font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.2em] text-saffron-600">
-          Simulated crypto payment
+          {{ $t('pay.simulated') }}
         </p>
         <h1 class="mt-3 font-[family:var(--font-serif)] text-4xl text-stone-900">
-          {{ order ? `${order.amount} ${order.currency}` : 'Order' }}
+          {{ order ? price(order.amount) : $t('pay.order') }}
         </h1>
         <p class="mt-3 text-sm leading-7 text-stone-600">
-          This is a stand-in for the NOWPayments hosted page. In production you'd be redirected to
-          NOWPayments to pay in crypto; here, confirm to simulate a completed payment.
+          {{ $t('pay.body') }}
         </p>
 
         <p
@@ -65,14 +67,14 @@ useSeoMeta({ title: 'Pay · illi', robots: 'noindex' })
           :disabled="paying || !order"
           @click="confirm"
         >
-          {{ paying ? 'Confirming…' : 'Simulate successful payment' }}
+          {{ paying ? $t('pay.confirming') : $t('pay.simulate') }}
         </button>
-        <NuxtLink
+        <NuxtLinkLocale
           to="/subscribe"
           class="mt-3 inline-block font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.14em] text-stone-500 hover:text-stone-800"
         >
-          Cancel
-        </NuxtLink>
+          {{ $t('pay.cancel') }}
+        </NuxtLinkLocale>
       </div>
     </div>
   </div>

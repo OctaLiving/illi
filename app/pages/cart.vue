@@ -4,18 +4,20 @@ import type { CheckoutDetails } from '~/composables/useCart'
 const { lines, count, subtotal, items, clear } = useCart()
 const { submit, pending, error } = useCheckout('/api/checkout/cart')
 const { data: me } = useMe()
+const { t } = useI18n()
+const { price } = useLocalized()
 
 function placeOrder(details: CheckoutDetails) {
   submit({ items: items.value, ...details }, clear)
 }
 
-useSeoMeta({ title: 'Checkout', robots: 'noindex' })
+useSeoMeta({ title: () => t('checkout.title'), robots: 'noindex' })
 </script>
 
 <template>
   <div class="mx-auto max-w-6xl px-5 py-10 sm:px-8 sm:py-14">
     <h1 class="font-serif text-4xl text-stone-900 sm:text-5xl">
-      Checkout
+      {{ $t('checkout.title') }}
     </h1>
 
     <ClientOnly>
@@ -24,17 +26,17 @@ useSeoMeta({ title: 'Checkout', robots: 'noindex' })
         class="mt-10 rounded-3xl bg-white p-10 text-center ring-1 ring-sand-200"
       >
         <p class="font-serif text-2xl text-stone-900">
-          Your cart is empty
+          {{ $t('cart.empty') }}
         </p>
         <p class="mt-2 text-stone-600">
-          Browse the pantry and add a jar or two.
+          {{ $t('checkout.emptyBody') }}
         </p>
-        <NuxtLink
+        <NuxtLinkLocale
           to="/catalog"
           class="mt-6 inline-flex rounded-full bg-olive-700 px-6 py-3 text-sm font-semibold text-sand-50 transition hover:bg-olive-800"
         >
-          Shop the pantry
-        </NuxtLink>
+          {{ $t('cart.shop') }}
+        </NuxtLinkLocale>
       </div>
 
       <div
@@ -45,19 +47,19 @@ useSeoMeta({ title: 'Checkout', robots: 'noindex' })
         <section class="rounded-3xl bg-white px-6 pb-2 pt-5 ring-1 ring-sand-200 lg:sticky lg:top-28">
           <div class="flex items-baseline justify-between">
             <h2 class="font-serif text-2xl text-stone-900">
-              Your order
+              {{ $t('checkout.yourOrder') }}
             </h2>
-            <NuxtLink
+            <NuxtLinkLocale
               to="/catalog"
               class="text-sm font-semibold text-olive-700 hover:underline"
             >
-              Add more
-            </NuxtLink>
+              {{ $t('checkout.addMore') }}
+            </NuxtLinkLocale>
           </div>
           <CartLines />
           <div class="flex items-baseline justify-between border-t border-sand-200 py-4">
-            <span class="text-stone-600">{{ count }} {{ count === 1 ? 'item' : 'items' }}</span>
-            <span class="font-serif text-3xl text-stone-900">{{ subtotal }} MAD</span>
+            <span class="text-stone-600">{{ $t('checkout.items', { n: count }, count) }}</span>
+            <span class="font-serif text-3xl text-stone-900">{{ price(subtotal) }}</span>
           </div>
         </section>
 
@@ -75,24 +77,24 @@ useSeoMeta({ title: 'Checkout', robots: 'noindex' })
             class="space-y-4 text-center"
           >
             <p class="font-serif text-2xl text-stone-900">
-              Sign in to check out
+              {{ $t('checkout.signInTitle') }}
             </p>
             <p class="text-stone-600">
-              It takes a minute, and you can track your orders afterwards. Your cart is saved.
+              {{ $t('checkout.signInBody') }}
             </p>
             <div class="flex flex-wrap justify-center gap-3">
-              <NuxtLink
+              <NuxtLinkLocale
                 to="/join?next=/cart"
                 class="rounded-full bg-olive-700 px-6 py-3 font-semibold text-sand-50 transition hover:bg-olive-800"
               >
-                Create an account
-              </NuxtLink>
-              <NuxtLink
+                {{ $t('checkout.createAccount') }}
+              </NuxtLinkLocale>
+              <NuxtLinkLocale
                 to="/login?next=/cart"
                 class="rounded-full bg-white px-6 py-3 font-semibold text-olive-800 ring-1 ring-sand-300 transition hover:ring-olive-600"
               >
-                Sign in
-              </NuxtLink>
+                {{ $t('checkout.signIn') }}
+              </NuxtLinkLocale>
             </div>
           </div>
         </section>

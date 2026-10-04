@@ -2,6 +2,8 @@
 import { authClient } from '~/utils/auth-client'
 
 const route = useRoute()
+const { t } = useI18n()
+const localePath = useLocalePath()
 const next = computed(() => (typeof route.query.next === 'string' ? route.query.next : '/'))
 
 const email = ref('')
@@ -16,15 +18,15 @@ async function submit() {
   error.value = ''
   const { error: e } = await authClient.signIn.email({ email: email.value, password: password.value })
   if (e) {
-    error.value = e.message || 'Could not sign in — check your email and password.'
+    error.value = t('auth.signInError')
     pending.value = false
     return
   }
   await refreshNuxtData('me')
-  await navigateTo(next.value)
+  await navigateTo(localePath(next.value))
 }
 
-useSeoMeta({ title: 'Sign in · illi', robots: 'noindex' })
+useSeoMeta({ title: () => t('auth.signInTitle'), robots: 'noindex' })
 </script>
 
 <template>
@@ -36,7 +38,7 @@ useSeoMeta({ title: 'Sign in · illi', robots: 'noindex' })
           class="text-6xl"
         />
         <h1 class="mt-3 font-[family:var(--font-serif)] text-4xl text-stone-900">
-          Welcome back.
+          {{ $t('auth.welcome') }}
         </h1>
       </div>
 
@@ -46,7 +48,7 @@ useSeoMeta({ title: 'Sign in · illi', robots: 'noindex' })
         @submit.prevent="submit"
       >
         <div>
-          <label class="mb-1 block font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.16em] text-stone-500">Email</label>
+          <label class="mb-1 block font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.16em] text-stone-500">{{ $t('auth.email') }}</label>
           <input
             v-model="email"
             type="email"
@@ -56,7 +58,7 @@ useSeoMeta({ title: 'Sign in · illi', robots: 'noindex' })
           >
         </div>
         <div>
-          <label class="mb-1 block font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.16em] text-stone-500">Password</label>
+          <label class="mb-1 block font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.16em] text-stone-500">{{ $t('auth.password') }}</label>
           <input
             v-model="password"
             type="password"
@@ -78,18 +80,18 @@ useSeoMeta({ title: 'Sign in · illi', robots: 'noindex' })
           class="w-full rounded-full bg-olive-700 py-3 text-sm font-semibold text-sand-50 transition hover:bg-olive-800 disabled:opacity-50"
           :disabled="pending"
         >
-          {{ pending ? 'Signing in…' : 'Sign in' }}
+          {{ pending ? $t('auth.signingIn') : $t('auth.signIn') }}
         </button>
       </form>
 
       <p class="mt-5 text-center text-sm text-stone-600">
-        New to illi?
-        <NuxtLink
+        {{ $t('auth.newHere') }}
+        <NuxtLinkLocale
           :to="{ path: '/join', query: route.query }"
           class="font-[family:var(--font-mono)] text-[0.7rem] uppercase tracking-[0.14em] text-olive-700 underline decoration-saffron-600 decoration-2 underline-offset-4"
         >
-          Create an account
-        </NuxtLink>
+          {{ $t('auth.createAccount') }}
+        </NuxtLinkLocale>
       </p>
     </div>
   </div>
