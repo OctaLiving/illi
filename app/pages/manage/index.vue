@@ -7,14 +7,14 @@ const categories = computed(() => catalog.value.categories)
 const plans = computed(() => catalog.value.plans)
 
 interface AdminSubscription { id: string, status: string }
-interface AdminOrder { id: string, amount: number, status: string }
+interface AdminOrder { id: string, amount: number, currency: string, status: string }
 const { data: commerce } = await useFetch<{ subscriptions: AdminSubscription[], orders: AdminOrder[] }>('/api/admin/commerce', {
   key: 'admin-commerce',
   headers: import.meta.server ? useRequestHeaders(['cookie']) : undefined,
   default: () => ({ subscriptions: [], orders: [] })
 })
 const activeSubscribers = computed(() => commerce.value.subscriptions.filter(s => s.status === 'active').length)
-const revenueCollected = computed(() => commerce.value.orders.filter(o => o.status === 'paid').reduce((sum, o) => sum + o.amount, 0))
+const revenueCollected = computed(() => commerce.value.orders.filter(o => o.status === 'paid' && o.currency === 'MAD').reduce((sum, o) => sum + o.amount, 0))
 
 const avgShelf = computed(() =>
   products.value.length
@@ -33,7 +33,7 @@ const kpis = computed(() => [
   { label: 'Plans', value: String(plans.value.length), note: 'subscription boxes' },
   { label: 'Avg shelf life', value: String(avgShelf.value), note: 'days' },
   { label: 'Active subscribers', value: String(activeSubscribers.value), note: 'active now' },
-  { label: 'Collected', value: String(revenueCollected.value), note: 'USDT · paid orders' }
+  { label: 'Collected', value: String(revenueCollected.value), note: 'MAD · paid orders' }
 ])
 
 useSeoMeta({ title: 'Operator console · illi', robots: 'noindex, nofollow' })

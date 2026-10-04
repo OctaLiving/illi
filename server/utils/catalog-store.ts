@@ -121,7 +121,7 @@ function toPlan(row: PlanRow): SubscriptionPlan {
     name: row.name,
     cadence: row.cadence as SubscriptionCadence,
     summary: row.summary,
-    price: { amount: row.priceAmount, currency: 'USDT' },
+    price: { amount: row.priceAmount, currency: 'MAD' },
     includedSlots: row.includedSlots.map(toSlot)
   }
 }
@@ -296,7 +296,7 @@ export async function createPlan(input: PlanInput): Promise<SubscriptionPlan> {
       cadence: n.cadence,
       summary: input.summary?.trim() ?? '',
       priceAmount: planAmount(input),
-      priceCurrency: 'USDT',
+      priceCurrency: 'MAD',
       sortOrder: existing.length,
       includedSlots: { create: slotRows(n.slots, slug) }
     },

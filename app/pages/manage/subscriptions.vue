@@ -29,7 +29,7 @@ const { data: commerce } = await useFetch<{ subscriptions: AdminSubscription[], 
   default: () => ({ subscriptions: [], orders: [] })
 })
 const activeSubscribers = computed(() => commerce.value.subscriptions.filter(s => s.status === 'active').length)
-const revenueCollected = computed(() => commerce.value.orders.filter(o => o.status === 'paid').reduce((sum, o) => sum + o.amount, 0))
+const revenueCollected = computed(() => commerce.value.orders.filter(o => o.status === 'paid' && o.currency === 'MAD').reduce((sum, o) => sum + o.amount, 0))
 
 const runningRenewals = ref(false)
 async function runRenewalsNow() {
@@ -50,7 +50,7 @@ useSeoMeta({ title: 'Subscriptions · illi ops', robots: 'noindex, nofollow' })
     <div class="flex flex-wrap items-end justify-between gap-3 border-b border-amber-600/20 pb-4">
       <div>
         <p class="font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.24em] text-terra-600">
-          {{ activeSubscribers }} active · {{ revenueCollected }} USDT collected
+          {{ activeSubscribers }} active · {{ revenueCollected }} MAD collected
         </p>
         <h1 class="mt-1 font-[family:var(--font-serif)] text-3xl text-stone-900">
           Subscriptions

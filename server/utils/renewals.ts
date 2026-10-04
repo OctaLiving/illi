@@ -32,6 +32,7 @@ export async function runRenewals(now = new Date()): Promise<{ invoiced: number,
     const payment = await provider.createPayment({
       orderId: order.id,
       amount: sub.amount,
+      currency: sub.currency,
       description: `illi — ${sub.planName} renewal`,
       successUrl: `${base}/account`,
       cancelUrl: `${base}/account`,

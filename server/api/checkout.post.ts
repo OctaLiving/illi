@@ -57,6 +57,7 @@ export default defineEventHandler(async (event) => {
   const payment = await provider.createPayment({
     orderId: order.id,
     amount,
+    currency,
     description: `illi — ${plan.name}`,
     successUrl: `${base}/account`,
     cancelUrl: `${base}/checkout`,

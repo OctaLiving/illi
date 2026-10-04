@@ -8,7 +8,7 @@ model Subscription {
   planId           String
   planName         String
   cadence          String
-  currency         String    @default("USDT")
+  currency         String    @default("MAD")
   amount           Float
   status           String    @default("pending") // pending | active | past_due | paused | canceled
   snapshot         String // JSON checkout-handoff payload
@@ -29,7 +29,7 @@ model Order {
   subscriptionId String?
   subscription   Subscription? @relation(fields: [subscriptionId], references: [id])
   status         String        @default("pending") // pending | paid | expired | failed
-  currency       String        @default("USDT")
+  currency       String        @default("MAD")
   amount         Float
   snapshot       String // JSON bundle snapshot, server-priced
   provider       String?
@@ -52,7 +52,7 @@ model Payment {
   providerRef String?
   status      String   @default("pending")
   amount      Float
-  currency    String   @default("USDT")
+  currency    String   @default("MAD")
   rawEvent    String? // last webhook payload (JSON)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

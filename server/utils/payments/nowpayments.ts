@@ -9,6 +9,9 @@ interface NowPaymentsConfig {
   payCurrency: string
 }
 
+// Legacy USDT-priced subscriptions are quoted as USD (USDT tracks the dollar).
+const priceCurrency = (currency: string) => currency === 'USDT' ? 'usd' : currency.toLowerCase()
+
 function mapStatus(status: string): NormalizedStatus {
   if (status === 'finished' || status === 'confirmed') return 'paid'
   if (status === 'expired') return 'expired'
@@ -41,7 +44,7 @@ export function createNowPaymentsProvider(config: NowPaymentsConfig): PaymentPro
         headers: { 'x-api-key': config.apiKey, 'content-type': 'application/json' },
         body: {
           price_amount: input.amount,
-          price_currency: 'usd',
+          price_currency: priceCurrency(input.currency),
           pay_currency: config.payCurrency,
           order_id: input.orderId,
           order_description: input.description,

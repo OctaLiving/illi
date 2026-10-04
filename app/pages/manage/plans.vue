@@ -249,7 +249,7 @@ useSeoMeta({ title: 'Plans · illi ops', robots: 'noindex, nofollow' })
                 </select>
               </div>
               <div>
-                <label :class="labelText">Price (USDT)</label>
+                <label :class="labelText">Price (MAD)</label>
                 <input
                   v-model.number="planForm.amount"
                   type="number"

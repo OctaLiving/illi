@@ -47,7 +47,7 @@ model Plan {
   cadence       String
   summary       String
   priceAmount   Int
-  priceCurrency String     @default("USDT")
+  priceCurrency String     @default("MAD")
   sortOrder     Int        @default(0)
   includedSlots PlanSlot[]
   createdAt     DateTime   @default(now())

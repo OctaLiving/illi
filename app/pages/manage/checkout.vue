@@ -31,8 +31,8 @@ const handoffContract = `{
   "planId": "plan-pantry",
   "planName": "Pantry Box",
   "cadence": "monthly",
-  "currency": "USDT",
-  "basePriceAmount": 64,
+  "currency": "MAD",
+  "basePriceAmount": 600,
   "selections": [
     { "slotId": "pantry-spread", "slotType": "spreads", "productIds": ["prod-amlou"] }
   ],

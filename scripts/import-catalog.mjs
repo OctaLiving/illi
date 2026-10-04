@@ -96,7 +96,7 @@ const PLANS = [
     name: 'Pantry Box',
     cadence: 'monthly',
     summary: 'Shelf-stable staples for the cupboard — a spread, a fruit product and a sauce, with room for one more.',
-    price: { amount: 64, currency: 'USDT' },
+    price: { amount: 600, currency: 'MAD' },
     includedSlots: [
       { id: 'pantry-spread', slotType: 'spreads', label: 'Spread', description: 'Choose a nut or seed butter.', minQuantity: 1, maxQuantity: 1, required: true },
       { id: 'pantry-jam', slotType: 'jams', label: 'Fruit product', description: 'Choose a jam, concentrate or preserve.', minQuantity: 1, maxQuantity: 1, required: true },
@@ -110,7 +110,7 @@ const PLANS = [
     name: 'Living Box',
     cadence: 'weekly',
     summary: 'Fresh, refrigerated ferments — a live drink, a cultured dairy and a fermented vegetable each week.',
-    price: { amount: 58, currency: 'USDT' },
+    price: { amount: 540, currency: 'MAD' },
     includedSlots: [
       { id: 'living-beverage', slotType: 'beverages', label: 'Fermented drink', description: 'Choose a live, fermented beverage.', minQuantity: 1, maxQuantity: 1, required: true },
       { id: 'living-dairy', slotType: 'dairy', label: 'Cultured dairy', description: 'Choose a cheese or cultured dairy.', minQuantity: 1, maxQuantity: 1, required: true },
@@ -124,7 +124,7 @@ const PLANS = [
     name: 'Coastal Box',
     cadence: 'biweekly',
     summary: 'Sea and table — two marinated fish, a sauce to serve them with, and an optional vegetable.',
-    price: { amount: 88, currency: 'USDT' },
+    price: { amount: 820, currency: 'MAD' },
     includedSlots: [
       { id: 'coastal-fish-1', slotType: 'seafood', label: 'Fish 1', description: 'Choose a marinated or kefta-style fish.', minQuantity: 1, maxQuantity: 1, required: true },
       { id: 'coastal-fish-2', slotType: 'seafood', label: 'Fish 2', description: 'Choose a second fish for the box.', minQuantity: 1, maxQuantity: 1, required: true },
