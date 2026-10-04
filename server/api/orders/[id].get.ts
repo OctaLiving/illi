@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
   const id = getRouterParam(event, 'id') ?? ''
   const order = await prisma.order.findUnique({
     where: { id },
-    include: { subscription: { select: { planName: true, cadence: true } } }
+    include: { subscription: { select: { planId: true, planName: true, cadence: true } } }
   })
   if (!order || order.userId !== session.user.id) {
     throw createError({ statusCode: 404, statusMessage: 'Order not found.' })

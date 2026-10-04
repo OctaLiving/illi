@@ -18,6 +18,9 @@ const { data: options } = await useFetch<Options>('/api/checkout/options', {
   default: () => ({ methods: [], countries: [{ code: 'MA', name: 'Morocco' }], codCountries: ['MA'] })
 })
 const { data: me } = useMe()
+const { t, te } = useI18n()
+const { price } = useLocalized()
+const countryName = (c: { code: string, name: string }) => (te(`countries.${c.code}`) ? t(`countries.${c.code}`) : c.name)
 
 const SAVED_KEY = 'illi-shipping'
 const shipping = reactive<ShippingDetails>({ name: me.value?.user?.name ?? '', phone: '', address: '', city: '', country: 'MA', notes: '' })
@@ -32,10 +35,10 @@ onMounted(() => {
   }
 })
 
-const METHOD_INFO: Record<PaymentMethod, { title: string, body: string, icon: string }> = {
-  cod: { title: 'Cash on delivery', body: 'Pay the courier in cash when your order arrives.', icon: 'i-lucide-banknote' },
-  card: { title: 'Card', body: 'Visa, Mastercard, Apple Pay and Google Pay.', icon: 'i-lucide-credit-card' },
-  crypto: { title: 'Crypto', body: 'USDT, Bitcoin and more through a secure crypto checkout.', icon: 'i-lucide-bitcoin' }
+const METHOD_ICON: Record<PaymentMethod, string> = {
+  cod: 'i-lucide-banknote',
+  card: 'i-lucide-credit-card',
+  crypto: 'i-lucide-bitcoin'
 }
 const ORDER: PaymentMethod[] = ['cod', 'card', 'crypto']
 
@@ -47,9 +50,11 @@ const methods = computed(() =>
     const blockedByCountry = id === 'cod' && !codAllowed.value
     return [{
       ...option,
-      ...METHOD_INFO[id],
+      icon: METHOD_ICON[id],
+      title: t(`checkout.methods.${id}.title`),
+      body: t(`checkout.methods.${id}.body`),
       available: option.available && !blockedByCountry,
-      reason: blockedByCountry ? 'Only available for delivery in Morocco.' : option.reason
+      reason: blockedByCountry ? t('checkout.reasons.codCountry') : te(`checkout.reasons.${id}`) ? t(`checkout.reasons.${id}`) : option.reason
     }]
   })
 )
@@ -63,8 +68,8 @@ watchEffect(() => {
 })
 
 const submitLabel = computed(() => {
-  if (pending) return method.value === 'cod' ? 'Placing your order…' : 'Starting payment…'
-  return method.value === 'cod' ? `Place order · ${total} MAD` : `Continue to payment · ${total} MAD`
+  if (pending) return method.value === 'cod' ? t('checkout.placing') : t('checkout.startingPayment')
+  return method.value === 'cod' ? t('checkout.placeOrder', { price: price(total) }) : t('checkout.continueToPayment', { price: price(total) })
 })
 
 function onSubmit() {
@@ -88,14 +93,14 @@ const label = 'mb-1.5 block text-sm font-semibold text-stone-700'
   >
     <fieldset class="space-y-4">
       <legend class="font-serif text-2xl text-stone-900">
-        Delivery details
+        {{ $t('checkout.delivery') }}
       </legend>
       <div class="grid gap-4 sm:grid-cols-2">
         <div class="sm:col-span-2">
           <label
             for="co-name"
             :class="label"
-          >Full name</label>
+          >{{ $t('checkout.fullName') }}</label>
           <input
             id="co-name"
             v-model="shipping.name"
@@ -108,7 +113,7 @@ const label = 'mb-1.5 block text-sm font-semibold text-stone-700'
           <label
             for="co-phone"
             :class="label"
-          >Phone</label>
+          >{{ $t('checkout.phone') }}</label>
           <input
             id="co-phone"
             v-model="shipping.phone"
@@ -116,6 +121,7 @@ const label = 'mb-1.5 block text-sm font-semibold text-stone-700'
             type="tel"
             autocomplete="tel"
             placeholder="+212 6 12 34 56 78"
+            dir="ltr"
             :class="field"
           >
         </div>
@@ -123,7 +129,7 @@ const label = 'mb-1.5 block text-sm font-semibold text-stone-700'
           <label
             for="co-country"
             :class="label"
-          >Country</label>
+          >{{ $t('checkout.country') }}</label>
           <select
             id="co-country"
             v-model="shipping.country"
@@ -135,7 +141,7 @@ const label = 'mb-1.5 block text-sm font-semibold text-stone-700'
               :key="c.code"
               :value="c.code"
             >
-              {{ c.name }}
+              {{ countryName(c) }}
             </option>
           </select>
         </div>
@@ -143,13 +149,13 @@ const label = 'mb-1.5 block text-sm font-semibold text-stone-700'
           <label
             for="co-address"
             :class="label"
-          >Address</label>
+          >{{ $t('checkout.address') }}</label>
           <input
             id="co-address"
             v-model="shipping.address"
             required
             autocomplete="street-address"
-            placeholder="Street, building, apartment"
+            :placeholder="$t('checkout.addressPlaceholder')"
             :class="field"
           >
         </div>
@@ -157,7 +163,7 @@ const label = 'mb-1.5 block text-sm font-semibold text-stone-700'
           <label
             for="co-city"
             :class="label"
-          >City</label>
+          >{{ $t('checkout.city') }}</label>
           <input
             id="co-city"
             v-model="shipping.city"
@@ -170,11 +176,11 @@ const label = 'mb-1.5 block text-sm font-semibold text-stone-700'
           <label
             for="co-notes"
             :class="label"
-          >Notes for the courier <span class="font-normal text-stone-400">(optional)</span></label>
+          >{{ $t('checkout.notes') }} <span class="font-normal text-stone-400">{{ $t('checkout.optional') }}</span></label>
           <input
             id="co-notes"
             v-model="shipping.notes"
-            placeholder="Floor, landmark, best time to call"
+            :placeholder="$t('checkout.notesPlaceholder')"
             :class="field"
           >
         </div>
@@ -183,7 +189,7 @@ const label = 'mb-1.5 block text-sm font-semibold text-stone-700'
 
     <fieldset class="space-y-3">
       <legend class="mb-1 font-serif text-2xl text-stone-900">
-        Payment
+        {{ $t('checkout.payment') }}
       </legend>
       <label
         v-for="m in methods"
@@ -232,12 +238,12 @@ const label = 'mb-1.5 block text-sm font-semibold text-stone-700'
         {{ submitLabel }}
       </button>
       <p class="text-center text-xs text-stone-500">
-        Prices in Moroccan dirhams (MAD).
+        {{ $t('checkout.pricesNote') }}
         <template v-if="method === 'cod'">
-          You pay the courier when your order arrives.
+          {{ $t('checkout.codNote') }}
         </template>
         <template v-else>
-          You'll be taken to a secure payment page.
+          {{ $t('checkout.onlineNote') }}
         </template>
       </p>
     </div>

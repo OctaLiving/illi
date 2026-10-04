@@ -1,6 +1,22 @@
 <script setup lang="ts">
 const { data: catalog } = await useCatalog()
-const categoryName = (slug: string) => catalog.value.categories.find(c => c.slug === slug)?.name ?? slug
+const { t } = useI18n()
+const { tr, price } = useLocalized()
+const localePath = useLocalePath()
+const categoryName = (slug: string) => {
+  const category = catalog.value.categories.find(c => c.slug === slug)
+  return category ? tr(category, 'name') : slug
+}
+const subtitle = (p: { storage: string, shelfLifeDays: number }) =>
+  t('product.subtitle', { storage: p.storage === 'Refrigerated' ? t('product.refrigerated') : t('product.roomTemp'), n: p.shelfLifeDays })
+const slotLabelById = (slotId: string, fallback: string) => {
+  const slot = selectedPlan.value?.includedSlots.find(s => s.id === slotId)
+  return slot ? tr(slot, 'label') : fallback
+}
+const productNameById = (id: string, fallback: string) => {
+  const product = catalog.value.products.find(p => p.id === id)
+  return product ? tr(product, 'name') : fallback
+}
 
 const {
   products,
@@ -43,12 +59,12 @@ function slotIsFilled(slotId: string) {
 const { data: me } = useMe()
 
 function proceedToCheckout() {
-  return navigateTo(me.value?.user ? '/checkout' : '/login?next=/checkout')
+  return navigateTo(localePath(me.value?.user ? '/checkout' : '/login?next=/checkout'))
 }
 
 useSeoMeta({
-  title: 'Build your box',
-  description: 'Choose an illi box — Pantry, Living or Coastal — and fill it with your favourite small-batch products, prepared again on your schedule.'
+  title: () => t('builder.metaTitle'),
+  description: () => t('builder.metaDescription')
 })
 </script>
 
@@ -63,20 +79,19 @@ useSeoMeta({
             style="animation-delay:.05s"
           >
             <span class="h-px w-8 bg-saffron-600" />
-            Boxes on repeat
+            {{ $t('builder.eyebrow') }}
           </p>
           <h1
             class="reveal mt-6 max-w-3xl font-[family:var(--font-serif)] text-5xl font-normal leading-[1.0] tracking-tight text-stone-900 sm:text-6xl"
             style="animation-delay:.16s"
           >
-            Build your <em class="italic text-olive-700">box.</em>
+            {{ $t('builder.titleA') }} <em class="italic text-olive-700">{{ $t('builder.titleB') }}</em>
           </h1>
           <p
             class="reveal mt-6 max-w-2xl text-lg leading-8 text-stone-700"
             style="animation-delay:.26s"
           >
-            Pick a box, choose a product for each spot, and we'll prepare it again on your schedule.
-            Each cycle is paid separately — no lock-in.
+            {{ $t('builder.intro') }}
           </p>
         </div>
 
@@ -88,7 +103,7 @@ useSeoMeta({
         >
           <div class="flex items-center justify-between">
             <p class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.2em] text-saffron-600">
-              Your progress
+              {{ $t('builder.progress') }}
             </p>
             <p class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.16em] text-stone-500">
               {{ requiredFilled }} / {{ requiredTotal }}
@@ -114,7 +129,7 @@ useSeoMeta({
               <span>ready</span>
             </div>
             <p class="text-sm leading-6 text-stone-700">
-              Your box is complete. Continue to checkout whenever you're ready.
+              {{ $t('builder.complete') }}
             </p>
           </div>
           <div
@@ -125,7 +140,7 @@ useSeoMeta({
               {{ remainingRequiredSlots }}
             </p>
             <p class="mt-2 font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.16em] text-stone-500">
-              spot{{ remainingRequiredSlots === 1 ? '' : 's' }} left to fill
+              {{ $t('builder.spotsLeft', remainingRequiredSlots) }}
             </p>
           </div>
         </div>
@@ -134,9 +149,9 @@ useSeoMeta({
       <!-- Step 1 -->
       <section class="space-y-6">
         <div class="flex items-baseline gap-4">
-          <span class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.24em] text-saffron-600">Step 1</span>
+          <span class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.24em] text-saffron-600">{{ $t('builder.step', { n: 1 }) }}</span>
           <h2 class="font-[family:var(--font-serif)] text-4xl text-stone-900">
-            Choose your box
+            {{ $t('builder.chooseBox') }}
           </h2>
         </div>
 
@@ -154,20 +169,20 @@ useSeoMeta({
             <div class="flex flex-wrap items-start justify-between gap-4">
               <div class="space-y-3">
                 <p class="font-[family:var(--font-mono)] text-[0.64rem] uppercase tracking-[0.2em] text-saffron-600">
-                  {{ plan.cadence }}
+                  {{ $t(`cadenceTitle.${plan.cadence}`) }}
                 </p>
                 <h3 class="font-[family:var(--font-serif)] text-3xl text-stone-900">
-                  {{ plan.name }}
+                  {{ tr(plan, 'name') }}
                 </h3>
                 <p class="max-w-md text-sm leading-7 text-stone-600">
-                  {{ plan.summary }}
+                  {{ tr(plan, 'summary') }}
                 </p>
               </div>
               <span
                 class="shrink-0 rounded-lg px-3 py-1.5 font-[family:var(--font-mono)] text-xs"
                 :class="selectedPlanId === plan.id ? 'bg-olive-600 text-sand-50' : 'bg-sand-600/10 text-stone-600'"
               >
-                {{ plan.price.amount }} {{ plan.price.currency }}
+                {{ price(plan.price.amount) }}
               </span>
             </div>
           </button>
@@ -181,9 +196,9 @@ useSeoMeta({
       >
         <div class="space-y-6">
           <div class="flex items-baseline gap-4">
-            <span class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.24em] text-saffron-600">Step 2</span>
+            <span class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.24em] text-saffron-600">{{ $t('builder.step', { n: 2 }) }}</span>
             <h2 class="font-[family:var(--font-serif)] text-4xl text-stone-900">
-              Fill your {{ selectedPlan.name }}
+              {{ $t('builder.fill', { name: tr(selectedPlan, 'name') }) }}
             </h2>
           </div>
 
@@ -202,12 +217,12 @@ useSeoMeta({
                       class="rounded-lg px-2 py-1"
                       :class="slot.required ? 'bg-olive-600/10 text-olive-700' : 'bg-sand-600/10 text-stone-500'"
                     >
-                      {{ slot.required ? 'Required' : 'Optional' }}
+                      {{ slot.required ? $t('builder.required') : $t('builder.optional') }}
                     </span>
                   </div>
                   <div>
                     <h3 class="flex items-center gap-2 font-[family:var(--font-serif)] text-3xl text-stone-900">
-                      {{ slot.label }}
+                      {{ tr(slot, 'label') }}
                       <UIcon
                         v-if="slotIsFilled(slot.id)"
                         name="i-lucide-check"
@@ -215,7 +230,7 @@ useSeoMeta({
                       />
                     </h3>
                     <p class="mt-2 max-w-md text-sm leading-7 text-stone-600">
-                      {{ slot.description }}
+                      {{ tr(slot, 'description') }}
                     </p>
                   </div>
                 </div>
@@ -228,7 +243,7 @@ useSeoMeta({
                     :disabled="getSelectedProductIds(slot.id).length === 0"
                     @click="clearSlot(slot.id)"
                   >
-                    Clear
+                    {{ $t('builder.clear') }}
                   </button>
                 </div>
               </div>
@@ -248,14 +263,14 @@ useSeoMeta({
                     <div class="arch-inner h-24 w-20 shrink-0 overflow-hidden border border-sand-600/30 bg-stone-100">
                       <img
                         :src="product.image.src"
-                        :alt="product.image.alt"
+                        :alt="tr(product, 'name')"
                         class="size-full object-cover transition duration-500 group-hover/card:scale-[1.05]"
                       >
                     </div>
                     <div class="min-w-0 space-y-1.5">
                       <div class="flex items-center gap-2">
                         <h4 class="font-[family:var(--font-serif)] text-xl text-stone-900">
-                          {{ product.name }}
+                          {{ tr(product, 'name') }}
                         </h4>
                         <UIcon
                           v-if="isSelected(slot.id, product.id)"
@@ -264,16 +279,16 @@ useSeoMeta({
                         />
                       </div>
                       <p class="font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.14em] text-stone-500">
-                        {{ product.subtitle }}
+                        {{ subtitle(product) }}
                       </p>
                       <p class="line-clamp-2 text-sm leading-6 text-stone-600">
-                        {{ product.description }}
+                        {{ tr(product, 'description') }}
                       </p>
                       <p
                         class="font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.16em] transition"
                         :class="isSelected(slot.id, product.id) ? 'text-saffron-700' : 'text-transparent group-hover/card:text-stone-400'"
                       >
-                        {{ isSelected(slot.id, product.id) ? '✓ In your box' : 'Tap to add' }}
+                        {{ isSelected(slot.id, product.id) ? $t('builder.inBox') : $t('builder.tapToAdd') }}
                       </p>
                     </div>
                   </div>
@@ -292,17 +307,17 @@ useSeoMeta({
             <div class="flex items-start justify-between gap-3">
               <div>
                 <p class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.2em] text-saffron-600">
-                  Summary
+                  {{ $t('builder.summary') }}
                 </p>
                 <h2 class="mt-2 font-[family:var(--font-serif)] text-3xl text-stone-900">
-                  Your box
+                  {{ $t('builder.yourBox') }}
                 </h2>
               </div>
               <div
                 v-if="isReady"
                 class="wax-seal stamp-in shrink-0 [--seal-size:4.25rem]"
               >
-                <span>sealed</span>
+                <span>{{ $t('builder.sealed') }}</span>
               </div>
             </div>
 
@@ -314,20 +329,20 @@ useSeoMeta({
                 <div class="flex flex-wrap items-start justify-between gap-3">
                   <div>
                     <p class="font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.18em] text-stone-500">
-                      {{ bundleSummary.cadence }}
+                      {{ $t(`cadenceTitle.${bundleSummary.cadence}`) }}
                     </p>
                     <p class="mt-1.5 font-[family:var(--font-serif)] text-2xl text-stone-900">
-                      {{ bundleSummary.planName }}
+                      {{ selectedPlan ? tr(selectedPlan, 'name') : bundleSummary.planName }}
                     </p>
                     <p class="mt-1 font-[family:var(--font-mono)] text-sm text-olive-700">
-                      {{ bundleSummary.basePriceAmount }} {{ bundleSummary.currency }}
+                      {{ price(bundleSummary.basePriceAmount) }}
                     </p>
                   </div>
                   <span
                     class="rounded-lg px-2.5 py-1 font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.14em]"
                     :class="isReady ? 'bg-olive-600 text-sand-50' : 'bg-saffron-600/15 text-saffron-700'"
                   >
-                    {{ isReady ? 'Ready' : 'In progress' }}
+                    {{ isReady ? $t('builder.ready') : $t('builder.inProgress') }}
                   </span>
                 </div>
               </div>
@@ -340,7 +355,7 @@ useSeoMeta({
                 <div class="flex items-start justify-between gap-3">
                   <div>
                     <p class="font-medium text-stone-900">
-                      {{ item.slotLabel }}
+                      {{ slotLabelById(item.slotId, item.slotLabel) }}
                     </p>
                     <p class="font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.14em] text-stone-500">
                       {{ categoryName(item.slotType) }}
@@ -350,7 +365,7 @@ useSeoMeta({
                     class="rounded-lg px-2 py-0.5 font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.12em]"
                     :class="item.isComplete ? 'bg-olive-600/10 text-olive-700' : 'bg-saffron-600/10 text-saffron-700'"
                   >
-                    {{ item.isComplete ? 'Filled' : item.required ? 'Required' : 'Optional' }}
+                    {{ item.isComplete ? $t('builder.filled') : item.required ? $t('builder.required') : $t('builder.optional') }}
                   </span>
                 </div>
 
@@ -359,18 +374,18 @@ useSeoMeta({
                     v-if="item.productNames.length === 0"
                     class="text-stone-400"
                   >
-                    No product selected yet.
+                    {{ $t('builder.nothingYet') }}
                   </li>
                   <li
-                    v-for="productName in item.productNames"
-                    :key="productName"
+                    v-for="(productId, i) in item.productIds"
+                    :key="productId"
                     class="flex items-start gap-3"
                   >
                     <UIcon
                       name="i-lucide-check"
                       class="mt-1 size-4 shrink-0 text-saffron-600"
                     />
-                    <span>{{ productName }}</span>
+                    <span>{{ productNameById(productId, item.productNames[i] ?? productId) }}</span>
                   </li>
                 </ul>
               </div>
@@ -386,15 +401,15 @@ useSeoMeta({
                   :disabled="!isReady"
                   @click="proceedToCheckout"
                 >
-                  {{ !isReady ? `Fill ${remainingRequiredSlots} more to continue` : me?.user ? 'Continue to checkout' : 'Sign in to check out' }}
+                  {{ !isReady ? $t('builder.fillMore', { n: remainingRequiredSlots }) : me?.user ? $t('builder.continue') : $t('builder.signIn') }}
                   <UIcon
                     v-if="isReady"
                     name="i-lucide-arrow-right"
-                    class="size-4"
+                    class="flip-rtl size-4"
                   />
                 </button>
                 <p class="text-center font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.12em] text-stone-400">
-                  Cash on delivery or online payment · Prices in MAD
+                  {{ $t('builder.payNote') }}
                 </p>
               </div>
             </div>
@@ -405,10 +420,10 @@ useSeoMeta({
             class="rounded-3xl border border-saffron-600/30 bg-saffron-50/70 p-6"
           >
             <p class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.2em] text-saffron-700">
-              Almost there
+              {{ $t('builder.almost') }}
             </p>
             <h2 class="mt-2 font-[family:var(--font-serif)] text-2xl text-stone-900">
-              Still to choose
+              {{ $t('builder.stillToChoose') }}
             </h2>
             <ul class="mt-4 space-y-3 text-sm leading-7 text-stone-700">
               <li
@@ -420,7 +435,7 @@ useSeoMeta({
                   name="i-lucide-alert-circle"
                   class="mt-1 size-4 shrink-0 text-saffron-600"
                 />
-                <span>{{ issue.message }}</span>
+                <span>{{ $t(`builder.issues.${issue.type}`, { slot: slotLabelById(issue.slotId, issue.slotId) }) }}</span>
               </li>
             </ul>
           </section>
@@ -444,7 +459,7 @@ useSeoMeta({
             />
           </div>
           <p class="mt-1.5 font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.14em] text-stone-500">
-            {{ requiredFilled }} / {{ requiredTotal }} chosen
+            {{ $t('builder.chosen', { a: requiredFilled, b: requiredTotal }) }}
           </p>
         </div>
         <a
@@ -452,7 +467,7 @@ useSeoMeta({
           class="shrink-0 rounded-lg px-4 py-2.5 font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.14em] transition"
           :class="isReady ? 'bg-saffron-600 text-sand-50' : 'bg-olive-600 text-sand-50'"
         >
-          {{ isReady ? 'Ready · review' : `${remainingRequiredSlots} left` }}
+          {{ isReady ? $t('builder.readyReview') : $t('builder.left', { n: remainingRequiredSlots }) }}
         </a>
       </div>
     </div>

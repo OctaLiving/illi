@@ -1,0 +1,409 @@
+{
+  "meta": {
+    "title": "illi — Small-batch Moroccan pantry",
+    "description": "Ferments, nut butters, marinated fish and slow-cooked sauces, made in small batches in Casablanca. Buy a jar or build a box."
+  },
+  "common": {
+    "price": "{amount} MAD",
+    "madeInCasablanca": "Made in Casablanca",
+    "listSep": ", "
+  },
+  "nav": {
+    "shop": "Shop",
+    "boxes": "Boxes",
+    "story": "Our story",
+    "account": "Account",
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "console": "Console",
+    "cart": "Cart",
+    "openCart": "Open cart",
+    "menu": "Menu",
+    "home": "illi — home",
+    "language": "Language"
+  },
+  "layout": {
+    "announcement": "Made in small batches in Casablanca · Buy any jar on its own, or get a box on repeat"
+  },
+  "footer": {
+    "about": "A small-batch Moroccan pantry. Ferments, nut butters, marinated fish and slow-cooked sauces — short ingredient lists, made in Casablanca.",
+    "shop": "Shop",
+    "boxes": "Boxes",
+    "account": "Account",
+    "yourAccount": "Your account",
+    "createAccount": "Create an account",
+    "yourCart": "Your cart",
+    "copyright": "© {year} illi · Made in Casablanca",
+    "payments": "Prices in Moroccan dirhams · Cash on delivery or secure online payment"
+  },
+  "product": {
+    "fresh": "Fresh · chilled",
+    "backSoon": "Back soon",
+    "per": "per {unit}",
+    "add": "Add",
+    "added": "Added",
+    "addAria": "Add {name} to cart",
+    "notFound": "Product not found",
+    "breadcrumb": "Breadcrumb",
+    "freshChilled": "Fresh · keep chilled",
+    "addToCart": "Add to cart",
+    "buyNow": "Buy now",
+    "refrigerated": "Refrigerated",
+    "roomTemp": "Room temp",
+    "storage": "Storage",
+    "days": "{n} days",
+    "keepsFor": "Keeps for",
+    "casablanca": "Casablanca",
+    "madeIn": "Made in",
+    "repeatTitle": "Want it on repeat?",
+    "repeatBody": "Add it to the {plan}, delivered {cadence} — {price}.",
+    "ingredients": "Ingredients",
+    "ingredientsCount": "{n} ingredients. Nothing else.",
+    "nutrition": "Nutrition",
+    "protein": "Protein {n}%",
+    "fat": "Fat {n}%",
+    "carbs": "Carbs {n}%",
+    "storageShelf": "Storage & shelf life",
+    "keepRefrigerated": "Keep refrigerated.",
+    "keepCool": "Store in a cool, dry place; refrigerate after opening.",
+    "bestWithin": "Best within {n} days. Sold by the {unit}.",
+    "related": "You may also like",
+    "subtitle": "{storage} · {n}-day shelf"
+  },
+  "units": {
+    "jar": "jar",
+    "bottle": "bottle",
+    "portion": "portion",
+    "tin": "tin"
+  },
+  "qty": {
+    "decrease": "Decrease quantity",
+    "increase": "Increase quantity"
+  },
+  "cart": {
+    "title": "Your cart",
+    "close": "Close cart",
+    "empty": "Your cart is empty",
+    "emptyBody": "Pick a jar or two — every product is made in small batches in Casablanca.",
+    "shop": "Shop the pantry",
+    "subtotal": "Subtotal",
+    "checkout": "Checkout",
+    "payNote": "Cash on delivery or online payment · Prices in MAD",
+    "unitLine": "{price} · {unit}"
+  },
+  "shop": {
+    "metaAll": "Shop the pantry",
+    "metaCategory": "{name} — Shop",
+    "metaDescription": "Ferments, cheeses, nut butters, jams, marinated fish and sauces — made in small batches in Casablanca. Buy a single jar or build a box.",
+    "eyebrow": "The pantry",
+    "titleAll": "Everything we make",
+    "intro": "Small batches, short ingredient lists, nothing added that shouldn't be. Add any jar to your cart — no subscription needed.",
+    "all": "All",
+    "boxesEyebrow": "Boxes on repeat",
+    "boxesTitle": "Choose your favourites once — we refill them on your schedule.",
+    "boxesFrom": "From {price}",
+    "buildBox": "Build a box",
+    "empty": "Nothing here yet — try another category."
+  },
+  "cadence": {
+    "weekly": "every week",
+    "biweekly": "every two weeks",
+    "monthly": "every month"
+  },
+  "cadenceTitle": {
+    "weekly": "Every week",
+    "biweekly": "Every two weeks",
+    "monthly": "Every month"
+  },
+  "home": {
+    "eyebrow": "Small-batch Moroccan pantry",
+    "titleA": "A Moroccan kitchen,",
+    "titleB": "kept in a jar.",
+    "intro": "Amlou, live ferments, marinated sardines, slow-cooked sauces — made in small batches in Casablanca with nothing added that shouldn't be.",
+    "shop": "Shop the pantry",
+    "buildBox": "Build a box",
+    "jarsFrom": "Jars from {price} · No subscription needed",
+    "smallBatches": "Small batches",
+    "shortLists": "Short ingredient lists",
+    "sealLine1": "Made in",
+    "sealLine2": "Casablanca",
+    "byCategory": "Shop by category",
+    "seeEverything": "See everything",
+    "favEyebrow": "Pantry favourites",
+    "favTitle": "Start with these",
+    "shopAll": "Shop all {n} products",
+    "storyAlt": "Jars of seasonal fermented vegetables on a shelf",
+    "storyEyebrow": "Our story",
+    "storyTitle": "Food that keeps, the way our grandmothers kept it.",
+    "storyBody": "illi started in a Casablanca kitchen with a simple rule: if it can't be made with a short list of real ingredients, we don't make it. Everything is fermented, marinated or slow-cooked in small batches, then sealed in glass.",
+    "values": {
+      "sourced": {
+        "title": "Sourced close",
+        "body": "Seasonal produce from local and regional farms, chosen for flavour over volume."
+      },
+      "old": {
+        "title": "Kept the old way",
+        "body": "Fermented, marinated, slow-cooked. Small batches and short ingredient lists."
+      },
+      "nothing": {
+        "title": "Nothing extra",
+        "body": "No additives, no shortcuts — just what the recipe needs, in reusable glass."
+      }
+    },
+    "boxesEyebrow": "Boxes on repeat",
+    "boxesTitle": "Never run out of your favourites",
+    "boxesBody": "Choose a box, fill it with the products you love, and we prepare it again on your schedule. Each cycle is paid separately, so there's no lock-in.",
+    "boxProducts": "{n} products",
+    "buildThisBox": "Build this box",
+    "howTitle": "How it works",
+    "steps": {
+      "pick": {
+        "title": "Pick what you love",
+        "body": "Add single jars to your cart, or build a box you can repeat."
+      },
+      "pay": {
+        "title": "Pay your way",
+        "body": "Cash on delivery in Morocco, or pay online with crypto — card payments are coming soon."
+      },
+      "prep": {
+        "title": "We prepare your order",
+        "body": "Your jars are made in small batches in Casablanca, then packed for you."
+      }
+    },
+    "ctaTitle": "Fill your pantry with something worth keeping."
+  },
+  "checkout": {
+    "title": "Checkout",
+    "emptyBody": "Browse the pantry and add a jar or two.",
+    "yourOrder": "Your order",
+    "addMore": "Add more",
+    "items": "{n} item | {n} items",
+    "signInTitle": "Sign in to check out",
+    "signInBody": "It takes a minute, and you can track your orders afterwards. Your cart is saved.",
+    "createAccount": "Create an account",
+    "signIn": "Sign in",
+    "delivery": "Delivery details",
+    "fullName": "Full name",
+    "phone": "Phone",
+    "country": "Country",
+    "address": "Address",
+    "addressPlaceholder": "Street, building, apartment",
+    "city": "City",
+    "notes": "Notes for the courier",
+    "optional": "(optional)",
+    "notesPlaceholder": "Floor, landmark, best time to call",
+    "payment": "Payment",
+    "methods": {
+      "cod": {
+        "title": "Cash on delivery",
+        "body": "Pay the courier in cash when your order arrives."
+      },
+      "card": {
+        "title": "Card",
+        "body": "Visa, Mastercard, Apple Pay and Google Pay."
+      },
+      "crypto": {
+        "title": "Crypto",
+        "body": "USDT, Bitcoin and more through a secure crypto checkout."
+      }
+    },
+    "reasons": {
+      "card": "Card payment is coming soon.",
+      "cod": "Cash on delivery is paused right now.",
+      "codCountry": "Only available for delivery in Morocco."
+    },
+    "placing": "Placing your order…",
+    "startingPayment": "Starting payment…",
+    "placeOrder": "Place order · {price}",
+    "continueToPayment": "Continue to payment · {price}",
+    "pricesNote": "Prices in Moroccan dirhams (MAD).",
+    "codNote": "You pay the courier when your order arrives.",
+    "onlineNote": "You'll be taken to a secure payment page.",
+    "errors": {
+      "address": "Please enter your name, address and city.",
+      "phone": "Please enter a phone number the courier can call.",
+      "country": "We don't deliver to that country yet.",
+      "method": "Choose how you want to pay.",
+      "cardUnavailable": "Card payment is coming soon.",
+      "cryptoUnavailable": "Crypto payment is not available right now.",
+      "codUnavailable": "Cash on delivery is paused right now.",
+      "codCountry": "Cash on delivery is only available in Morocco.",
+      "emptyCart": "Your cart is empty.",
+      "invalidItem": "Your cart has an invalid item.",
+      "unavailable": "{product} is not available right now.",
+      "maxQuantity": "You can order up to {max} of {product}.",
+      "incompleteBox": "Your box is missing some picks.",
+      "generic": "Could not place your order. Please try again."
+    }
+  },
+  "countries": {
+    "MA": "Morocco",
+    "FR": "France",
+    "ES": "Spain",
+    "BE": "Belgium",
+    "NL": "Netherlands",
+    "DE": "Germany",
+    "IT": "Italy",
+    "PT": "Portugal",
+    "SK": "Slovakia",
+    "CZ": "Czechia",
+    "GB": "United Kingdom",
+    "AE": "United Arab Emirates"
+  },
+  "order": {
+    "notFound": "Order not found",
+    "title": "Your order",
+    "paid": "Thank you — your order is paid.",
+    "confirmed": "Thank you — your order is confirmed.",
+    "awaiting": "Almost there — complete your payment.",
+    "incomplete": "This order was not completed.",
+    "cashNote": "We're preparing it now. Please have {amount} ready in cash for the courier.",
+    "meta": "Order {ref} · {date}",
+    "pay": "Pay {amount}",
+    "summary": "Summary",
+    "box": "Box · {cadence}",
+    "total": "Total",
+    "payment": "Payment",
+    "status": {
+      "paid": "Paid",
+      "cod": "Pay on delivery",
+      "awaiting": "Waiting for payment",
+      "other": "Not completed"
+    },
+    "deliveryTo": "Delivery to",
+    "keepShopping": "Keep shopping",
+    "yourOrders": "Your orders"
+  },
+  "box": {
+    "checkoutTitle": "Checkout",
+    "crumbHome": "Home",
+    "crumbBuild": "Build your box",
+    "youreIn": "You're in",
+    "youreInName": "You're in, {name}",
+    "ready": "Your box is ready.",
+    "readyBody": "Check your picks, add your delivery details and choose how to pay — cash on delivery or online. Each renewal is paid the same way.",
+    "changePicks": "Change your picks",
+    "incompleteA": "Your box isn't complete yet.",
+    "finish": "Finish choosing",
+    "incompleteB": "to check out."
+  },
+  "auth": {
+    "signInTitle": "Sign in",
+    "welcome": "Welcome back.",
+    "email": "Email",
+    "password": "Password",
+    "name": "Name",
+    "signingIn": "Signing in…",
+    "signIn": "Sign in",
+    "signInError": "Could not sign in — check your email and password.",
+    "newHere": "New to illi?",
+    "createAccount": "Create an account",
+    "joinTitle": "Join illi",
+    "createYourAccount": "Create your account.",
+    "joining": "Joining…",
+    "join": "Join illi",
+    "joinError": "Could not create your account.",
+    "haveAccount": "Already a member?"
+  },
+  "pay": {
+    "title": "Pay",
+    "crumbHome": "Home",
+    "crumbAccount": "Account",
+    "crumbInvoice": "Pay invoice",
+    "simulated": "Simulated crypto payment",
+    "order": "Order",
+    "body": "This is a stand-in for the NOWPayments hosted page. In production you'd be redirected to NOWPayments to pay in crypto; here, confirm to simulate a completed payment.",
+    "confirming": "Confirming…",
+    "simulate": "Simulate successful payment",
+    "cancel": "Cancel",
+    "error": "Could not confirm the payment."
+  },
+  "account": {
+    "title": "Your account",
+    "member": "Member",
+    "contact": "Contact & delivery details",
+    "subscriptions": "Subscriptions",
+    "noSubs": "No subscriptions yet.",
+    "buildOne": "Build one",
+    "renews": "Renews {date}",
+    "orders": "Orders",
+    "noOrders": "No orders yet.",
+    "pay": "Pay",
+    "box": "Box",
+    "order": "Order"
+  },
+  "status": {
+    "pending": "pending",
+    "cod_pending": "pay on delivery",
+    "paid": "paid",
+    "expired": "expired",
+    "failed": "failed",
+    "active": "active",
+    "past_due": "payment due",
+    "paused": "paused",
+    "canceled": "canceled"
+  },
+  "profile": {
+    "title": "Your information",
+    "crumbHome": "Home",
+    "crumbAccount": "Account",
+    "crumbInfo": "Information",
+    "heading": "Contact & delivery",
+    "intro": "Where your boxes go and how we reach you. This is the address each subscription delivery is sent to.",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "address1": "Address line 1",
+    "address2": "Address line 2",
+    "city": "City",
+    "postal": "Postal code",
+    "country": "Country",
+    "notes": "Delivery notes",
+    "notesPlaceholder": "Gate code, drop-off preference…",
+    "saving": "Saving…",
+    "save": "Save information",
+    "saved": "Saved",
+    "error": "Could not save your information."
+  },
+  "builder": {
+    "metaTitle": "Build your box",
+    "metaDescription": "Choose an illi box — Pantry, Living or Coastal — and fill it with your favourite small-batch products, prepared again on your schedule.",
+    "eyebrow": "Boxes on repeat",
+    "titleA": "Build your",
+    "titleB": "box.",
+    "intro": "Pick a box, choose a product for each spot, and we'll prepare it again on your schedule. Each cycle is paid separately — no lock-in.",
+    "progress": "Your progress",
+    "complete": "Your box is complete. Continue to checkout whenever you're ready.",
+    "spotsLeft": "spot left to fill | spots left to fill",
+    "step": "Step {n}",
+    "chooseBox": "Choose your box",
+    "fill": "Fill your {name}",
+    "required": "Required",
+    "optional": "Optional",
+    "clear": "Clear",
+    "inBox": "✓ In your box",
+    "tapToAdd": "Tap to add",
+    "summary": "Summary",
+    "yourBox": "Your box",
+    "sealed": "ready",
+    "ready": "Ready",
+    "inProgress": "In progress",
+    "filled": "Filled",
+    "nothingYet": "No product selected yet.",
+    "fillMore": "Fill {n} more to continue",
+    "continue": "Continue to checkout",
+    "signIn": "Sign in to check out",
+    "payNote": "Cash on delivery or online payment · Prices in MAD",
+    "almost": "Almost there",
+    "stillToChoose": "Still to choose",
+    "chosen": "{a} / {b} chosen",
+    "readyReview": "Ready · review",
+    "left": "{n} left",
+    "issues": {
+      "missing-required": "{slot} is required before checkout can continue.",
+      "below-minimum": "{slot} needs more products.",
+      "too-many-products": "{slot} has too many products.",
+      "invalid-product": "{slot} contains a product that does not fit."
+    }
+  }
+}

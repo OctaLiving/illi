@@ -6,10 +6,11 @@
 // stayed on the file store until now.
 
 model Category {
-  slug      String @id
-  name      String
-  blurb     String
-  sortOrder Int    @default(0)
+  slug         String @id
+  name         String
+  blurb        String
+  sortOrder    Int    @default(0)
+  translations Json? // { ar: { name, … } } — falls back to the English columns
 }
 
 model Product {
@@ -40,6 +41,7 @@ model Product {
   sortOrder         Int      @default(0)
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
+  translations      Json? // { ar: { name, … } } — falls back to the English columns
 }
 
 model Plan {
@@ -54,17 +56,19 @@ model Plan {
   includedSlots PlanSlot[]
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
+  translations  Json? // { ar: { name, … } } — falls back to the English columns
 }
 
 model PlanSlot {
-  id          String  @id
-  planId      String
-  plan        Plan    @relation(fields: [planId], references: [id], onDelete: Cascade)
-  slotType    String
-  label       String
-  description String
-  minQuantity Int
-  maxQuantity Int
-  required    Boolean
-  sortOrder   Int     @default(0)
+  id           String  @id
+  planId       String
+  plan         Plan    @relation(fields: [planId], references: [id], onDelete: Cascade)
+  slotType     String
+  label        String
+  description  String
+  minQuantity  Int
+  maxQuantity  Int
+  required     Boolean
+  sortOrder    Int     @default(0)
+  translations Json? // { ar: { name, … } } — falls back to the English columns
 }

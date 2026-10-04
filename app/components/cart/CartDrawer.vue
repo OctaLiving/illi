@@ -1,5 +1,7 @@
 <script setup lang="ts">
 const { lines, count, subtotal, isOpen } = useCart()
+const { price } = useLocalized()
+const localePath = useLocalePath()
 
 const route = useRoute()
 watch(() => route.fullPath, () => {
@@ -14,7 +16,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
 
 function startCheckout() {
   isOpen.value = false
-  navigateTo('/cart')
+  navigateTo(localePath('/cart'))
 }
 </script>
 
@@ -33,26 +35,26 @@ function startCheckout() {
       />
     </Transition>
     <Transition
-      enter-from-class="translate-x-full"
-      leave-to-class="translate-x-full"
+      enter-from-class="translate-x-full rtl:-translate-x-full"
+      leave-to-class="translate-x-full rtl:-translate-x-full"
       enter-active-class="transition duration-300 ease-out"
       leave-active-class="transition duration-200 ease-in"
     >
       <aside
         v-if="isOpen"
-        class="fixed inset-y-0 right-0 z-50 flex w-full max-w-md flex-col bg-sand-50 shadow-2xl"
+        class="fixed inset-y-0 end-0 z-50 flex w-full max-w-md flex-col bg-sand-50 shadow-2xl"
         role="dialog"
         aria-modal="true"
-        aria-label="Your cart"
+        :aria-label="$t('cart.title')"
       >
         <header class="flex items-center justify-between border-b border-sand-200 px-6 py-5">
           <h2 class="font-serif text-2xl text-stone-900">
-            Your cart <span class="font-sans text-base text-stone-500">({{ count }})</span>
+            {{ $t('cart.title') }} <span class="font-sans text-base text-stone-500">({{ count }})</span>
           </h2>
           <button
             type="button"
             class="grid size-10 place-items-center rounded-full text-stone-600 transition hover:bg-sand-200"
-            aria-label="Close cart"
+            :aria-label="$t('cart.close')"
             @click="isOpen = false"
           >
             <UIcon
@@ -71,17 +73,17 @@ function startCheckout() {
             class="text-6xl opacity-80"
           />
           <p class="font-serif text-2xl text-stone-900">
-            Your cart is empty
+            {{ $t('cart.empty') }}
           </p>
           <p class="text-sm text-stone-600">
-            Pick a jar or two — every product is made in small batches in Casablanca.
+            {{ $t('cart.emptyBody') }}
           </p>
-          <NuxtLink
+          <NuxtLinkLocale
             to="/catalog"
             class="mt-2 rounded-full bg-olive-700 px-6 py-3 text-sm font-semibold text-sand-50 transition hover:bg-olive-800"
           >
-            Shop the pantry
-          </NuxtLink>
+            {{ $t('cart.shop') }}
+          </NuxtLinkLocale>
         </div>
 
         <template v-else>
@@ -91,8 +93,8 @@ function startCheckout() {
 
           <footer class="space-y-4 border-t border-sand-200 bg-white px-6 py-5">
             <div class="flex items-baseline justify-between">
-              <span class="text-stone-600">Subtotal</span>
-              <span class="font-serif text-3xl text-stone-900">{{ subtotal }} MAD</span>
+              <span class="text-stone-600">{{ $t('cart.subtotal') }}</span>
+              <span class="font-serif text-3xl text-stone-900">{{ price(subtotal) }}</span>
             </div>
             <button
               type="button"
@@ -103,10 +105,10 @@ function startCheckout() {
                 name="i-lucide-lock"
                 class="size-4"
               />
-              Checkout
+              {{ $t('cart.checkout') }}
             </button>
             <p class="text-center text-xs text-stone-500">
-              Cash on delivery or online payment · Prices in MAD
+              {{ $t('cart.payNote') }}
             </p>
           </footer>
         </template>

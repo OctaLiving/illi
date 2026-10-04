@@ -29,7 +29,12 @@ const productForm = reactive({
   carbs: 0,
   summary: '',
   isAvailable: true,
-  price: 150
+  price: 150,
+  // Arabic storefront text (optional; English is used when blank).
+  nameAr: '',
+  descriptionAr: '',
+  ingredientsAr: '',
+  summaryAr: ''
 })
 
 function newProduct() {
@@ -50,7 +55,11 @@ function newProduct() {
     carbs: 0,
     summary: '',
     isAvailable: true,
-    price: defaultProductPrice[categories.value[0]?.slug ?? 'jams']
+    price: defaultProductPrice[categories.value[0]?.slug ?? 'jams'],
+    nameAr: '',
+    descriptionAr: '',
+    ingredientsAr: '',
+    summaryAr: ''
   })
   showProductForm.value = true
 }
@@ -73,7 +82,11 @@ function editProduct(p: CatalogProduct) {
     carbs: p.nutrition.carbs,
     summary: p.nutrition.summary,
     isAvailable: p.isAvailable,
-    price: p.price.amount
+    price: p.price.amount,
+    nameAr: String(p.translations?.ar?.name ?? ''),
+    descriptionAr: String(p.translations?.ar?.description ?? ''),
+    ingredientsAr: ([] as string[]).concat(p.translations?.ar?.ingredients ?? []).join('، '),
+    summaryAr: String(p.translations?.ar?.nutritionSummary ?? '')
   })
   showProductForm.value = true
 }
@@ -99,7 +112,15 @@ async function submitProduct() {
         summary: productForm.summary
       },
       isAvailable: productForm.isAvailable,
-      price: { amount: productForm.price }
+      price: { amount: productForm.price },
+      translations: {
+        ar: {
+          name: productForm.nameAr,
+          description: productForm.descriptionAr,
+          ingredients: productForm.ingredientsAr.split(/[,،]/).map(s => s.trim()).filter(Boolean),
+          nutritionSummary: productForm.summaryAr
+        }
+      }
     }
     if (editingProductId.value) {
       await $fetch(`/api/products/${editingProductId.value}`, { method: 'PUT', body })
@@ -369,6 +390,36 @@ useSeoMeta({ title: 'Catalog · illi ops', robots: 'noindex, nofollow' })
                 v-model="productForm.ingredients"
                 :class="field"
                 placeholder="Almonds, Argan oil, Honey"
+              >
+            </div>
+            <div class="space-y-3 rounded-sm border border-sand-600/25 bg-sand-50/40 p-3">
+              <p :class="labelText">
+                Arabic — shown on /ar (blank = English)
+              </p>
+              <input
+                v-model="productForm.nameAr"
+                dir="rtl"
+                :class="field"
+                placeholder="الاسم"
+              >
+              <textarea
+                v-model="productForm.descriptionAr"
+                dir="rtl"
+                rows="3"
+                :class="field"
+                placeholder="الوصف"
+              />
+              <input
+                v-model="productForm.ingredientsAr"
+                dir="rtl"
+                :class="field"
+                placeholder="المكوّنات، مفصولة بفواصل"
+              >
+              <input
+                v-model="productForm.summaryAr"
+                dir="rtl"
+                :class="field"
+                placeholder="ملخّص القيمة الغذائية"
               >
             </div>
             <div>

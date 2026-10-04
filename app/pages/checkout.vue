@@ -6,6 +6,9 @@ definePageMeta({ middleware: 'auth' })
 const { data: me } = useMe()
 const firstName = computed(() => me.value?.user?.name?.split(' ')[0] ?? '')
 const { data: catalog } = await useCatalog()
+const { t } = useI18n()
+const { price } = useLocalized()
+const { productName, planName, slotLabel } = useCatalogText()
 const { bundleSummary, selection } = useSubscriptionBuilder(catalog.value.products, catalog.value.plans)
 
 const { submit, pending, error } = useCheckout('/api/checkout')
@@ -14,7 +17,7 @@ function placeOrder(details: CheckoutDetails) {
   submit({ selection: selection.value, ...details })
 }
 
-useSeoMeta({ title: 'Checkout · illi', robots: 'noindex' })
+useSeoMeta({ title: () => t('box.checkoutTitle'), robots: 'noindex' })
 </script>
 
 <template>
@@ -22,7 +25,7 @@ useSeoMeta({ title: 'Checkout · illi', robots: 'noindex' })
     <div class="mx-auto max-w-2xl px-5 py-16 sm:py-20">
       <AppBreadcrumbs
         class="mb-10 justify-center"
-        :items="[{ label: 'Home', to: '/' }, { label: 'Build your box', to: '/subscribe' }, { label: 'Checkout' }]"
+        :items="[{ label: $t('box.crumbHome'), to: '/' }, { label: $t('box.crumbBuild'), to: '/subscribe' }, { label: $t('box.checkoutTitle') }]"
       />
       <div class="reveal text-center">
         <BrandLogo
@@ -30,14 +33,13 @@ useSeoMeta({ title: 'Checkout · illi', robots: 'noindex' })
           class="text-6xl"
         />
         <p class="mt-6 font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.3em] text-saffron-600">
-          You're in{{ firstName ? `, ${firstName}` : '' }}
+          {{ firstName ? $t('box.youreInName', { name: firstName }) : $t('box.youreIn') }}
         </p>
         <h1 class="mt-3 font-[family:var(--font-serif)] text-4xl leading-tight text-stone-900 sm:text-5xl">
-          Your box is ready.
+          {{ $t('box.ready') }}
         </h1>
         <p class="mx-auto mt-4 max-w-md text-base leading-7 text-stone-600">
-          Check your picks, add your delivery details and choose how to pay — cash on delivery or online.
-          Each renewal is paid the same way.
+          {{ $t('box.readyBody') }}
         </p>
       </div>
 
@@ -49,14 +51,14 @@ useSeoMeta({ title: 'Checkout · illi', robots: 'noindex' })
         <div class="flex items-center justify-between border-b border-sand-600/15 pb-4">
           <div>
             <p class="font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.18em] text-stone-500">
-              {{ bundleSummary.cadence }}
+              {{ $t(`cadenceTitle.${bundleSummary.cadence}`) }}
             </p>
             <p class="mt-1 font-[family:var(--font-serif)] text-2xl text-stone-900">
-              {{ bundleSummary.planName }}
+              {{ planName(bundleSummary.planId, bundleSummary.planName) }}
             </p>
           </div>
           <p class="font-[family:var(--font-mono)] text-lg text-olive-700">
-            {{ bundleSummary.basePriceAmount }} {{ bundleSummary.currency }}
+            {{ price(bundleSummary.basePriceAmount) }}
           </p>
         </div>
 
@@ -67,20 +69,20 @@ useSeoMeta({ title: 'Checkout · illi', robots: 'noindex' })
             class="flex items-start justify-between gap-3 text-sm leading-7"
           >
             <span class="font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.12em] text-stone-500">
-              {{ item.slotLabel }}
+              {{ slotLabel(bundleSummary.planId, item.slotId, item.slotLabel) }}
             </span>
-            <span class="text-right text-stone-700">
-              {{ item.productNames.length ? item.productNames.join(', ') : '—' }}
+            <span class="text-end text-stone-700">
+              {{ item.productIds.length ? item.productIds.map((id, i) => productName(id, item.productNames[i] ?? id)).join($t('common.listSep')) : '—' }}
             </span>
           </li>
         </ul>
 
-        <NuxtLink
+        <NuxtLinkLocale
           to="/subscribe"
           class="mt-5 inline-flex text-sm font-semibold text-olive-700 hover:underline"
         >
-          Change your picks
-        </NuxtLink>
+          {{ $t('box.changePicks') }}
+        </NuxtLinkLocale>
       </div>
 
       <section
@@ -99,10 +101,12 @@ useSeoMeta({ title: 'Checkout · illi', robots: 'noindex' })
         v-else
         class="mt-8 rounded-2xl bg-saffron-50 p-5 text-center text-stone-700 ring-1 ring-saffron-200"
       >
-        Your box isn't complete yet. <NuxtLink
+        {{ $t('box.incompleteA') }} <NuxtLinkLocale
           to="/subscribe"
           class="font-semibold text-olive-700 underline"
-        >Finish choosing</NuxtLink> to check out.
+        >
+          {{ $t('box.finish') }}
+        </NuxtLinkLocale> {{ $t('box.incompleteB') }}
       </p>
     </div>
   </div>

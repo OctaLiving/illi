@@ -99,6 +99,8 @@ export interface CheckoutDetails {
 // shopper on: to the payment page for online methods, or to the order page for
 // cash on delivery.
 export function useCheckout(endpoint: '/api/checkout/cart' | '/api/checkout') {
+  const { t, te } = useI18n()
+  const localePath = useLocalePath()
   const pending = ref(false)
   const error = ref('')
 
@@ -111,11 +113,15 @@ export function useCheckout(endpoint: '/api/checkout/cart' | '/api/checkout') {
       if (/^https?:\/\//.test(nextUrl)) {
         window.location.href = nextUrl // external hosted payment page
       } else {
-        await navigateTo(nextUrl)
+        await navigateTo(localePath(nextUrl))
       }
     } catch (err) {
-      const e = err as { data?: { statusMessage?: string } }
-      error.value = e?.data?.statusMessage ?? 'Could not place your order. Please try again.'
+      // Server errors carry a code (data.data.code) so they can be shown in the
+      // shopper's language; anything unexpected falls back to a generic message.
+      const e = err as { data?: { statusMessage?: string, data?: { code?: string, product?: string, max?: number } } }
+      const info = e?.data?.data
+      const key = `checkout.errors.${info?.code}`
+      error.value = info?.code && te(key) ? t(key, { product: info.product ?? '', max: info.max ?? 20 }) : t('checkout.errors.generic')
       pending.value = false
     }
   }

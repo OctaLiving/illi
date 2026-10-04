@@ -27,6 +27,9 @@ export const defaultProductPrice: Record<BundleSlotType, number> = {
   sauces: 140
 }
 
+/** Optional per-language overrides of a catalog row's text, e.g. { ar: { name: '…' } }. */
+export type Translations = Partial<Record<'ar', Record<string, string | string[]>>>
+
 export interface ProductImage {
   src: string
   alt: string
@@ -58,6 +61,7 @@ export interface CatalogProduct {
   eligibleSlotTypes: BundleSlotType[]
   /** One-time purchase price, outside any subscription. */
   price: ProductPrice
+  translations?: Translations
 }
 
 export interface ProductPrice {
@@ -70,6 +74,7 @@ export interface ProductCategory {
   slug: BundleSlotType
   name: string
   blurb: string
+  translations?: Translations
 }
 
 export interface BundleSlotRule {
@@ -80,6 +85,7 @@ export interface BundleSlotRule {
   minQuantity: number
   maxQuantity: number
   required: boolean
+  translations?: Translations
 }
 
 export interface SubscriptionPlanPrice {
@@ -95,6 +101,7 @@ export interface SubscriptionPlan {
   summary: string
   price: SubscriptionPlanPrice
   includedSlots: BundleSlotRule[]
+  translations?: Translations
 }
 
 /** How a single product fits a plan: the plan plus every slot it is eligible to fill. */

@@ -17,17 +17,19 @@ const planForm = reactive({
   cadence: 'weekly',
   summary: '',
   amount: 0,
-  includedSlots: [] as Array<{ slotType: string, label: string, description: string, minQuantity: number, maxQuantity: number, required: boolean }>
+  nameAr: '',
+  summaryAr: '',
+  includedSlots: [] as Array<{ slotType: string, label: string, description: string, minQuantity: number, maxQuantity: number, required: boolean, labelAr: string, descriptionAr: string }>
 })
 
 function blankSlot() {
-  return { slotType: categories.value[0]?.slug ?? '', label: '', description: '', minQuantity: 1, maxQuantity: 1, required: true }
+  return { slotType: categories.value[0]?.slug ?? '', label: '', description: '', minQuantity: 1, maxQuantity: 1, required: true, labelAr: '', descriptionAr: '' }
 }
 
 function newPlan() {
   editingPlanId.value = null
   planError.value = ''
-  Object.assign(planForm, { name: '', cadence: 'weekly', summary: '', amount: 0, includedSlots: [blankSlot()] })
+  Object.assign(planForm, { name: '', cadence: 'weekly', summary: '', amount: 0, nameAr: '', summaryAr: '', includedSlots: [blankSlot()] })
   showPlanForm.value = true
 }
 
@@ -39,13 +41,17 @@ function editPlan(pl: SubscriptionPlan) {
     cadence: pl.cadence,
     summary: pl.summary,
     amount: pl.price.amount,
+    nameAr: String(pl.translations?.ar?.name ?? ''),
+    summaryAr: String(pl.translations?.ar?.summary ?? ''),
     includedSlots: pl.includedSlots.map(s => ({
       slotType: s.slotType,
       label: s.label,
       description: s.description,
       minQuantity: s.minQuantity,
       maxQuantity: s.maxQuantity,
-      required: s.required
+      required: s.required,
+      labelAr: String(s.translations?.ar?.label ?? ''),
+      descriptionAr: String(s.translations?.ar?.description ?? '')
     }))
   })
   showPlanForm.value = true
@@ -67,7 +73,11 @@ async function submitPlan() {
       cadence: planForm.cadence,
       summary: planForm.summary,
       price: { amount: planForm.amount },
-      includedSlots: planForm.includedSlots
+      translations: { ar: { name: planForm.nameAr, summary: planForm.summaryAr } },
+      includedSlots: planForm.includedSlots.map(({ labelAr, descriptionAr, ...slot }) => ({
+        ...slot,
+        translations: { ar: { label: labelAr, description: descriptionAr } }
+      }))
     }
     if (editingPlanId.value) {
       await $fetch(`/api/plans/${editingPlanId.value}`, { method: 'PUT', body })
@@ -266,6 +276,24 @@ useSeoMeta({ title: 'Plans · illi ops', robots: 'noindex, nofollow' })
                 :class="field"
               />
             </div>
+            <div class="space-y-2 rounded-sm border border-sand-600/25 bg-sand-50/40 p-3">
+              <p :class="labelText">
+                Arabic — shown on /ar (blank = English)
+              </p>
+              <input
+                v-model="planForm.nameAr"
+                dir="rtl"
+                :class="field"
+                placeholder="اسم الصندوق"
+              >
+              <textarea
+                v-model="planForm.summaryAr"
+                dir="rtl"
+                rows="2"
+                :class="field"
+                placeholder="الوصف"
+              />
+            </div>
 
             <div class="border-t border-sand-600/20 pt-4">
               <div class="flex items-center justify-between">
@@ -326,6 +354,20 @@ useSeoMeta({ title: 'Plans · illi ops', robots: 'noindex, nofollow' })
                     :class="[field, 'mt-2']"
                     placeholder="Slot description"
                   >
+                  <div class="mt-2 grid grid-cols-2 gap-2">
+                    <input
+                      v-model="slot.labelAr"
+                      dir="rtl"
+                      :class="field"
+                      placeholder="التسمية بالعربية"
+                    >
+                    <input
+                      v-model="slot.descriptionAr"
+                      dir="rtl"
+                      :class="field"
+                      placeholder="الوصف بالعربية"
+                    >
+                  </div>
                   <div class="mt-2 flex items-center gap-4">
                     <label class="flex items-center gap-2">
                       <span class="font-[family:var(--font-mono)] text-[0.56rem] uppercase tracking-[0.12em] text-stone-500">Max</span>

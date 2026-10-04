@@ -1,5 +1,7 @@
 <script setup lang="ts">
 const route = useRoute()
+const { t, locale } = useI18n()
+const localePath = useLocalePath()
 const next = computed(() => (typeof route.query.next === 'string' ? route.query.next : '/'))
 
 const form = reactive({ name: '', email: '', password: '' })
@@ -14,15 +16,16 @@ async function submit() {
   try {
     await $fetch('/api/register', { method: 'POST', body: { ...form } })
     await refreshNuxtData('me')
-    await navigateTo(next.value)
+    await navigateTo(localePath(next.value))
   } catch (err) {
     const e = err as { data?: { statusMessage?: string } }
-    error.value = e?.data?.statusMessage ?? 'Could not create your account.'
+    // Better Auth's messages (e.g. email already used) are English-only.
+    error.value = locale.value === 'en' && e?.data?.statusMessage ? e.data.statusMessage : t('auth.joinError')
     pending.value = false
   }
 }
 
-useSeoMeta({ title: 'Join illi', robots: 'noindex' })
+useSeoMeta({ title: () => t('auth.joinTitle'), robots: 'noindex' })
 </script>
 
 <template>
@@ -34,7 +37,7 @@ useSeoMeta({ title: 'Join illi', robots: 'noindex' })
           class="text-6xl"
         />
         <h1 class="mt-3 font-[family:var(--font-serif)] text-4xl text-stone-900">
-          Create your account.
+          {{ $t('auth.createYourAccount') }}
         </h1>
       </div>
 
@@ -44,7 +47,7 @@ useSeoMeta({ title: 'Join illi', robots: 'noindex' })
         @submit.prevent="submit"
       >
         <div>
-          <label class="mb-1 block font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.16em] text-stone-500">Name</label>
+          <label class="mb-1 block font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.16em] text-stone-500">{{ $t('auth.name') }}</label>
           <input
             v-model="form.name"
             required
@@ -53,7 +56,7 @@ useSeoMeta({ title: 'Join illi', robots: 'noindex' })
           >
         </div>
         <div>
-          <label class="mb-1 block font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.16em] text-stone-500">Email</label>
+          <label class="mb-1 block font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.16em] text-stone-500">{{ $t('auth.email') }}</label>
           <input
             v-model="form.email"
             type="email"
@@ -63,7 +66,7 @@ useSeoMeta({ title: 'Join illi', robots: 'noindex' })
           >
         </div>
         <div>
-          <label class="mb-1 block font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.16em] text-stone-500">Password</label>
+          <label class="mb-1 block font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.16em] text-stone-500">{{ $t('auth.password') }}</label>
           <input
             v-model="form.password"
             type="password"
@@ -86,18 +89,18 @@ useSeoMeta({ title: 'Join illi', robots: 'noindex' })
           class="w-full rounded-full bg-olive-700 py-3 text-sm font-semibold text-sand-50 transition hover:bg-olive-800 disabled:opacity-50"
           :disabled="pending"
         >
-          {{ pending ? 'Joining…' : 'Join illi' }}
+          {{ pending ? $t('auth.joining') : $t('auth.join') }}
         </button>
       </form>
 
       <p class="mt-5 text-center text-sm text-stone-600">
-        Already a member?
-        <NuxtLink
+        {{ $t('auth.haveAccount') }}
+        <NuxtLinkLocale
           :to="{ path: '/login', query: route.query }"
           class="font-[family:var(--font-mono)] text-[0.7rem] uppercase tracking-[0.14em] text-olive-700 underline decoration-saffron-600 decoration-2 underline-offset-4"
         >
-          Sign in
-        </NuxtLink>
+          {{ $t('auth.signIn') }}
+        </NuxtLinkLocale>
       </p>
     </div>
   </div>

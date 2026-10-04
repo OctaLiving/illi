@@ -12,16 +12,20 @@ interface OrderDetail {
   payUrl: string | null
   createdAt: string
   countryName: string | null
-  subscription: { planName: string, cadence: string } | null
+  subscription: { planId: string, planName: string, cadence: string } | null
 }
 
 const route = useRoute()
+const { t, locale } = useI18n()
+const { price } = useLocalized()
+const { productName, planName } = useCatalogText()
+const localePath = useLocalePath()
 const { data: order, error } = await useFetch<OrderDetail>(`/api/orders/${route.params.id}`, {
   key: `order-${route.params.id}`,
   headers: import.meta.server ? useRequestHeaders(['cookie']) : undefined
 })
 if (error.value) {
-  throw createError({ statusCode: 404, statusMessage: 'Order not found', fatal: true })
+  throw createError({ statusCode: 404, statusMessage: t('order.notFound'), fatal: true })
 }
 
 const lines = computed(() => {
@@ -29,16 +33,17 @@ const lines = computed(() => {
   try {
     const snap = JSON.parse(order.value.snapshot) as {
       kind?: string
-      items?: { productName: string, quantity: number, unitPrice: number }[]
+      items?: { productId: string, productName: string, quantity: number, unitPrice: number }[]
       selections?: { productIds: string[] }[]
     }
     if (snap.kind === 'products') {
-      return (snap.items ?? []).map(i => ({ label: i.productName, detail: `${i.quantity} × ${i.unitPrice} MAD` }))
+      return (snap.items ?? []).map(i => ({ label: productName(i.productId, i.productName), detail: `${i.quantity} × ${price(i.unitPrice)}` }))
     }
   } catch {
     // Unreadable snapshot — show the total only.
   }
-  return order.value.subscription ? [{ label: order.value.subscription.planName, detail: `Box · ${order.value.subscription.cadence}` }] : []
+  const sub = order.value.subscription
+  return sub ? [{ label: planName(sub.planId, sub.planName), detail: t('order.box', { cadence: t(`cadence.${sub.cadence}`) }) }] : []
 })
 
 const isCash = computed(() => order.value?.paymentMethod === 'cod')
@@ -46,19 +51,28 @@ const awaitingPayment = computed(() => order.value?.status === 'pending' && !isC
 const payLink = computed(() => {
   const o = order.value
   if (!o) return ''
-  return o.payUrl && /^https?:\/\//.test(o.payUrl) ? o.payUrl : `/pay/${o.id}`
+  return o.payUrl && /^https?:\/\//.test(o.payUrl) ? o.payUrl : localePath(`/pay/${o.id}`)
 })
 
 const heading = computed(() => {
   if (!order.value) return ''
-  if (order.value.status === 'paid') return 'Thank you — your order is paid.'
-  if (isCash.value) return 'Thank you — your order is confirmed.'
-  if (awaitingPayment.value) return 'Almost there — complete your payment.'
-  return 'This order was not completed.'
+  if (order.value.status === 'paid') return t('order.paid')
+  if (isCash.value) return t('order.confirmed')
+  if (awaitingPayment.value) return t('order.awaiting')
+  return t('order.incomplete')
 })
-const methodLabel: Record<string, string> = { cod: 'Cash on delivery', card: 'Card', crypto: 'Crypto' }
+const statusLabel = computed(() => {
+  const o = order.value
+  if (!o) return ''
+  if (o.status === 'paid') return t('order.status.paid')
+  if (isCash.value) return t('order.status.cod')
+  return awaitingPayment.value ? t('order.status.awaiting') : t('order.status.other')
+})
+const placedOn = computed(() => order.value
+  ? new Date(order.value.createdAt).toLocaleDateString(locale.value === 'ar' ? 'ar-MA' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+  : '')
 
-useSeoMeta({ title: 'Your order', robots: 'noindex' })
+useSeoMeta({ title: () => t('order.title'), robots: 'noindex' })
 </script>
 
 <template>
@@ -83,11 +97,10 @@ useSeoMeta({ title: 'Your order', robots: 'noindex' })
         v-if="isCash && order.status !== 'paid'"
         class="mx-auto mt-4 max-w-md text-lg leading-8 text-stone-600"
       >
-        We're preparing it now. Please have <strong class="text-stone-900">{{ order.amount }} {{ order.currency }}</strong>
-        ready in cash for the courier.
+        {{ $t('order.cashNote', { amount: price(order.amount) }) }}
       </p>
       <p class="mt-3 text-sm text-stone-500">
-        Order {{ order.id.slice(-8).toUpperCase() }} · {{ new Date(order.createdAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) }}
+        {{ $t('order.meta', { ref: order.id.slice(-8).toUpperCase(), date: placedOn }) }}
       </p>
     </div>
 
@@ -100,12 +113,12 @@ useSeoMeta({ title: 'Your order', robots: 'noindex' })
         name="i-lucide-lock"
         class="size-5"
       />
-      Pay {{ order.amount }} {{ order.currency }}
+      {{ $t('order.pay', { amount: price(order.amount) }) }}
     </a>
 
     <section class="mt-10 rounded-3xl bg-white p-6 ring-1 ring-sand-200 sm:p-8">
       <h2 class="font-serif text-2xl text-stone-900">
-        Summary
+        {{ $t('order.summary') }}
       </h2>
       <ul class="mt-4 divide-y divide-sand-200">
         <li
@@ -118,31 +131,34 @@ useSeoMeta({ title: 'Your order', robots: 'noindex' })
         </li>
       </ul>
       <div class="mt-2 flex items-baseline justify-between border-t border-sand-200 pt-4">
-        <span class="text-stone-600">Total</span>
-        <span class="font-serif text-3xl text-stone-900">{{ order.amount }} {{ order.currency }}</span>
+        <span class="text-stone-600">{{ $t('order.total') }}</span>
+        <span class="font-serif text-3xl text-stone-900">{{ price(order.amount) }}</span>
       </div>
 
       <dl class="mt-8 grid gap-6 sm:grid-cols-2">
         <div>
           <dt class="text-xs font-bold uppercase tracking-[0.14em] text-saffron-700">
-            Payment
+            {{ $t('order.payment') }}
           </dt>
           <dd class="mt-1 text-stone-800">
-            {{ methodLabel[order.paymentMethod] ?? order.paymentMethod }}
+            {{ $t(`checkout.methods.${order.paymentMethod}.title`) }}
             <span class="block text-sm text-stone-500">
-              {{ order.status === 'paid' ? 'Paid' : isCash ? 'Pay on delivery' : awaitingPayment ? 'Waiting for payment' : order.status }}
+              {{ statusLabel }}
             </span>
           </dd>
         </div>
         <div v-if="order.shipping">
           <dt class="text-xs font-bold uppercase tracking-[0.14em] text-saffron-700">
-            Delivery to
+            {{ $t('order.deliveryTo') }}
           </dt>
           <dd class="mt-1 text-stone-800">
             {{ order.shipping.name }}<br>
             {{ order.shipping.address }}<br>
-            {{ order.shipping.city }}, {{ order.countryName ?? order.shipping.country }}<br>
-            <span class="text-sm text-stone-500">{{ order.shipping.phone }}</span>
+            {{ order.shipping.city }}{{ $t('common.listSep') }}{{ $te(`countries.${order.shipping.country}`) ? $t(`countries.${order.shipping.country}`) : (order.countryName ?? order.shipping.country) }}<br>
+            <span
+              class="text-sm text-stone-500"
+              dir="ltr"
+            >{{ order.shipping.phone }}</span>
             <span
               v-if="order.shipping.notes"
               class="block text-sm text-stone-500"
@@ -153,18 +169,18 @@ useSeoMeta({ title: 'Your order', robots: 'noindex' })
     </section>
 
     <div class="mt-8 flex flex-wrap justify-center gap-3">
-      <NuxtLink
+      <NuxtLinkLocale
         to="/catalog"
         class="rounded-full bg-olive-700 px-6 py-3 font-semibold text-sand-50 transition hover:bg-olive-800"
       >
-        Keep shopping
-      </NuxtLink>
-      <NuxtLink
+        {{ $t('order.keepShopping') }}
+      </NuxtLinkLocale>
+      <NuxtLinkLocale
         to="/account"
         class="rounded-full bg-white px-6 py-3 font-semibold text-olive-800 ring-1 ring-sand-300 transition hover:ring-olive-600"
       >
-        Your orders
-      </NuxtLink>
+        {{ $t('order.yourOrders') }}
+      </NuxtLinkLocale>
     </div>
   </div>
 </template>

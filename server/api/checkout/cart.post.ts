@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
   const { items } = body
 
   if (!Array.isArray(items) || items.length === 0) {
-    throw createError({ statusCode: 400, statusMessage: 'Your cart is empty.' })
+    throw createError({ statusCode: 400, statusMessage: 'Your cart is empty.', data: { code: 'emptyCart' } })
   }
 
   const shipping = normalizeShipping(body.shipping)
@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
   for (const item of items) {
     const quantity = Math.round(Number(item?.quantity) || 0)
     if (typeof item?.productId !== 'string' || quantity < 1) {
-      throw createError({ statusCode: 400, statusMessage: 'Your cart has an invalid item.' })
+      throw createError({ statusCode: 400, statusMessage: 'Your cart has an invalid item.', data: { code: 'invalidItem' } })
     }
     quantities.set(item.productId, (quantities.get(item.productId) ?? 0) + quantity)
   }
@@ -34,10 +34,10 @@ export default defineEventHandler(async (event) => {
   const lines = [...quantities].map(([productId, quantity]) => {
     const product = store.products.find(p => p.id === productId)
     if (!product || !product.isAvailable || product.price.amount <= 0) {
-      throw createError({ statusCode: 400, statusMessage: `${product?.name ?? 'A product in your cart'} is not available right now.` })
+      throw createError({ statusCode: 400, statusMessage: `${product?.name ?? 'A product in your cart'} is not available right now.`, data: { code: 'unavailable', product: product?.name } })
     }
     if (quantity > MAX_QUANTITY) {
-      throw createError({ statusCode: 400, statusMessage: `You can order up to ${MAX_QUANTITY} of ${product.name}.` })
+      throw createError({ statusCode: 400, statusMessage: `You can order up to ${MAX_QUANTITY} of ${product.name}.`, data: { code: 'maxQuantity', product: product.name, max: MAX_QUANTITY } })
     }
     return {
       productId: product.id,

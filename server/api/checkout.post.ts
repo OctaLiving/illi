@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
 
   const summary = createSubscriptionBundleSummary({ plan, products: store.products, selection })
   if (!summary.isReadyForCheckout) {
-    throw createError({ statusCode: 400, statusMessage: 'Your bundle is missing required slots.' })
+    throw createError({ statusCode: 400, statusMessage: 'Your bundle is missing required slots.', data: { code: 'incompleteBox' } })
   }
 
   const shipping = normalizeShipping(body.shipping)

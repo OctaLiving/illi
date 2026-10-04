@@ -2,6 +2,9 @@
 import { getEligiblePlansForProduct } from '~/utils/catalog'
 
 const route = useRoute()
+const { t } = useI18n()
+const { tr, trKey, price } = useLocalized()
+const localePath = useLocalePath()
 const { data: catalog } = await useCatalog()
 const productSlug = computed(() => String(route.params.productSlug ?? ''))
 
@@ -11,7 +14,7 @@ const product = computed(() => {
   if (!foundProduct) {
     throw createError({
       statusCode: 404,
-      statusMessage: 'Product not found'
+      statusMessage: t('product.notFound')
     })
   }
 
@@ -39,14 +42,14 @@ function addToCart() {
 }
 function buyNow() {
   add(product.value.id, quantity.value, false)
-  navigateTo('/cart')
+  navigateTo(localePath('/cart'))
 }
 
-const cadenceLabel: Record<string, string> = { weekly: 'every week', biweekly: 'every two weeks', monthly: 'every month' }
+const unit = computed(() => t(`units.${product.value.defaultUnitLabel}`, product.value.defaultUnitLabel))
 
 useSeoMeta({
-  title: () => product.value.name,
-  description: () => product.value.description,
+  title: () => tr(product.value, 'name'),
+  description: () => tr(product.value, 'description'),
   ogImage: () => product.value.image.src
 })
 </script>
@@ -56,25 +59,29 @@ useSeoMeta({
     <div class="mx-auto max-w-6xl px-5 py-8 sm:px-8 sm:py-12">
       <nav
         class="flex flex-wrap items-center gap-1.5 text-sm text-stone-500"
-        aria-label="Breadcrumb"
+        :aria-label="$t('product.breadcrumb')"
       >
-        <NuxtLink
+        <NuxtLinkLocale
           to="/catalog"
           class="hover:text-olive-700"
-        >Shop</NuxtLink>
+        >
+          {{ $t('nav.shop') }}
+        </NuxtLinkLocale>
         <UIcon
           name="i-lucide-chevron-right"
-          class="size-3.5"
+          class="flip-rtl size-3.5"
         />
-        <NuxtLink
+        <NuxtLinkLocale
           :to="`/catalog?category=${categorySlug}`"
           class="hover:text-olive-700"
-        >{{ product.category }}</NuxtLink>
+        >
+          {{ tr(product, 'category') }}
+        </NuxtLinkLocale>
         <UIcon
           name="i-lucide-chevron-right"
-          class="size-3.5"
+          class="flip-rtl size-3.5"
         />
-        <span class="text-stone-800">{{ product.name }}</span>
+        <span class="text-stone-800">{{ tr(product, 'name') }}</span>
       </nav>
 
       <section class="mt-6 grid gap-8 lg:grid-cols-2 lg:gap-14">
@@ -83,31 +90,31 @@ useSeoMeta({
           <div class="relative overflow-hidden rounded-[2rem] bg-white ring-1 ring-sand-200">
             <img
               :src="product.image.src"
-              :alt="product.image.alt"
+              :alt="tr(product, 'name')"
               class="aspect-square w-full object-cover"
             >
             <span
               v-if="product.storage === 'Refrigerated'"
-              class="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1.5 text-xs font-semibold text-olive-800 shadow-sm"
-            >Fresh · keep chilled</span>
+              class="absolute start-4 top-4 rounded-full bg-white/90 px-3 py-1.5 text-xs font-semibold text-olive-800 shadow-sm"
+            >{{ $t('product.freshChilled') }}</span>
           </div>
         </div>
 
         <!-- Buy box -->
         <div>
           <p class="eyebrow">
-            {{ product.category }}
+            {{ tr(product, 'category') }}
           </p>
           <h1 class="mt-2 font-serif text-4xl leading-[1.05] text-stone-900 sm:text-6xl">
-            {{ product.name }}
+            {{ tr(product, 'name') }}
           </h1>
           <p class="mt-5 text-lg leading-8 text-stone-600">
-            {{ product.description }}
+            {{ tr(product, 'description') }}
           </p>
 
           <div class="mt-7 flex items-baseline gap-3">
-            <span class="font-serif text-5xl text-stone-900">{{ product.price.amount }} MAD</span>
-            <span class="text-stone-500">per {{ product.defaultUnitLabel }}</span>
+            <span class="font-serif text-5xl text-stone-900">{{ price(product.price.amount) }}</span>
+            <span class="text-stone-500">{{ $t('product.per', { unit }) }}</span>
           </div>
 
           <div class="mt-6 flex flex-wrap items-center gap-3">
@@ -123,10 +130,10 @@ useSeoMeta({
                 class="size-5"
               />
               <template v-if="canBuy">
-                Add to cart<span class="hidden sm:inline"> · {{ product.price.amount * quantity }} MAD</span>
+                {{ $t('product.addToCart') }}<span class="hidden sm:inline"> · {{ price(product.price.amount * quantity) }}</span>
               </template>
               <template v-else>
-                Back soon
+                {{ $t('product.backSoon') }}
               </template>
             </button>
           </div>
@@ -136,7 +143,7 @@ useSeoMeta({
             class="mt-3 w-full rounded-full bg-white px-7 py-3.5 text-base font-semibold text-olive-800 ring-1 ring-sand-300 transition hover:ring-olive-600 disabled:opacity-60 sm:w-auto"
             @click="buyNow"
           >
-            Buy now
+            {{ $t('product.buyNow') }}
           </button>
 
           <ul class="mt-8 grid grid-cols-3 gap-3 text-sm">
@@ -146,10 +153,10 @@ useSeoMeta({
                 class="size-5 text-olive-600"
               />
               <p class="mt-2 font-semibold text-stone-900">
-                {{ product.storage === 'Refrigerated' ? 'Refrigerated' : 'Room temp' }}
+                {{ product.storage === 'Refrigerated' ? $t('product.refrigerated') : $t('product.roomTemp') }}
               </p>
               <p class="text-xs text-stone-500">
-                Storage
+                {{ $t('product.storage') }}
               </p>
             </li>
             <li class="rounded-2xl bg-white p-4 ring-1 ring-sand-200">
@@ -158,10 +165,10 @@ useSeoMeta({
                 class="size-5 text-olive-600"
               />
               <p class="mt-2 font-semibold text-stone-900">
-                {{ product.shelfLifeDays }} days
+                {{ $t('product.days', { n: product.shelfLifeDays }) }}
               </p>
               <p class="text-xs text-stone-500">
-                Keeps for
+                {{ $t('product.keepsFor') }}
               </p>
             </li>
             <li class="rounded-2xl bg-white p-4 ring-1 ring-sand-200">
@@ -170,15 +177,15 @@ useSeoMeta({
                 class="size-5 text-olive-600"
               />
               <p class="mt-2 font-semibold text-stone-900">
-                Casablanca
+                {{ $t('product.casablanca') }}
               </p>
               <p class="text-xs text-stone-500">
-                Made in
+                {{ $t('product.madeIn') }}
               </p>
             </li>
           </ul>
 
-          <NuxtLink
+          <NuxtLinkLocale
             v-if="compatiblePlans[0]"
             to="/subscribe"
             class="mt-6 flex items-center gap-4 rounded-2xl bg-saffron-50 p-4 ring-1 ring-saffron-200 transition hover:ring-saffron-400"
@@ -190,15 +197,14 @@ useSeoMeta({
               />
             </span>
             <span class="text-sm leading-6 text-stone-700">
-              <strong class="text-stone-900">Want it on repeat?</strong> Add it to the {{ compatiblePlans[0].plan.name }},
-              delivered {{ cadenceLabel[compatiblePlans[0].plan.cadence] ?? compatiblePlans[0].plan.cadence }} —
-              {{ compatiblePlans[0].plan.price.amount }} MAD.
+              <strong class="text-stone-900">{{ $t('product.repeatTitle') }}</strong>
+              {{ $t('product.repeatBody', { plan: tr(compatiblePlans[0].plan, 'name'), cadence: $t(`cadence.${compatiblePlans[0].plan.cadence}`), price: price(compatiblePlans[0].plan.price.amount) }) }}
             </span>
             <UIcon
               name="i-lucide-arrow-right"
-              class="ml-auto size-5 shrink-0 text-saffron-700"
+              class="flip-rtl ms-auto size-5 shrink-0 text-saffron-700"
             />
-          </NuxtLink>
+          </NuxtLinkLocale>
 
           <!-- Details -->
           <div class="mt-10 divide-y divide-sand-200 border-y border-sand-200">
@@ -207,7 +213,7 @@ useSeoMeta({
               open
             >
               <summary class="flex cursor-pointer list-none items-center justify-between font-semibold text-stone-900">
-                Ingredients
+                {{ $t('product.ingredients') }}
                 <UIcon
                   name="i-lucide-chevron-down"
                   class="size-5 transition group-open:rotate-180"
@@ -215,7 +221,7 @@ useSeoMeta({
               </summary>
               <ul class="mt-4 flex flex-wrap gap-2">
                 <li
-                  v-for="ingredient in product.ingredients"
+                  v-for="ingredient in tr(product, 'ingredients')"
                   :key="ingredient"
                   class="rounded-full bg-white px-3 py-1.5 text-sm text-stone-700 ring-1 ring-sand-200"
                 >
@@ -226,12 +232,12 @@ useSeoMeta({
                 v-if="product.ingredients.length"
                 class="mt-3 text-sm text-stone-500"
               >
-                {{ product.ingredients.length }} ingredients. Nothing else.
+                {{ $t('product.ingredientsCount', { n: product.ingredients.length }) }}
               </p>
             </details>
             <details class="group py-5">
               <summary class="flex cursor-pointer list-none items-center justify-between font-semibold text-stone-900">
-                Nutrition
+                {{ $t('product.nutrition') }}
                 <UIcon
                   name="i-lucide-chevron-down"
                   class="size-5 transition group-open:rotate-180"
@@ -252,28 +258,28 @@ useSeoMeta({
                 />
               </div>
               <div class="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-sm text-stone-600">
-                <span class="flex items-center gap-2"><span class="size-2.5 rounded-full bg-olive-600" />Protein {{ product.nutrition.proteins }}%</span>
-                <span class="flex items-center gap-2"><span class="size-2.5 rounded-full bg-saffron-400" />Fat {{ product.nutrition.fats }}%</span>
-                <span class="flex items-center gap-2"><span class="size-2.5 rounded-full bg-sand-400" />Carbs {{ product.nutrition.carbs }}%</span>
+                <span class="flex items-center gap-2"><span class="size-2.5 rounded-full bg-olive-600" />{{ $t('product.protein', { n: product.nutrition.proteins }) }}</span>
+                <span class="flex items-center gap-2"><span class="size-2.5 rounded-full bg-saffron-400" />{{ $t('product.fat', { n: product.nutrition.fats }) }}</span>
+                <span class="flex items-center gap-2"><span class="size-2.5 rounded-full bg-sand-400" />{{ $t('product.carbs', { n: product.nutrition.carbs }) }}</span>
               </div>
               <p
                 v-if="product.nutrition.summary"
                 class="mt-3 text-sm leading-6 text-stone-500"
               >
-                {{ product.nutrition.summary }}
+                {{ trKey(product, 'nutritionSummary', product.nutrition.summary) }}
               </p>
             </details>
             <details class="group py-5">
               <summary class="flex cursor-pointer list-none items-center justify-between font-semibold text-stone-900">
-                Storage & shelf life
+                {{ $t('product.storageShelf') }}
                 <UIcon
                   name="i-lucide-chevron-down"
                   class="size-5 transition group-open:rotate-180"
                 />
               </summary>
               <p class="mt-3 leading-7 text-stone-600">
-                {{ product.storage === 'Refrigerated' ? 'Keep refrigerated.' : 'Store in a cool, dry place; refrigerate after opening.' }}
-                Best within {{ product.shelfLifeDays }} days. Sold by the {{ product.defaultUnitLabel }}.
+                {{ product.storage === 'Refrigerated' ? $t('product.keepRefrigerated') : $t('product.keepCool') }}
+                {{ $t('product.bestWithin', { n: product.shelfLifeDays, unit }) }}
               </p>
             </details>
           </div>
@@ -286,7 +292,7 @@ useSeoMeta({
         class="mt-20"
       >
         <h2 class="font-serif text-3xl text-stone-900 sm:text-4xl">
-          You may also like
+          {{ $t('product.related') }}
         </h2>
         <div class="mt-6 grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4">
           <CatalogProductCard
@@ -306,10 +312,10 @@ useSeoMeta({
       <div class="flex items-center gap-3">
         <div class="min-w-0 flex-1 leading-tight">
           <p class="truncate text-sm font-semibold text-stone-900">
-            {{ product.name }}
+            {{ tr(product, 'name') }}
           </p>
           <p class="text-sm text-stone-500">
-            {{ product.price.amount }} MAD
+            {{ price(product.price.amount) }}
           </p>
         </div>
         <button
@@ -321,7 +327,7 @@ useSeoMeta({
             name="i-lucide-shopping-bag"
             class="size-4"
           />
-          Add to cart
+          {{ $t('product.addToCart') }}
         </button>
       </div>
     </div>

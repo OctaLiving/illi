@@ -2,6 +2,8 @@
 import type { CatalogProduct } from '~/types/catalog'
 
 const { data: catalog } = await useCatalog()
+const { t } = useI18n()
+const { tr, price } = useLocalized()
 
 const bySlug = (slug: string) => catalog.value.products.find(p => p.slug === slug && p.isAvailable)
 
@@ -30,17 +32,15 @@ const lowestPrice = computed(() => {
   return prices.length ? Math.min(...prices) : 0
 })
 
-const cadenceLabel: Record<string, string> = { weekly: 'Every week', biweekly: 'Every two weeks', monthly: 'Every month' }
-
 const values = [
-  { icon: 'i-lucide-sprout', title: 'Sourced close', body: 'Seasonal produce from local and regional farms, chosen for flavour over volume.' },
-  { icon: 'i-lucide-flask-conical', title: 'Kept the old way', body: 'Fermented, marinated, slow-cooked. Small batches and short ingredient lists.' },
-  { icon: 'i-lucide-ban', title: 'Nothing extra', body: 'No additives, no shortcuts — just what the recipe needs, in reusable glass.' }
+  { icon: 'i-lucide-sprout', key: 'sourced' },
+  { icon: 'i-lucide-flask-conical', key: 'old' },
+  { icon: 'i-lucide-ban', key: 'nothing' }
 ]
 
 useSeoMeta({
-  title: 'illi — Small-batch Moroccan pantry',
-  description: 'Ferments, nut butters, marinated fish and slow-cooked sauces, made in small batches in Casablanca. Buy a jar or build a box.'
+  title: () => t('meta.title'),
+  description: () => t('meta.description')
 })
 </script>
 
@@ -54,48 +54,47 @@ useSeoMeta({
             class="eyebrow reveal"
             style="animation-delay:.05s"
           >
-            Small-batch Moroccan pantry
+            {{ $t('home.eyebrow') }}
           </p>
           <h1
             class="reveal mt-5 font-serif text-5xl leading-[1.02] text-stone-900 sm:text-7xl"
             style="animation-delay:.12s"
           >
-            A Moroccan kitchen, <em class="text-olive-700">kept in a jar.</em>
+            {{ $t('home.titleA') }} <em class="text-olive-700">{{ $t('home.titleB') }}</em>
           </h1>
           <p
             class="reveal mt-6 max-w-xl text-lg leading-8 text-stone-600"
             style="animation-delay:.2s"
           >
-            Amlou, live ferments, marinated sardines, slow-cooked sauces — made in small batches in Casablanca with
-            nothing added that shouldn't be.
+            {{ $t('home.intro') }}
           </p>
           <div
             class="reveal mt-8 flex flex-wrap items-center gap-3"
             style="animation-delay:.28s"
           >
-            <NuxtLink
+            <NuxtLinkLocale
               to="/catalog"
               class="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-olive-700 px-6 py-4 text-base font-semibold text-sand-50 shadow-[0_14px_30px_-14px_rgba(47,74,41,0.8)] transition hover:bg-olive-800 sm:flex-none sm:px-7"
             >
-              Shop the pantry
+              {{ $t('home.shop') }}
               <UIcon
                 name="i-lucide-arrow-right"
-                class="size-5"
+                class="flip-rtl size-5"
               />
-            </NuxtLink>
-            <NuxtLink
+            </NuxtLinkLocale>
+            <NuxtLinkLocale
               to="/subscribe"
               class="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-white px-6 py-4 text-base font-semibold text-olive-800 ring-1 ring-sand-300 transition hover:ring-olive-600 sm:flex-none sm:px-7"
             >
-              Build a box
-            </NuxtLink>
+              {{ $t('home.buildBox') }}
+            </NuxtLinkLocale>
           </div>
           <p
             v-if="lowestPrice"
             class="reveal mt-4 text-sm text-stone-500"
             style="animation-delay:.32s"
           >
-            Jars from <strong class="text-stone-800">{{ lowestPrice }} MAD</strong> · No subscription needed
+            {{ $t('home.jarsFrom', { price: price(lowestPrice) }) }}
           </p>
 
           <ul
@@ -106,19 +105,19 @@ useSeoMeta({
               <UIcon
                 name="i-lucide-leaf"
                 class="size-5 text-olive-600"
-              />Small batches
+              />{{ $t('home.smallBatches') }}
             </li>
             <li class="flex flex-col gap-1.5">
               <UIcon
                 name="i-lucide-list-checks"
                 class="size-5 text-olive-600"
-              />Short ingredient lists
+              />{{ $t('home.shortLists') }}
             </li>
             <li class="flex flex-col gap-1.5">
               <UIcon
                 name="i-lucide-map-pin"
                 class="size-5 text-olive-600"
-              />Made in Casablanca
+              />{{ $t('common.madeInCasablanca') }}
             </li>
           </ul>
         </div>
@@ -128,18 +127,18 @@ useSeoMeta({
           class="reveal relative mx-auto grid w-full max-w-sm grid-cols-2 gap-3 sm:max-w-lg sm:gap-4"
           style="animation-delay:.18s"
         >
-          <NuxtLink
+          <NuxtLinkLocale
             v-if="heroProducts[0]"
             :to="`/catalog/${heroProducts[0].slug}`"
             class="arch row-span-2 overflow-hidden bg-white shadow-[0_40px_70px_-40px_rgba(46,39,27,0.6)] ring-1 ring-sand-200"
           >
             <img
               :src="heroProducts[0].image.src"
-              :alt="heroProducts[0].image.alt"
+              :alt="tr(heroProducts[0], 'name')"
               class="size-full object-cover"
             >
-          </NuxtLink>
-          <NuxtLink
+          </NuxtLinkLocale>
+          <NuxtLinkLocale
             v-for="p in heroProducts.slice(1)"
             :key="p.id"
             :to="`/catalog/${p.slug}`"
@@ -147,12 +146,12 @@ useSeoMeta({
           >
             <img
               :src="p.image.src"
-              :alt="p.image.alt"
+              :alt="tr(p, 'name')"
               class="aspect-square size-full object-cover"
             >
-          </NuxtLink>
-          <div class="wax-seal stamp-in absolute -right-3 -top-6 [--seal-size:5.5rem] sm:-right-8 sm:[--seal-size:6.5rem]">
-            <span>Made in<br>Casablanca</span>
+          </NuxtLinkLocale>
+          <div class="wax-seal stamp-in absolute -end-3 -top-6 [--seal-size:5.5rem] sm:-end-8 sm:[--seal-size:6.5rem]">
+            <span>{{ $t('home.sealLine1') }}<br>{{ $t('home.sealLine2') }}</span>
           </div>
         </div>
       </div>
@@ -162,17 +161,17 @@ useSeoMeta({
     <section class="mx-auto max-w-6xl px-5 pt-16 sm:px-8">
       <div class="flex items-end justify-between gap-4">
         <h2 class="font-serif text-3xl text-stone-900 sm:text-4xl">
-          Shop by category
+          {{ $t('home.byCategory') }}
         </h2>
-        <NuxtLink
+        <NuxtLinkLocale
           to="/catalog"
           class="hidden text-sm font-semibold text-olive-700 hover:underline sm:block"
         >
-          See everything →
-        </NuxtLink>
+          {{ $t('home.seeEverything') }} <span class="flip-rtl inline-block">→</span>
+        </NuxtLinkLocale>
       </div>
       <div class="no-scrollbar -mx-5 mt-6 flex gap-4 overflow-x-auto px-5 pb-2 sm:mx-0 sm:grid sm:grid-cols-4 sm:px-0 lg:grid-cols-7">
-        <NuxtLink
+        <NuxtLinkLocale
           v-for="tile in categoryTiles"
           :key="tile.category.slug"
           :to="`/catalog?category=${tile.category.slug}`"
@@ -182,15 +181,15 @@ useSeoMeta({
             <img
               v-if="tile.image"
               :src="tile.image.src"
-              :alt="tile.image.alt"
+              :alt="tr(tile.category, 'name')"
               class="size-full object-cover transition duration-500 group-hover:scale-105"
               loading="lazy"
             >
           </div>
           <p class="mt-3 text-sm font-semibold leading-snug text-stone-800">
-            {{ tile.category.name }}
+            {{ tr(tile.category, 'name') }}
           </p>
-        </NuxtLink>
+        </NuxtLinkLocale>
       </div>
     </section>
 
@@ -199,18 +198,18 @@ useSeoMeta({
       <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p class="eyebrow">
-            Pantry favourites
+            {{ $t('home.favEyebrow') }}
           </p>
           <h2 class="mt-2 font-serif text-3xl text-stone-900 sm:text-5xl">
-            Start with these
+            {{ $t('home.favTitle') }}
           </h2>
         </div>
-        <NuxtLink
+        <NuxtLinkLocale
           to="/catalog"
           class="text-sm font-semibold text-olive-700 hover:underline"
         >
-          Shop all {{ catalog.products.length }} products →
-        </NuxtLink>
+          {{ $t('home.shopAll', { n: catalog.products.length }) }} <span class="flip-rtl inline-block">→</span>
+        </NuxtLinkLocale>
       </div>
       <div class="mt-8 grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4">
         <CatalogProductCard
@@ -231,27 +230,25 @@ useSeoMeta({
           <img
             v-if="bySlug('seasonal-fermented-vegetables')"
             :src="bySlug('seasonal-fermented-vegetables')!.image.src"
-            alt="Jars of seasonal fermented vegetables on a shelf"
+            :alt="$t('home.storyAlt')"
             class="absolute inset-0 size-full object-cover"
             loading="lazy"
           >
         </div>
         <div class="p-8 sm:p-12">
           <p class="eyebrow">
-            Our story
+            {{ $t('home.storyEyebrow') }}
           </p>
           <h2 class="mt-3 font-serif text-3xl leading-tight text-stone-900 sm:text-4xl">
-            Food that keeps, the way our grandmothers kept it.
+            {{ $t('home.storyTitle') }}
           </h2>
           <p class="mt-4 leading-8 text-stone-600">
-            illi started in a Casablanca kitchen with a simple rule: if it can't be made with a short list of real
-            ingredients, we don't make it. Everything is fermented, marinated or slow-cooked in small batches, then
-            sealed in glass.
+            {{ $t('home.storyBody') }}
           </p>
           <ul class="mt-8 space-y-6">
             <li
               v-for="v in values"
-              :key="v.title"
+              :key="v.key"
               class="flex gap-4"
             >
               <span class="grid size-11 shrink-0 place-items-center rounded-full bg-olive-50 text-olive-700">
@@ -262,10 +259,10 @@ useSeoMeta({
               </span>
               <div>
                 <p class="font-semibold text-stone-900">
-                  {{ v.title }}
+                  {{ $t(`home.values.${v.key}.title`) }}
                 </p>
                 <p class="text-sm leading-6 text-stone-600">
-                  {{ v.body }}
+                  {{ $t(`home.values.${v.key}.body`) }}
                 </p>
               </div>
             </li>
@@ -281,18 +278,17 @@ useSeoMeta({
     >
       <div class="max-w-2xl">
         <p class="eyebrow">
-          Boxes on repeat
+          {{ $t('home.boxesEyebrow') }}
         </p>
         <h2 class="mt-2 font-serif text-3xl text-stone-900 sm:text-5xl">
-          Never run out of your favourites
+          {{ $t('home.boxesTitle') }}
         </h2>
         <p class="mt-4 text-lg leading-8 text-stone-600">
-          Choose a box, fill it with the products you love, and we prepare it again on your schedule. Each cycle is
-          paid separately, so there's no lock-in.
+          {{ $t('home.boxesBody') }}
         </p>
       </div>
       <div class="mt-10 grid gap-5 md:grid-cols-3">
-        <NuxtLink
+        <NuxtLinkLocale
           v-for="(plan, i) in catalog.plans"
           :key="plan.id"
           to="/subscribe"
@@ -303,65 +299,63 @@ useSeoMeta({
             class="text-xs font-bold uppercase tracking-[0.16em]"
             :class="i === 0 ? 'text-saffron-300' : 'text-saffron-700'"
           >
-            {{ cadenceLabel[plan.cadence] ?? plan.cadence }}
+            {{ $t(`cadenceTitle.${plan.cadence}`) }}
           </p>
           <h3
             class="mt-3 font-serif text-3xl"
             :class="i === 0 ? 'text-sand-50' : 'text-stone-900'"
           >
-            {{ plan.name }}
+            {{ tr(plan, 'name') }}
           </h3>
           <p
             class="mt-3 flex-1 leading-7"
             :class="i === 0 ? 'text-sand-200' : 'text-stone-600'"
           >
-            {{ plan.summary }}
+            {{ tr(plan, 'summary') }}
           </p>
           <p
             class="mt-6 text-sm"
             :class="i === 0 ? 'text-sand-300' : 'text-stone-500'"
           >
-            {{ plan.includedSlots.length }} products ·
+            {{ $t('home.boxProducts', { n: plan.includedSlots.length }) }} ·
             <strong
               class="text-lg"
               :class="i === 0 ? 'text-sand-50' : 'text-stone-900'"
-            >{{ plan.price.amount }} MAD</strong>
+            >{{ price(plan.price.amount) }}</strong>
           </p>
           <span
             class="mt-5 inline-flex items-center justify-center gap-2 rounded-full py-3 text-sm font-semibold transition"
             :class="i === 0 ? 'bg-saffron-400 text-olive-950 group-hover:bg-saffron-300' : 'bg-olive-700 text-sand-50 group-hover:bg-olive-800'"
           >
-            Build this box
+            {{ $t('home.buildThisBox') }}
             <UIcon
               name="i-lucide-arrow-right"
-              class="size-4"
+              class="flip-rtl size-4"
             />
           </span>
-        </NuxtLink>
+        </NuxtLinkLocale>
       </div>
     </section>
 
     <!-- How it works -->
     <section class="mx-auto mt-24 max-w-6xl px-5 sm:px-8">
       <h2 class="text-center font-serif text-3xl text-stone-900 sm:text-4xl">
-        How it works
+        {{ $t('home.howTitle') }}
       </h2>
       <ol class="mt-10 grid gap-5 sm:grid-cols-3">
         <li
           v-for="(step, i) in [
-            { title: 'Pick what you love', body: 'Add single jars to your cart, or build a box you can repeat.' },
-            { title: 'Pay your way', body: 'Cash on delivery in Morocco, or pay online with crypto — card payments are coming soon.' },
-            { title: 'We prepare your order', body: 'Your jars are made in small batches in Casablanca, then packed for you.' }
+            'pick', 'pay', 'prep'
           ]"
-          :key="step.title"
+          :key="step"
           class="rounded-3xl bg-white p-7 ring-1 ring-sand-200"
         >
           <span class="grid size-10 place-items-center rounded-full bg-saffron-300 font-bold text-olive-950">{{ i + 1 }}</span>
           <p class="mt-5 text-lg font-semibold text-stone-900">
-            {{ step.title }}
+            {{ $t(`home.steps.${step}.title`) }}
           </p>
           <p class="mt-1 leading-7 text-stone-600">
-            {{ step.body }}
+            {{ $t(`home.steps.${step}.body`) }}
           </p>
         </li>
       </ol>
@@ -373,28 +367,28 @@ useSeoMeta({
         <BrandLogo
           variant="mark"
           reversed
-          class="absolute -right-6 -top-6 rotate-12 text-[10rem] opacity-10"
+          class="absolute -end-6 -top-6 rotate-12 text-[10rem] opacity-10"
         />
         <h2 class="mx-auto max-w-2xl font-serif text-4xl leading-tight text-sand-50 sm:text-5xl">
-          Fill your pantry with something worth keeping.
+          {{ $t('home.ctaTitle') }}
         </h2>
         <div class="mt-8 flex flex-wrap justify-center gap-3">
-          <NuxtLink
+          <NuxtLinkLocale
             to="/catalog"
             class="inline-flex items-center gap-2 rounded-full bg-saffron-400 px-7 py-4 font-semibold text-olive-950 transition hover:bg-saffron-300"
           >
-            Shop the pantry
+            {{ $t('home.shop') }}
             <UIcon
               name="i-lucide-arrow-right"
-              class="size-5"
+              class="flip-rtl size-5"
             />
-          </NuxtLink>
-          <NuxtLink
+          </NuxtLinkLocale>
+          <NuxtLinkLocale
             to="/subscribe"
             class="inline-flex items-center rounded-full px-7 py-4 font-semibold text-sand-50 ring-1 ring-sand-50/40 transition hover:bg-white/10"
           >
-            Build a box
-          </NuxtLink>
+            {{ $t('home.buildBox') }}
+          </NuxtLinkLocale>
         </div>
       </div>
     </section>
