@@ -117,7 +117,7 @@ useSeoMeta({ title: () => t('order.title'), robots: 'noindex' })
       {{ $t('order.pay', { amount: price(order.amount) }) }}
     </a>
 
-    <section class="mt-10 rounded-3xl bg-white p-6 ring-1 ring-sand-200 sm:p-8">
+    <section class="mt-10 rounded-3xl bg-sand-50 p-6 ring-1 ring-sand-200 sm:p-8">
       <h2 class="font-serif text-2xl text-stone-900">
         {{ $t('order.summary') }}
       </h2>
@@ -178,7 +178,7 @@ useSeoMeta({ title: () => t('order.title'), robots: 'noindex' })
       </NuxtLinkLocale>
       <NuxtLinkLocale
         to="/account"
-        class="rounded-full bg-white px-6 py-3 font-semibold text-terra-800 ring-1 ring-sand-300 transition hover:ring-terra-600"
+        class="rounded-full bg-sand-50 px-6 py-3 font-semibold text-terra-800 ring-1 ring-sand-300 transition hover:ring-terra-600"
       >
         {{ $t('order.yourOrders') }}
       </NuxtLinkLocale>

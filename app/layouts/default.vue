@@ -9,7 +9,7 @@ const { tr, price } = useLocalized()
 const nav = computed(() => [
   { label: t('nav.shop'), to: '/catalog' },
   { label: t('nav.boxes'), to: '/subscribe' },
-  { label: t('nav.story'), to: '/#story' }
+  { label: t('nav.story'), to: '/story' }
 ])
 // The other languages, for one-tap switching in the header (short labels on phones).
 const shortNames: Record<string, string> = { en: 'EN', fr: 'FR', ar: 'ع' }
@@ -108,7 +108,7 @@ async function signOut() {
             <ClientOnly>
               <span
                 v-if="count > 0"
-                class="grid min-w-5 place-items-center rounded-full bg-sage-400 px-1.5 text-xs font-bold text-terra-950"
+                class="grid min-w-5 place-items-center rounded-full bg-sand-100 px-1.5 text-xs font-bold text-terra-800"
               >{{ count }}</span>
             </ClientOnly>
           </button>
@@ -167,7 +167,7 @@ async function signOut() {
       <slot />
     </main>
 
-    <footer class="mt-24 bg-terra-900 text-sand-200">
+    <footer class="mt-24 bg-terra-800 text-sand-200">
       <div class="mx-auto grid max-w-6xl gap-12 px-5 py-16 sm:px-8 md:grid-cols-[1.3fr_1fr_1fr_1fr]">
         <div class="space-y-5">
           <BrandLogo
@@ -178,6 +178,27 @@ async function signOut() {
           <p class="max-w-xs text-sm leading-7 text-sand-300">
             {{ $t('footer.about') }}
           </p>
+          <div class="flex flex-wrap gap-x-5 gap-y-2 text-sm">
+            <NuxtLinkLocale
+              to="/story"
+              class="font-semibold text-sand-50 hover:underline"
+            >
+              {{ $t('footer.story') }}
+            </NuxtLinkLocale>
+            <a
+              href="https://www.instagram.com/illi.artisanal/"
+              target="_blank"
+              rel="noopener"
+              class="inline-flex items-center gap-1.5 font-semibold text-sand-50 hover:underline"
+              :aria-label="`${$t('footer.follow')} — Instagram`"
+            >
+              <UIcon
+                name="i-lucide-instagram"
+                class="size-4"
+              />
+              <span dir="ltr">@illi.artisanal</span>
+            </a>
+          </div>
         </div>
 
         <div>
@@ -250,7 +271,7 @@ async function signOut() {
           </ul>
         </div>
       </div>
-      <div class="border-t border-terra-800">
+      <div class="border-t border-sand-50/10">
         <div class="mx-auto flex max-w-6xl flex-col gap-2 px-5 py-6 text-xs text-sand-400 sm:flex-row sm:justify-between sm:px-8">
           <p>{{ $t('footer.copyright', { year: new Date().getFullYear() }) }}</p>
           <p>{{ $t('footer.payments') }}</p>

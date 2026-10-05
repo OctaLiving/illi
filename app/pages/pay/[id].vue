@@ -43,7 +43,7 @@ useSeoMeta({ title: () => t('pay.title'), robots: 'noindex' })
         class="mb-6"
         :items="[{ label: $t('pay.crumbHome'), to: '/' }, { label: $t('pay.crumbAccount'), to: '/account' }, { label: $t('pay.crumbInvoice') }]"
       />
-      <div class="w-full rounded-3xl bg-white ring-1 ring-sand-200 p-7 text-center">
+      <div class="w-full rounded-3xl bg-sand-50 ring-1 ring-sand-200 p-7 text-center">
         <p class="font-mono text-[0.6rem] uppercase tracking-[0.2em] text-sage-600">
           {{ $t('pay.simulated') }}
         </p>

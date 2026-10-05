@@ -50,7 +50,7 @@ useSeoMeta({
           <button
             type="button"
             class="shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition"
-            :class="!activeCategory ? 'bg-terra-700 text-sand-50' : 'bg-white text-stone-700 ring-1 ring-sand-300 hover:ring-terra-600'"
+            :class="!activeCategory ? 'bg-terra-700 text-sand-50' : 'bg-sand-50 text-stone-700 ring-1 ring-sand-300 hover:ring-terra-600'"
             @click="selectCategory('')"
           >
             {{ $t('shop.all') }} <span class="opacity-70">{{ listed.length }}</span>
@@ -60,7 +60,7 @@ useSeoMeta({
             :key="category.slug"
             type="button"
             class="shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition"
-            :class="activeCategory === category.slug ? 'bg-terra-700 text-sand-50' : 'bg-white text-stone-700 ring-1 ring-sand-300 hover:ring-terra-600'"
+            :class="activeCategory === category.slug ? 'bg-terra-700 text-sand-50' : 'bg-sand-50 text-stone-700 ring-1 ring-sand-300 hover:ring-terra-600'"
             @click="selectCategory(category.slug)"
           >
             {{ tr(category, 'name') }} <span class="opacity-70">{{ counts[category.slug] }}</span>
@@ -91,7 +91,7 @@ useSeoMeta({
             </div>
             <p class="flex items-center justify-between text-sm font-semibold">
               {{ $t('shop.boxesFrom', { price: price(lowestPlan) }) }}
-              <span class="inline-flex items-center gap-1 rounded-full bg-sage-400 px-4 py-2 text-terra-950">
+              <span class="inline-flex items-center gap-1 rounded-full bg-sand-100 px-4 py-2 text-terra-800">
                 {{ $t('shop.buildBox') }}
                 <UIcon
                   name="i-lucide-arrow-right"
@@ -105,7 +105,7 @@ useSeoMeta({
 
       <p
         v-if="products.length === 0"
-        class="rounded-3xl bg-white p-10 text-center text-stone-600 ring-1 ring-sand-200"
+        class="rounded-3xl bg-sand-50 p-10 text-center text-stone-600 ring-1 ring-sand-200"
       >
         {{ $t('shop.empty') }}
       </p>

@@ -163,7 +163,7 @@ useSeoMeta({
             class="rounded-3xl border p-7 text-left transition"
             :class="selectedPlanId === plan.id
               ? 'border-terra-600 bg-terra-600/[0.04] shadow-[0_20px_40px_-30px_rgba(30,58,95,0.6)]'
-              : 'border-sand-600/30 bg-white hover:border-sage-600/50'"
+              : 'border-sand-600/30 bg-sand-50 hover:border-sage-600/50'"
             @click="setPlan(plan.id)"
           >
             <div class="flex flex-wrap items-start justify-between gap-4">
@@ -207,7 +207,7 @@ useSeoMeta({
               v-for="slot in selectedPlan.includedSlots"
               :key="slot.id"
               class="rounded-3xl border p-6 transition-colors duration-300"
-              :class="slotIsFilled(slot.id) ? 'border-terra-600/40 bg-terra-600/[0.02]' : 'border-sand-600/25 bg-white'"
+              :class="slotIsFilled(slot.id) ? 'border-terra-600/40 bg-terra-600/[0.02]' : 'border-sand-600/25 bg-sand-50'"
             >
               <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                 <div class="space-y-3">
@@ -264,7 +264,7 @@ useSeoMeta({
                       <img
                         :src="product.image.src"
                         :alt="tr(product, 'name')"
-                        class="size-full object-cover transition duration-500 group-hover/card:scale-[1.05]"
+                        class="ivory-photo size-full object-cover transition duration-500 group-hover/card:scale-[1.05]"
                       >
                     </div>
                     <div class="min-w-0 space-y-1.5">
@@ -325,7 +325,7 @@ useSeoMeta({
               v-if="bundleSummary"
               class="mt-6 space-y-4"
             >
-              <div class="rounded-3xl bg-white ring-1 ring-sand-200 p-4">
+              <div class="rounded-3xl bg-sand-50 ring-1 ring-sand-200 p-4">
                 <div class="flex flex-wrap items-start justify-between gap-3">
                   <div>
                     <p class="font-mono text-[0.6rem] uppercase tracking-[0.18em] text-stone-500">
@@ -446,7 +446,7 @@ useSeoMeta({
     <!-- Mobile sticky finish bar -->
     <div
       v-if="selectedPlan"
-      class="fixed inset-x-0 bottom-0 z-30 border-t border-sand-600/20 bg-white/95 px-5 py-3 backdrop-blur-md xl:hidden"
+      class="fixed inset-x-0 bottom-0 z-30 border-t border-sand-600/20 bg-sand-50/95 px-5 py-3 backdrop-blur-md xl:hidden"
     >
       <div class="mx-auto flex max-w-6xl items-center justify-between gap-4">
         <div class="min-w-0 flex-1">
