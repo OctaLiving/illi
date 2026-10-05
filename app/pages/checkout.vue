@@ -45,7 +45,7 @@ useSeoMeta({ title: () => t('box.checkoutTitle'), robots: 'noindex' })
 
       <div
         v-if="bundleSummary"
-        class="reveal mt-10 rounded-3xl bg-white ring-1 ring-sand-200 p-7"
+        class="reveal mt-10 rounded-3xl bg-sand-50 ring-1 ring-sand-200 p-7"
         style="animation-delay:.1s"
       >
         <div class="flex items-center justify-between border-b border-sand-600/15 pb-4">

@@ -7,7 +7,7 @@ const quantity = defineModel<number>({ required: true })
 
 <template>
   <div
-    class="inline-flex items-center rounded-full bg-white ring-1 ring-sand-300"
+    class="inline-flex items-center rounded-full bg-sand-50 ring-1 ring-sand-300"
     :class="size === 'sm' ? 'h-9' : 'h-12'"
   >
     <button

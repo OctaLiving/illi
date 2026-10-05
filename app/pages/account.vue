@@ -115,7 +115,7 @@ useSeoMeta({ title: () => t('account.title'), robots: 'noindex' })
       <div
         v-for="sub in account.subscriptions"
         :key="sub.id"
-        class="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-3xl bg-white ring-1 ring-sand-200 p-5"
+        class="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-3xl bg-sand-50 ring-1 ring-sand-200 p-5"
       >
         <div>
           <p class="font-mono text-[0.6rem] uppercase tracking-[0.18em] text-stone-500">
@@ -140,7 +140,7 @@ useSeoMeta({ title: () => t('account.title'), robots: 'noindex' })
       <h2 class="mt-12 border-b border-sand-600/20 pb-3 font-serif text-2xl text-stone-900">
         {{ $t('account.orders') }}
       </h2>
-      <div class="mt-4 overflow-x-auto rounded-3xl bg-white ring-1 ring-sand-200">
+      <div class="mt-4 overflow-x-auto rounded-3xl bg-sand-50 ring-1 ring-sand-200">
         <table class="w-full border-collapse text-left">
           <tbody>
             <tr

@@ -43,7 +43,7 @@ useSeoMeta({ title: () => t('auth.signInTitle'), robots: 'noindex' })
       </div>
 
       <form
-        class="reveal mt-8 space-y-4 rounded-3xl bg-white ring-1 ring-sand-200 p-7"
+        class="reveal mt-8 space-y-4 rounded-3xl bg-sand-50 ring-1 ring-sand-200 p-7"
         style="animation-delay:.1s"
         @submit.prevent="submit"
       >

@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "Maison Illi — Épicerie marocaine artisanale",
-    "description": "Fermentations, beurres d'oléagineux, poissons marinés et sauces mijotées, préparés en petites séries à Casablanca. Achetez un bocal ou composez une box."
+    "title": "Maison Illi — De notre cuisine à la vôtre",
+    "description": "Kéfirs de fruits, fermentations naturelles et produits vivants, faits maison avec soin pour nourrir le corps et l'âme. Un bocal à l'unité ou une box à votre rythme."
   },
   "common": {
     "price": "{amount} MAD",
@@ -23,18 +23,20 @@
     "language": "Langue"
   },
   "layout": {
-    "announcement": "Préparé en petites séries à Casablanca · Achetez un bocal à l'unité, ou recevez une box régulièrement"
+    "announcement": "Fait maison avec soin, de mère en fille · Un bocal à l'unité ou une box à votre rythme"
   },
   "footer": {
-    "about": "Une épicerie marocaine artisanale. Fermentations, beurres d'oléagineux, poissons marinés et sauces mijotées — des listes d'ingrédients courtes, faites à Casablanca.",
+    "about": "ILLI, c'est une marque artisanale née d'un amour du fait maison. Kéfir de fruit, fermentations naturelles et produits vivants, créés avec soin pour nourrir le corps et l'âme.",
     "shop": "Boutique",
     "boxes": "Box",
     "account": "Compte",
     "yourAccount": "Votre compte",
     "createAccount": "Créer un compte",
     "yourCart": "Votre panier",
-    "copyright": "© {year} Maison Illi · Fait à Casablanca",
-    "payments": "Prix en dirhams marocains · Paiement à la livraison ou paiement en ligne sécurisé"
+    "copyright": "© {year} Maison Illi · De notre cuisine à la vôtre",
+    "payments": "Prix en dirhams marocains · Paiement à la livraison ou paiement en ligne sécurisé",
+    "story": "Notre histoire",
+    "follow": "Suivez-nous"
   },
   "product": {
     "fresh": "Frais · réfrigéré",
@@ -84,7 +86,7 @@
     "title": "Votre panier",
     "close": "Fermer le panier",
     "empty": "Votre panier est vide",
-    "emptyBody": "Choisissez un bocal ou deux — chaque produit est préparé en petites séries à Casablanca.",
+    "emptyBody": "Choisissez un bocal ou deux — chaque produit est fait maison, avec soin.",
     "shop": "Voir la boutique",
     "subtotal": "Sous-total",
     "checkout": "Commander",
@@ -97,7 +99,7 @@
     "metaDescription": "Fermentations, fromages, beurres d'oléagineux, confitures, poissons marinés et sauces — préparés en petites séries à Casablanca. Achetez un seul bocal ou composez une box.",
     "eyebrow": "L'épicerie",
     "titleAll": "Tout ce que nous préparons",
-    "intro": "Petites séries, listes d'ingrédients courtes, rien de superflu. Ajoutez n'importe quel bocal à votre panier — sans abonnement.",
+    "intro": "Des produits vivants, faits maison en petites quantités avec de bons ingrédients de saison. Ajoutez un bocal à votre panier — sans abonnement.",
     "all": "Tout",
     "boxesEyebrow": "Box régulières",
     "boxesTitle": "Choisissez vos favoris une fois — nous les renouvelons à votre rythme.",
@@ -117,60 +119,48 @@
   },
   "home": {
     "eyebrow": "Retour au vivant",
-    "titleA": "Une cuisine marocaine,",
-    "titleB": "mise en bocal.",
-    "intro": "Amlou, fermentations vivantes, sardines marinées, sauces mijotées — préparés en petites séries à Casablanca, sans rien de superflu.",
-    "shop": "Voir la boutique",
+    "titleA": "De notre cuisine",
+    "titleB": "à la vôtre.",
+    "intro": "Kéfirs de fruits, fermentations naturelles et produits vivants — des recettes nées dans la cuisine d'une mère, transmises à sa fille, et préparées avec patience et de bons ingrédients.",
+    "shop": "Découvrir nos produits",
     "buildBox": "Composer une box",
-    "jarsFrom": "Bocaux à partir de {price} · Sans abonnement",
-    "smallBatches": "Petites séries",
-    "shortLists": "Listes d'ingrédients courtes",
+    "jarsFrom": "À partir de {price} · Sans abonnement",
     "sealLine1": "Fait à",
     "sealLine2": "Casablanca",
     "byCategory": "Acheter par catégorie",
     "seeEverything": "Tout voir",
-    "favEyebrow": "Les favoris",
-    "favTitle": "Commencez par ceux-ci",
+    "favEyebrow": "Nos préférés",
+    "favTitle": "Ce que nous aimons vraiment",
     "shopAll": "Voir les {n} produits",
-    "storyAlt": "Bocaux de légumes de saison fermentés sur une étagère",
-    "storyEyebrow": "Notre histoire",
-    "storyTitle": "Des aliments qui se gardent, comme le faisaient nos grands-mères.",
-    "storyBody": "illi est né dans une cuisine de Casablanca avec une règle simple : si on ne peut pas le faire avec une courte liste de vrais ingrédients, on ne le fait pas. Tout est fermenté, mariné ou mijoté en petites séries, puis scellé dans du verre.",
-    "values": {
-      "sourced": {
-        "title": "Produits de proximité",
-        "body": "Des produits de saison issus de fermes locales et régionales, choisis pour leur goût plutôt que leur volume."
-      },
-      "old": {
-        "title": "Conservés à l'ancienne",
-        "body": "Fermentés, marinés, mijotés. Petites séries et listes d'ingrédients courtes."
-      },
-      "nothing": {
-        "title": "Rien de plus",
-        "body": "Sans additifs, sans raccourcis — juste ce que la recette demande, dans du verre réutilisable."
-      }
-    },
+    "storyAlt": "Bouteilles de kéfir de fruits",
     "boxesEyebrow": "Box régulières",
-    "boxesTitle": "Ne manquez plus jamais de vos favoris",
-    "boxesBody": "Choisissez une box, remplissez-la des produits que vous aimez, et nous la préparons à nouveau à votre rythme. Chaque cycle est payé séparément, sans engagement.",
+    "boxesTitle": "Vos favoris, à votre rythme",
+    "boxesBody": "Choisissez une box, remplissez-la des produits que vous aimez, et nous la préparons à nouveau à votre rythme. Chaque cycle est payé séparément : vous restez libre.",
     "boxProducts": "{n} produits",
     "buildThisBox": "Composer cette box",
     "howTitle": "Comment ça marche",
     "steps": {
       "pick": {
-        "title": "Choisissez ce que vous aimez",
-        "body": "Ajoutez des bocaux à l'unité à votre panier, ou composez une box à recevoir régulièrement."
+        "title": "Choisissez ce qui vous fait du bien",
+        "body": "Un bocal à l'unité pour découvrir, ou une box à recevoir à votre rythme."
       },
       "pay": {
         "title": "Payez comme vous voulez",
         "body": "Paiement à la livraison au Maroc, ou en ligne en crypto — le paiement par carte arrive bientôt."
       },
       "prep": {
-        "title": "Nous préparons votre commande",
-        "body": "Vos bocaux sont préparés en petites séries à Casablanca, puis emballés pour vous."
+        "title": "Nous préparons avec soin",
+        "body": "Vos produits sont faits à la main, en petites quantités, puis emballés pour vous."
       }
     },
-    "ctaTitle": "Remplissez votre garde-manger de bonnes choses."
+    "ctaTitle": "Des choses simples, faites maison, avec beaucoup de soin.",
+    "homemade": "Fait maison",
+    "seasonal": "Ingrédients de saison",
+    "motherDaughter": "De mère en fille",
+    "storyLead": "Illi est née dans la cuisine de ma mère.",
+    "storyExcerpt": "Il y a quelques années, elle a ressenti le besoin de prendre soin d'elle autrement : l'alimentation vivante, la fermentation, ces préparations simples que l'on fait soi-même avec patience. J'ai goûté, j'ai adopté — et un jour, nous nous sommes dit : pourquoi garder tout cela pour nous ?",
+    "readStory": "Lire notre histoire",
+    "ctaSignature": "Illi, de notre cuisine à la vôtre."
   },
   "checkout": {
     "title": "Commande",
@@ -405,5 +395,64 @@
       "too-many-products": "{slot} contient trop de produits.",
       "invalid-product": "{slot} contient un produit qui ne convient pas."
     }
+  },
+  "values": {
+    "title": "Nos valeurs",
+    "items": {
+      "transmission": {
+        "title": "Transmission",
+        "body": "Faire vivre un savoir-faire de mère en fille et le partager avec les autres."
+      },
+      "simplicity": {
+        "title": "Simplicité",
+        "body": "Revenir à l'essentiel, sans artifices."
+      },
+      "living": {
+        "title": "Respect du vivant",
+        "body": "Privilégier le bio, la saisonnalité, les bons ingrédients et respecter le temps des préparations."
+      },
+      "authenticity": {
+        "title": "Authenticité",
+        "body": "Partager ce que nous faisons et consommons réellement."
+      },
+      "kindness": {
+        "title": "Bienveillance",
+        "body": "Contribuer au bien-être quotidien sans culpabiliser ni imposer."
+      }
+    },
+    "intro": "Ce qui guide chacune de nos recettes, de la cuisine de ma mère à la vôtre."
+  },
+  "mission": {
+    "title": "Notre mission",
+    "quote1": "Chez ILLI, notre mission est de partager des produits que nous aimons réellement, faits avec des ingrédients de qualité, dans le respect des saisons et du vivant, tout en transmettant une façon simple et authentique de prendre soin de soi.",
+    "quote2": "Nourrir le quotidien avec des produits simples, vivants et faits avec soin, tout en transmettant notre savoir-faire de mère en fille."
+  },
+  "story": {
+    "metaTitle": "Notre histoire",
+    "metaDescription": "Illi est née dans la cuisine d'une mère : une histoire de fermentation, de fait maison et de transmission, de mère en fille.",
+    "lead": "Illi est née dans la cuisine de ma mère.",
+    "part1": [
+      "Il y a quelques années, elle a ressenti le besoin de prendre soin d'elle autrement. Elle s'est intéressée à l'alimentation vivante, à la fermentation et à ces préparations simples que l'on fait soi-même, avec patience et de bons ingrédients.",
+      "Petit à petit, elle a créé ses propres recettes, ses habitudes et surtout une nouvelle façon de manger, plus simple et plus consciente.",
+      "Puis j'ai commencé à goûter à tout ce qu'elle préparait.",
+      "Et sans vraiment m'en rendre compte, j'ai adopté ces produits dans mon quotidien. Parce que je les aimais, tout simplement. Pour leur goût, leur simplicité, cette sensation de revenir à l'essentiel et pour leurs bienfaits.",
+      "Un jour, nous nous sommes dit : pourquoi garder tout cela pour nous ?"
+    ],
+    "part2": [
+      "Alors Illi est née : une idée imaginée par ma mère, que j'ai découverte, adoptée et que nous avons aujourd'hui envie de construire ensemble."
+    ],
+    "heading2": "Avec ILLI, nous voulons partager bien plus que des produits.",
+    "part3": [
+      "Nous voulons transmettre une façon de faire, mais aussi une façon de prendre soin de soi : choisir des ingrédients de qualité, privilégier le bio et les produits de saison, prendre le temps de faire les choses et retrouver le plaisir du fait maison.",
+      "Parce que derrière chaque recette, il y a un savoir-faire.",
+      "Et derrière ce savoir-faire, une histoire, des gestes, des habitudes et une manière de vivre que nous avons envie de partager."
+    ],
+    "heading3": "Illi, c'est notre histoire de mère en fille.",
+    "part4": [
+      "Des recettes transmises, des goûts partagés et l'envie de faire découvrir ce que nous aimons vraiment.",
+      "Des choses simples, faites maison, avec beaucoup de soin.",
+      "Et surtout, l'envie d'apporter quelque chose de bon, de vrai et de positif dans le quotidien de ceux qui nous font confiance."
+    ],
+    "signature": "ILLI, de notre cuisine à la vôtre."
   }
 }

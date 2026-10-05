@@ -91,7 +91,7 @@ function startCheckout() {
             <CartLines />
           </div>
 
-          <footer class="space-y-4 border-t border-sand-200 bg-white px-6 py-5">
+          <footer class="space-y-4 border-t border-sand-200 bg-sand-50 px-6 py-5">
             <div class="flex items-baseline justify-between">
               <span class="text-stone-600">{{ $t('cart.subtotal') }}</span>
               <span class="font-serif text-3xl text-stone-900">{{ price(subtotal) }}</span>

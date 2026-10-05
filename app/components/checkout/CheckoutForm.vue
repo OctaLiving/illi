@@ -82,7 +82,7 @@ function onSubmit() {
   emit('submit', { method: method.value, shipping: { ...shipping } })
 }
 
-const field = 'w-full rounded-xl border-0 bg-white px-4 py-3 text-stone-900 ring-1 ring-sand-300 transition placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-terra-600'
+const field = 'w-full rounded-xl border-0 bg-sand-50 px-4 py-3 text-stone-900 ring-1 ring-sand-300 transition placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-terra-600'
 const label = 'mb-1.5 block text-sm font-semibold text-stone-700'
 </script>
 
@@ -194,7 +194,7 @@ const label = 'mb-1.5 block text-sm font-semibold text-stone-700'
       <label
         v-for="m in methods"
         :key="m.id"
-        class="flex items-start gap-4 rounded-2xl bg-white p-4 ring-1 transition"
+        class="flex items-start gap-4 rounded-2xl bg-sand-50 p-4 ring-1 transition"
         :class="!m.available ? 'cursor-not-allowed opacity-55 ring-sand-200' : method === m.id ? 'cursor-pointer ring-2 ring-terra-600' : 'cursor-pointer ring-sand-300 hover:ring-terra-500'"
       >
         <input
