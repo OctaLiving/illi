@@ -17,7 +17,7 @@ export default defineNuxtConfig({
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         {
           rel: 'stylesheet',
-          href: 'https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400;1,700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap'
+          href: 'https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400;1,700&family=Corinthia:wght@400;700&family=Gilda+Display&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Questrial&display=swap'
         }
       ]
     }
@@ -56,13 +56,15 @@ export default defineNuxtConfig({
     }
   },
 
-  // English at /, Arabic at /ar (right-to-left). The visitor's choice is
-  // remembered in a cookie; Arabic browsers are sent to /ar on their first visit.
+  // English at /, French at /fr, Arabic at /ar (right-to-left). The visitor's
+  // choice is remembered in a cookie; French and Arabic browsers are sent to
+  // their language on their first visit.
   i18n: {
     defaultLocale: 'en',
     strategy: 'prefix_except_default',
     locales: [
       { code: 'en', language: 'en-GB', name: 'English', dir: 'ltr', file: 'en.json' },
+      { code: 'fr', language: 'fr-MA', name: 'Français', dir: 'ltr', file: 'fr.json' },
       { code: 'ar', language: 'ar-MA', name: 'العربية', dir: 'rtl', file: 'ar.json' }
     ],
     detectBrowserLanguage: {

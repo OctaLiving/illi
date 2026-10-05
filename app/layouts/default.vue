@@ -11,8 +11,9 @@ const nav = computed(() => [
   { label: t('nav.boxes'), to: '/subscribe' },
   { label: t('nav.story'), to: '/#story' }
 ])
-// The other language, for the one-tap switch in the header.
-const otherLocale = computed(() => locales.value.find(l => l.code !== locale.value))
+// The other languages, for one-tap switching in the header (short labels on phones).
+const shortNames: Record<string, string> = { en: 'EN', fr: 'FR', ar: 'ع' }
+const otherLocales = computed(() => locales.value.filter(l => l.code !== locale.value))
 
 const { data: me } = useMe()
 const { data: catalog } = await useCatalog()
@@ -33,7 +34,7 @@ async function signOut() {
 
 <template>
   <div class="min-h-screen bg-sand-100 text-stone-900">
-    <div class="bg-olive-800 px-4 py-2 text-center text-xs font-medium tracking-wide text-sand-100 sm:text-sm">
+    <div class="bg-terra-800 px-4 py-2 text-center text-xs font-medium tracking-wide text-sand-100 sm:text-sm">
       {{ $t('layout.announcement') }}
     </div>
 
@@ -41,7 +42,7 @@ async function signOut() {
       <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3.5 sm:px-8">
         <NuxtLinkLocale
           to="/"
-          class="text-olive-800 text-[2.1rem] leading-none"
+          class="text-[1.7rem] leading-none sm:text-[2rem]"
           :aria-label="$t('nav.home')"
         >
           <BrandLogo />
@@ -53,7 +54,7 @@ async function signOut() {
             :key="item.to"
             :to="item.to"
             class="rounded-full px-4 py-2 text-sm font-semibold text-stone-700 transition hover:bg-sand-200 hover:text-stone-900"
-            active-class="text-olive-700"
+            active-class="text-terra-700"
           >
             {{ item.label }}
           </NuxtLinkLocale>
@@ -63,7 +64,7 @@ async function signOut() {
           <NuxtLink
             v-if="me?.user?.role === 'operator'"
             to="/manage"
-            class="hidden rounded-full px-3 py-2 text-sm font-semibold text-saffron-700 transition hover:bg-saffron-50 sm:block"
+            class="hidden rounded-full px-3 py-2 text-sm font-semibold text-sage-700 transition hover:bg-sage-50 sm:block"
           >
             {{ $t('nav.console') }}
           </NuxtLink>
@@ -77,18 +78,25 @@ async function signOut() {
             />
             {{ me?.user ? $t('nav.account') : $t('nav.signIn') }}
           </NuxtLinkLocale>
-          <NuxtLink
-            v-if="otherLocale"
-            :to="switchLocalePath(otherLocale.code)"
-            class="rounded-full px-3 py-2 text-sm font-semibold text-stone-700 transition hover:bg-sand-200"
-            :lang="otherLocale.code"
-            :title="$t('nav.language')"
+          <nav
+            class="flex items-center"
+            :aria-label="$t('nav.language')"
           >
-            {{ otherLocale.name }}
-          </NuxtLink>
+            <NuxtLink
+              v-for="l in otherLocales"
+              :key="l.code"
+              :to="switchLocalePath(l.code)"
+              class="rounded-full px-2 py-2 text-sm font-semibold text-stone-700 transition hover:bg-sand-200 sm:px-3"
+              :lang="l.code"
+              :title="l.name"
+            >
+              <span class="sm:hidden">{{ shortNames[l.code] ?? l.code }}</span>
+              <span class="hidden sm:inline">{{ l.name }}</span>
+            </NuxtLink>
+          </nav>
           <button
             type="button"
-            class="relative flex items-center gap-2 rounded-full bg-olive-700 px-4 py-2.5 text-sm font-semibold text-sand-50 transition hover:bg-olive-800"
+            class="relative flex items-center gap-2 rounded-full bg-terra-700 px-4 py-2.5 text-sm font-semibold text-sand-50 transition hover:bg-terra-800"
             :aria-label="$t('nav.openCart')"
             @click="cartOpen = true"
           >
@@ -100,7 +108,7 @@ async function signOut() {
             <ClientOnly>
               <span
                 v-if="count > 0"
-                class="grid min-w-5 place-items-center rounded-full bg-saffron-400 px-1.5 text-xs font-bold text-olive-950"
+                class="grid min-w-5 place-items-center rounded-full bg-sage-400 px-1.5 text-xs font-bold text-terra-950"
               >{{ count }}</span>
             </ClientOnly>
           </button>
@@ -140,7 +148,7 @@ async function signOut() {
         <NuxtLink
           v-if="me?.user?.role === 'operator'"
           to="/manage"
-          class="block rounded-xl px-3 py-3 text-base font-semibold text-saffron-700 hover:bg-sand-200"
+          class="block rounded-xl px-3 py-3 text-base font-semibold text-sage-700 hover:bg-sand-200"
         >
           {{ $t('nav.console') }}
         </NuxtLink>
@@ -159,12 +167,13 @@ async function signOut() {
       <slot />
     </main>
 
-    <footer class="mt-24 bg-olive-900 text-sand-200">
+    <footer class="mt-24 bg-terra-900 text-sand-200">
       <div class="mx-auto grid max-w-6xl gap-12 px-5 py-16 sm:px-8 md:grid-cols-[1.3fr_1fr_1fr_1fr]">
         <div class="space-y-5">
           <BrandLogo
+            variant="lockup"
             reversed
-            class="text-[2.6rem] text-sand-50"
+            class="text-[2.6rem]"
           />
           <p class="max-w-xs text-sm leading-7 text-sand-300">
             {{ $t('footer.about') }}
@@ -172,7 +181,7 @@ async function signOut() {
         </div>
 
         <div>
-          <p class="text-xs font-bold uppercase tracking-[0.18em] text-saffron-300">
+          <p class="text-xs font-bold uppercase tracking-[0.18em] text-sage-300">
             {{ $t('footer.shop') }}
           </p>
           <ul class="mt-4 space-y-2.5 text-sm">
@@ -191,7 +200,7 @@ async function signOut() {
         </div>
 
         <div>
-          <p class="text-xs font-bold uppercase tracking-[0.18em] text-saffron-300">
+          <p class="text-xs font-bold uppercase tracking-[0.18em] text-sage-300">
             {{ $t('footer.boxes') }}
           </p>
           <ul class="mt-4 space-y-2.5 text-sm">
@@ -210,7 +219,7 @@ async function signOut() {
         </div>
 
         <div>
-          <p class="text-xs font-bold uppercase tracking-[0.18em] text-saffron-300">
+          <p class="text-xs font-bold uppercase tracking-[0.18em] text-sage-300">
             {{ $t('footer.account') }}
           </p>
           <ul class="mt-4 space-y-2.5 text-sm">
@@ -241,7 +250,7 @@ async function signOut() {
           </ul>
         </div>
       </div>
-      <div class="border-t border-olive-800">
+      <div class="border-t border-terra-800">
         <div class="mx-auto flex max-w-6xl flex-col gap-2 px-5 py-6 text-xs text-sand-400 sm:flex-row sm:justify-between sm:px-8">
           <p>{{ $t('footer.copyright', { year: new Date().getFullYear() }) }}</p>
           <p>{{ $t('footer.payments') }}</p>

@@ -2,25 +2,27 @@
 @import "@nuxt/ui";
 
 @theme static {
-  /* Calibri where the device has it (Windows, Office); otherwise Carlito, its
-     free metric-compatible twin, served from Google Fonts. Headings use the same
-     family in bold. */
+  /* Maison Illi type, taken from the logo: Gilda Display for headings (the
+     "Maison" serif), Corinthia for the script "Illi", Questrial for small
+     labels and taglines. Body text stays Calibri, or Carlito (its free,
+     metric-compatible twin) where the device doesn't have it. */
   --font-sans: 'Calibri', 'Carlito', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-serif: 'Calibri', 'Carlito', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-mono: 'Calibri', 'Carlito', system-ui, sans-serif; /* labels share the brand sans */
+  --font-serif: 'Gilda Display', Georgia, 'Times New Roman', serif;
+  --font-script: 'Corinthia', 'Gilda Display', cursive;
+  --font-mono: 'Questrial', 'Calibri', 'Carlito', system-ui, sans-serif; /* labels and taglines */
 
-  /* Sand — warm paper neutrals for surfaces and hairlines. */
-  --color-sand-50: #fffdf9;
-  --color-sand-100: #f7f2ea;
-  --color-sand-200: #ede4d4;
-  --color-sand-300: #dfd0b5;
-  --color-sand-400: #c9b48e;
-  --color-sand-500: #ad956a;
-  --color-sand-600: #8a744d;
-  --color-sand-700: #6a5939;
-  --color-sand-800: #4a3e29;
-  --color-sand-900: #2e271b;
-  --color-sand-950: #19150e;
+  /* Sand — the cream of the logo's milk-foam background, for surfaces and hairlines. */
+  --color-sand-50: #fdfbf8;
+  --color-sand-100: #f5f0e9;
+  --color-sand-200: #ebe3d8;
+  --color-sand-300: #ddd1c1;
+  --color-sand-400: #c6b49d;
+  --color-sand-500: #a9967d;
+  --color-sand-600: #8a7861;
+  --color-sand-700: #6b5c49;
+  --color-sand-800: #4b4033;
+  --color-sand-900: #2f2820;
+  --color-sand-950: #1a1612;
 
   /* Stone — warm ink greys for text. */
   --color-stone-50: #faf8f5;
@@ -35,41 +37,41 @@
   --color-stone-900: #221e1a;
   --color-stone-950: #13110e;
 
-  /* Olive — the brand colour: buttons, links, the logo. Nuxt UI `primary`. */
-  --color-olive-50: #f2f5f0;
-  --color-olive-100: #e1e9dd;
-  --color-olive-200: #c3d3ba;
-  --color-olive-300: #9bb68d;
-  --color-olive-400: #729463;
-  --color-olive-500: #557747;
-  --color-olive-600: #3d5c34;
-  --color-olive-700: #2f4a29;
-  --color-olive-800: #253b21;
-  --color-olive-900: #1b2c19;
-  --color-olive-950: #0f190e;
+  /* Terra — the logo's rust brown: buttons, links, the wordmark. Nuxt UI `primary`. */
+  --color-terra-50: #fbf5f1;
+  --color-terra-100: #f5e7de;
+  --color-terra-200: #eacdbb;
+  --color-terra-300: #dbab8e;
+  --color-terra-400: #c6835e;
+  --color-terra-500: #ae6640;
+  --color-terra-600: #985534;
+  --color-terra-700: #864a2b;
+  --color-terra-800: #6c3b22;
+  --color-terra-900: #532e1b;
+  --color-terra-950: #30190e;
 
-  /* Saffron — the warm accent: prices, badges, highlights. */
-  --color-saffron-50: #fdf7ec;
-  --color-saffron-100: #fbebcd;
-  --color-saffron-200: #f6d596;
-  --color-saffron-300: #f0b95c;
-  --color-saffron-400: #e9a032;
-  --color-saffron-500: #d9861b;
-  --color-saffron-600: #b86a12;
-  --color-saffron-700: #925212;
-  --color-saffron-800: #744215;
-  --color-saffron-900: #5c3614;
+  /* Sage — the ginkgo leaf and "Retour au vivant": labels, badges, highlights. */
+  --color-sage-50: #f3f6ef;
+  --color-sage-100: #e5ecdc;
+  --color-sage-200: #cdd9bf;
+  --color-sage-300: #afc29b;
+  --color-sage-400: #91a77a;
+  --color-sage-500: #768d5e;
+  --color-sage-600: #5f7849;
+  --color-sage-700: #4e663b;
+  --color-sage-800: #3f5231;
+  --color-sage-900: #324128;
+  --color-sage-950: #1b2416;
 }
 
 :root {
   color-scheme: light;
 }
 
-/* Headings: the brand family in bold (unlayered, so it wins over font-normal). */
-.font-serif,
-.font-\[family\:var\(--font-serif\)\] {
-  font-weight: 700;
-  letter-spacing: -0.01em;
+/* Headings: Gilda Display has a single weight — never synthesise bold. */
+.font-serif {
+  font-weight: 400;
+  letter-spacing: -0.005em;
 }
 
 /* Arabic: Plex Sans Arabic for text and headings (Calibri has no Arabic). Letter-spacing breaks
@@ -78,6 +80,11 @@
   --font-sans: 'IBM Plex Sans Arabic', 'Calibri', 'Carlito', system-ui, sans-serif;
   --font-serif: 'IBM Plex Sans Arabic', 'Calibri', 'Carlito', system-ui, sans-serif;
   --font-mono: 'IBM Plex Sans Arabic', system-ui, sans-serif;
+  --font-script: 'IBM Plex Sans Arabic', system-ui, sans-serif;
+}
+/* Plex Arabic has real weights, so Arabic headings stay bold. */
+[dir="rtl"] .font-serif {
+  font-weight: 700;
 }
 [dir="rtl"] * {
   letter-spacing: 0 !important;
@@ -102,11 +109,14 @@ body {
   background-image: none;
 }
 
-/* Soft warm light for hero backgrounds. */
+/* Hero backgrounds: soft cream light with faint fermentation bubbles, after the
+   milk-foam texture behind the Maison Illi logo. */
 .maghreb-wash {
+  background-color: var(--color-sand-100);
   background-image:
-    radial-gradient(90% 70% at 90% 0%, rgba(233, 160, 50, 0.16), transparent 55%),
-    radial-gradient(80% 60% at 0% 100%, rgba(61, 92, 52, 0.08), transparent 55%);
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' fill='none' stroke='%23a9967d' stroke-opacity='.13'%3E%3Ccircle cx='38' cy='44' r='22'/%3E%3Ccircle cx='70' cy='18' r='6'/%3E%3Ccircle cx='150' cy='70' r='34'/%3E%3Ccircle cx='200' cy='22' r='9'/%3E%3Ccircle cx='96' cy='120' r='12'/%3E%3Ccircle cx='24' cy='150' r='8'/%3E%3Ccircle cx='60' cy='196' r='26'/%3E%3Ccircle cx='132' cy='176' r='5'/%3E%3Ccircle cx='190' cy='160' r='16'/%3E%3Ccircle cx='214' cy='216' r='7'/%3E%3Ccircle cx='118' cy='224' r='10'/%3E%3C/svg%3E"),
+    radial-gradient(90% 70% at 90% 0%, rgba(174, 102, 64, 0.10), transparent 55%),
+    radial-gradient(80% 60% at 0% 100%, rgba(118, 141, 94, 0.12), transparent 55%);
 }
 
 /* Arch — a soft nod to Moroccan doorways, used for feature images. */
@@ -127,15 +137,15 @@ body {
   width: var(--seal-size);
   height: var(--seal-size);
   border-radius: 50%;
-  color: var(--color-olive-900);
-  background: var(--color-saffron-300);
-  box-shadow: 0 14px 28px -16px rgba(146, 82, 18, 0.7);
+  color: var(--color-terra-900);
+  background: var(--color-sage-300);
+  box-shadow: 0 14px 28px -16px rgba(108, 59, 34, 0.6);
 }
 .wax-seal::before {
   content: "";
   position: absolute;
   inset: 0.4rem;
-  border: 1px dashed rgba(27, 44, 25, 0.45);
+  border: 1px dashed rgba(48, 25, 14, 0.4);
   border-radius: 50%;
 }
 .wax-seal span {
@@ -154,7 +164,7 @@ body {
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--color-saffron-700);
+  color: var(--color-sage-700);
 }
 
 /* Hide scrollbars on horizontal chip rows while keeping them scrollable. */

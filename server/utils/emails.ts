@@ -1,17 +1,17 @@
 // Transactional email templates. Inline styles only — email clients have no web
-// fonts and strip <style>, so we use system serif + the illi palette (olive, saffron, sand) inline.
+// fonts and strip <style>, so we use system serif + the Maison Illi palette (terra, sage, sand) inline.
 
-const BONE = '#f7f2ea'
+const BONE = '#f5f0e9'
 const INK = '#221e1a'
-const TERRA = '#925212' // saffron, dark enough for small text
-const INDIGO = '#2f4a29' // olive — buttons
+const SAGE = '#4e663b' // sage, dark enough for small text
+const TERRA = '#864a2b' // terra — buttons
 
 function shell(heading: string, bodyHtml: string): string {
   return `<div style="margin:0;padding:32px 0;background:${BONE};font-family:Georgia,'Times New Roman',serif;color:${INK};">
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center">
     <table role="presentation" width="480" cellpadding="0" cellspacing="0" style="max-width:480px;background:#ffffff;border:1px solid rgba(138,116,77,0.25);border-radius:16px;overflow:hidden;">
       <tr><td style="padding:28px 32px 0;">
-        <div style="font-family:Arial,sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:${TERRA};">illi · small batch</div>
+        <div style="font-family:Arial,sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:${SAGE};">Maison Illi · De notre cuisine à la vôtre</div>
         <h1 style="margin:12px 0 0;font-size:28px;font-weight:normal;color:${INK};">${heading}</h1>
       </td></tr>
       <tr><td style="padding:16px 32px 32px;font-family:Arial,sans-serif;font-size:15px;line-height:1.6;color:#4e463c;">
@@ -24,7 +24,7 @@ function shell(heading: string, bodyHtml: string): string {
 }
 
 function button(href: string, label: string): string {
-  return `<a href="${href}" style="display:inline-block;background:${INDIGO};color:${BONE};text-decoration:none;font-size:13px;letter-spacing:1px;text-transform:uppercase;padding:12px 22px;border-radius:999px;">${label}</a>`
+  return `<a href="${href}" style="display:inline-block;background:${TERRA};color:${BONE};text-decoration:none;font-size:13px;letter-spacing:1px;text-transform:uppercase;padding:12px 22px;border-radius:999px;">${label}</a>`
 }
 
 export function invitationEmail(code: string, joinUrl: string) {

@@ -26,7 +26,7 @@ useHead({
 const title = computed(() => t('meta.title'))
 const description = computed(() => t('meta.description'))
 
-useHead({ titleTemplate: s => (!s ? title.value : s.includes('illi') ? s : `${s} · illi`) })
+useHead({ titleTemplate: s => (!s ? title.value : /illi/i.test(s) ? s : `${s} · Maison Illi`) })
 
 useSeoMeta({
   title,

@@ -28,7 +28,7 @@ export const defaultProductPrice: Record<BundleSlotType, number> = {
 }
 
 /** Optional per-language overrides of a catalog row's text, e.g. { ar: { name: '…' } }. */
-export type Translations = Partial<Record<'ar', Record<string, string | string[]>>>
+export type Translations = Partial<Record<'fr' | 'ar', Record<string, string | string[]>>>
 
 export interface ProductImage {
   src: string

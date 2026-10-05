@@ -76,6 +76,16 @@ const SLOT_UNIT = {
 }
 
 // Starting one-time prices in MAD — keep in sync with defaultProductPrice in app/types/catalog.ts.
+// Products kept in the catalog but hidden from the shop for now (by slug).
+const HIDDEN = new Set([
+  'pistachio-butter',
+  'marinated-sardines',
+  'pomegranate-concentrate',
+  'hard-cheese',
+  'marinated-tuna',
+  'marinated-octopus'
+])
+
 const SLOT_PRICE = {
   beverages: 130,
   dairy: 170,
@@ -221,7 +231,7 @@ for (const row of rows) {
     storage,
     shelfLifeDays,
     nutrition: { proteins, fats, carbs, summary: nutritionSummary },
-    isAvailable: true,
+    isAvailable: !HIDDEN.has(slug),
     eligibleSlotTypes: [slotType],
     price: { amount: SLOT_PRICE[slotType], currency: 'MAD' },
     _order: categoryOrder.indexOf(category)

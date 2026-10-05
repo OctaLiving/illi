@@ -27,13 +27,13 @@ async function signOut() {
 <template>
   <div class="min-h-screen bg-sand-100 text-stone-900">
     <!-- Desktop sidebar -->
-    <aside class="hidden bg-olive-950 text-sand-50 lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
+    <aside class="hidden bg-terra-950 text-sand-50 lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
       <div class="border-b border-sand-50/10 px-6 py-6">
         <BrandLogo
           reversed
           class="text-[2rem] text-sand-50"
         />
-        <p class="mt-1 font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.26em] text-sand-200/60">
+        <p class="mt-1 font-mono text-[0.58rem] uppercase tracking-[0.26em] text-sand-200/60">
           Operator console
         </p>
       </div>
@@ -49,7 +49,7 @@ async function signOut() {
           <UIcon
             :name="item.icon"
             class="size-4 shrink-0"
-            :class="isActive(item.to) ? 'text-saffron-200' : 'text-saffron-300'"
+            :class="isActive(item.to) ? 'text-sage-200' : 'text-sage-300'"
           />
           {{ item.label }}
         </NuxtLink>
@@ -58,14 +58,14 @@ async function signOut() {
       <div class="space-y-3 border-t border-sand-50/10 px-6 py-5">
         <p
           v-if="me?.user"
-          class="truncate font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.14em] text-sand-200/50"
+          class="truncate font-mono text-[0.58rem] uppercase tracking-[0.14em] text-sand-200/50"
         >
           {{ me.user.email }}
         </p>
         <div class="flex items-center justify-between gap-3">
           <NuxtLink
             to="/"
-            class="flex items-center gap-2 font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.16em] text-sand-200/60 transition hover:text-sand-50"
+            class="flex items-center gap-2 font-mono text-[0.6rem] uppercase tracking-[0.16em] text-sand-200/60 transition hover:text-sand-50"
           >
             <UIcon
               name="i-lucide-arrow-left"
@@ -75,7 +75,7 @@ async function signOut() {
           </NuxtLink>
           <button
             type="button"
-            class="flex items-center gap-2 font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.16em] text-saffron-300 transition hover:text-saffron-200"
+            class="flex items-center gap-2 font-mono text-[0.6rem] uppercase tracking-[0.16em] text-sage-300 transition hover:text-sage-200"
             @click="signOut"
           >
             <UIcon
@@ -89,7 +89,7 @@ async function signOut() {
     </aside>
 
     <!-- Mobile top bar -->
-    <header class="sticky top-0 z-40 bg-olive-950 text-sand-50 lg:hidden">
+    <header class="sticky top-0 z-40 bg-terra-950 text-sand-50 lg:hidden">
       <div class="flex items-center justify-between px-5 py-3">
         <p class="flex items-center gap-2">
           <BrandLogo
@@ -101,13 +101,13 @@ async function signOut() {
         <div class="flex items-center gap-4">
           <NuxtLink
             to="/"
-            class="font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.14em] text-sand-200/70"
+            class="font-mono text-[0.58rem] uppercase tracking-[0.14em] text-sand-200/70"
           >
             Storefront
           </NuxtLink>
           <button
             type="button"
-            class="font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.14em] text-saffron-300"
+            class="font-mono text-[0.58rem] uppercase tracking-[0.14em] text-sage-300"
             @click="signOut"
           >
             Sign out
@@ -119,7 +119,7 @@ async function signOut() {
           v-for="item in nav"
           :key="item.to"
           :to="item.to"
-          class="whitespace-nowrap rounded-sm px-3 py-1.5 font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.14em] transition"
+          class="whitespace-nowrap rounded-sm px-3 py-1.5 font-mono text-[0.6rem] uppercase tracking-[0.14em] transition"
           :class="isActive(item.to) ? 'bg-sand-50/12 text-sand-50' : 'text-sand-50/70'"
         >
           {{ item.label }}

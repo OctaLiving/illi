@@ -11,16 +11,14 @@ const activeName = computed(() => {
   return category ? tr(category, 'name') : undefined
 })
 
-const products = computed(() => {
-  const list = activeCategory.value
-    ? catalog.value.products.filter(p => p.eligibleSlotTypes.includes(activeCategory.value as never))
-    : catalog.value.products
-  // Available first, keep catalog order otherwise.
-  return [...list].sort((a, b) => Number(b.isAvailable) - Number(a.isAvailable))
-})
+// Products switched off in the console are hidden from the shop entirely.
+const listed = computed(() => catalog.value.products.filter(p => p.isAvailable))
+const products = computed(() => activeCategory.value
+  ? listed.value.filter(p => p.eligibleSlotTypes.includes(activeCategory.value as never))
+  : listed.value)
 
 const counts = computed(() =>
-  Object.fromEntries(catalog.value.categories.map(c => [c.slug, catalog.value.products.filter(p => p.eligibleSlotTypes.includes(c.slug)).length]))
+  Object.fromEntries(catalog.value.categories.map(c => [c.slug, listed.value.filter(p => p.eligibleSlotTypes.includes(c.slug)).length]))
 )
 const lowestPlan = computed(() => Math.min(...catalog.value.plans.map(p => p.price.amount)))
 
@@ -52,17 +50,17 @@ useSeoMeta({
           <button
             type="button"
             class="shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition"
-            :class="!activeCategory ? 'bg-olive-700 text-sand-50' : 'bg-white text-stone-700 ring-1 ring-sand-300 hover:ring-olive-600'"
+            :class="!activeCategory ? 'bg-terra-700 text-sand-50' : 'bg-white text-stone-700 ring-1 ring-sand-300 hover:ring-terra-600'"
             @click="selectCategory('')"
           >
-            {{ $t('shop.all') }} <span class="opacity-70">{{ catalog.products.length }}</span>
+            {{ $t('shop.all') }} <span class="opacity-70">{{ listed.length }}</span>
           </button>
           <button
             v-for="category in catalog.categories"
             :key="category.slug"
             type="button"
             class="shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition"
-            :class="activeCategory === category.slug ? 'bg-olive-700 text-sand-50' : 'bg-white text-stone-700 ring-1 ring-sand-300 hover:ring-olive-600'"
+            :class="activeCategory === category.slug ? 'bg-terra-700 text-sand-50' : 'bg-white text-stone-700 ring-1 ring-sand-300 hover:ring-terra-600'"
             @click="selectCategory(category.slug)"
           >
             {{ tr(category, 'name') }} <span class="opacity-70">{{ counts[category.slug] }}</span>
@@ -81,10 +79,10 @@ useSeoMeta({
           <NuxtLinkLocale
             v-if="i === 5 && catalog.plans.length"
             to="/subscribe"
-            class="col-span-2 flex flex-col justify-between gap-6 rounded-3xl bg-olive-800 p-6 text-sand-100 transition hover:bg-olive-900 sm:p-8 lg:col-span-1"
+            class="col-span-2 flex flex-col justify-between gap-6 rounded-3xl bg-terra-800 p-6 text-sand-100 transition hover:bg-terra-900 sm:p-8 lg:col-span-1"
           >
             <div>
-              <p class="text-xs font-bold uppercase tracking-[0.18em] text-saffron-300">
+              <p class="text-xs font-bold uppercase tracking-[0.18em] text-sage-300">
                 {{ $t('shop.boxesEyebrow') }}
               </p>
               <p class="mt-3 font-serif text-3xl leading-tight text-sand-50">
@@ -93,7 +91,7 @@ useSeoMeta({
             </div>
             <p class="flex items-center justify-between text-sm font-semibold">
               {{ $t('shop.boxesFrom', { price: price(lowestPlan) }) }}
-              <span class="inline-flex items-center gap-1 rounded-full bg-saffron-400 px-4 py-2 text-olive-950">
+              <span class="inline-flex items-center gap-1 rounded-full bg-sage-400 px-4 py-2 text-terra-950">
                 {{ $t('shop.buildBox') }}
                 <UIcon
                   name="i-lucide-arrow-right"

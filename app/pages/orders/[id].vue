@@ -68,8 +68,9 @@ const statusLabel = computed(() => {
   if (isCash.value) return t('order.status.cod')
   return awaitingPayment.value ? t('order.status.awaiting') : t('order.status.other')
 })
+const dateLocales: Record<string, string> = { en: 'en-GB', fr: 'fr-FR', ar: 'ar-MA' }
 const placedOn = computed(() => order.value
-  ? new Date(order.value.createdAt).toLocaleDateString(locale.value === 'ar' ? 'ar-MA' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+  ? new Date(order.value.createdAt).toLocaleDateString(dateLocales[locale.value] ?? 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
   : '')
 
 useSeoMeta({ title: () => t('order.title'), robots: 'noindex' })
@@ -83,7 +84,7 @@ useSeoMeta({ title: () => t('order.title'), robots: 'noindex' })
     <div class="text-center">
       <span
         class="mx-auto grid size-16 place-items-center rounded-full"
-        :class="order.status === 'paid' || isCash ? 'bg-olive-700 text-sand-50' : 'bg-saffron-300 text-olive-950'"
+        :class="order.status === 'paid' || isCash ? 'bg-terra-700 text-sand-50' : 'bg-sage-300 text-terra-950'"
       >
         <UIcon
           :name="order.status === 'paid' || isCash ? 'i-lucide-check' : 'i-lucide-clock'"
@@ -107,7 +108,7 @@ useSeoMeta({ title: () => t('order.title'), robots: 'noindex' })
     <a
       v-if="awaitingPayment"
       :href="payLink"
-      class="mt-8 flex w-full items-center justify-center gap-2 rounded-full bg-olive-700 py-4 font-semibold text-sand-50 transition hover:bg-olive-800"
+      class="mt-8 flex w-full items-center justify-center gap-2 rounded-full bg-terra-700 py-4 font-semibold text-sand-50 transition hover:bg-terra-800"
     >
       <UIcon
         name="i-lucide-lock"
@@ -137,7 +138,7 @@ useSeoMeta({ title: () => t('order.title'), robots: 'noindex' })
 
       <dl class="mt-8 grid gap-6 sm:grid-cols-2">
         <div>
-          <dt class="text-xs font-bold uppercase tracking-[0.14em] text-saffron-700">
+          <dt class="text-xs font-bold uppercase tracking-[0.14em] text-sage-700">
             {{ $t('order.payment') }}
           </dt>
           <dd class="mt-1 text-stone-800">
@@ -148,7 +149,7 @@ useSeoMeta({ title: () => t('order.title'), robots: 'noindex' })
           </dd>
         </div>
         <div v-if="order.shipping">
-          <dt class="text-xs font-bold uppercase tracking-[0.14em] text-saffron-700">
+          <dt class="text-xs font-bold uppercase tracking-[0.14em] text-sage-700">
             {{ $t('order.deliveryTo') }}
           </dt>
           <dd class="mt-1 text-stone-800">
@@ -171,13 +172,13 @@ useSeoMeta({ title: () => t('order.title'), robots: 'noindex' })
     <div class="mt-8 flex flex-wrap justify-center gap-3">
       <NuxtLinkLocale
         to="/catalog"
-        class="rounded-full bg-olive-700 px-6 py-3 font-semibold text-sand-50 transition hover:bg-olive-800"
+        class="rounded-full bg-terra-700 px-6 py-3 font-semibold text-sand-50 transition hover:bg-terra-800"
       >
         {{ $t('order.keepShopping') }}
       </NuxtLinkLocale>
       <NuxtLinkLocale
         to="/account"
-        class="rounded-full bg-white px-6 py-3 font-semibold text-olive-800 ring-1 ring-sand-300 transition hover:ring-olive-600"
+        class="rounded-full bg-white px-6 py-3 font-semibold text-terra-800 ring-1 ring-sand-300 transition hover:ring-terra-600"
       >
         {{ $t('order.yourOrders') }}
       </NuxtLinkLocale>

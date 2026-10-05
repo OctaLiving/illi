@@ -36,11 +36,11 @@ const { data: account } = await useFetch<AccountData>('/api/account', {
 })
 
 const statusBadge: Record<string, string> = {
-  active: 'bg-olive-600/10 text-olive-700',
-  pending: 'bg-saffron-600/10 text-saffron-700',
-  cod_pending: 'bg-saffron-600/10 text-saffron-700',
-  paid: 'bg-olive-600/10 text-olive-700',
-  past_due: 'bg-saffron-600/10 text-saffron-700',
+  active: 'bg-terra-600/10 text-terra-700',
+  pending: 'bg-sage-600/10 text-sage-700',
+  cod_pending: 'bg-sage-600/10 text-sage-700',
+  paid: 'bg-terra-600/10 text-terra-700',
+  past_due: 'bg-sage-600/10 text-sage-700',
   paused: 'bg-stone-400/15 text-stone-500',
   canceled: 'bg-stone-400/15 text-stone-500',
   failed: 'bg-stone-400/15 text-stone-500',
@@ -79,15 +79,15 @@ useSeoMeta({ title: () => t('account.title'), robots: 'noindex' })
 <template>
   <div class="maghreb-wash">
     <div class="mx-auto max-w-3xl px-5 py-16 sm:px-8">
-      <p class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.3em] text-saffron-600">
+      <p class="font-mono text-[0.66rem] uppercase tracking-[0.3em] text-sage-600">
         {{ $t('account.title') }}
       </p>
-      <h1 class="mt-2 font-[family:var(--font-serif)] text-4xl text-stone-900 sm:text-5xl">
+      <h1 class="mt-2 font-serif text-4xl text-stone-900 sm:text-5xl">
         {{ me?.user ? me.user.name : $t('account.member') }}
       </h1>
       <NuxtLinkLocale
         to="/account/profile"
-        class="mt-4 inline-flex items-center gap-2 font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.14em] text-olive-700 underline decoration-saffron-600 decoration-2 underline-offset-4 transition hover:text-saffron-700"
+        class="mt-4 inline-flex items-center gap-2 font-mono text-[0.66rem] uppercase tracking-[0.14em] text-terra-700 underline decoration-sage-600 decoration-2 underline-offset-4 transition hover:text-sage-700"
       >
         {{ $t('account.contact') }}
         <UIcon
@@ -97,7 +97,7 @@ useSeoMeta({ title: () => t('account.title'), robots: 'noindex' })
       </NuxtLinkLocale>
 
       <!-- Subscriptions -->
-      <h2 class="mt-12 border-b border-sand-600/20 pb-3 font-[family:var(--font-serif)] text-2xl text-stone-900">
+      <h2 class="mt-12 border-b border-sand-600/20 pb-3 font-serif text-2xl text-stone-900">
         {{ $t('account.subscriptions') }}
       </h2>
       <p
@@ -107,7 +107,7 @@ useSeoMeta({ title: () => t('account.title'), robots: 'noindex' })
         {{ $t('account.noSubs') }}
         <NuxtLinkLocale
           to="/subscribe"
-          class="font-[family:var(--font-mono)] text-[0.7rem] uppercase tracking-[0.14em] text-olive-700 underline decoration-saffron-600 decoration-2 underline-offset-4"
+          class="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-terra-700 underline decoration-sage-600 decoration-2 underline-offset-4"
         >
           {{ $t('account.buildOne') }}
         </NuxtLinkLocale>
@@ -118,18 +118,18 @@ useSeoMeta({ title: () => t('account.title'), robots: 'noindex' })
         class="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-3xl bg-white ring-1 ring-sand-200 p-5"
       >
         <div>
-          <p class="font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.18em] text-stone-500">
+          <p class="font-mono text-[0.6rem] uppercase tracking-[0.18em] text-stone-500">
             {{ $t(`cadenceTitle.${sub.cadence}`) }} · {{ price(sub.amount) }}
           </p>
-          <p class="mt-1 font-[family:var(--font-serif)] text-2xl text-stone-900">
+          <p class="mt-1 font-serif text-2xl text-stone-900">
             {{ planName(sub.planId, sub.planName) }}
           </p>
-          <p class="mt-1 font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.12em] text-stone-500">
+          <p class="mt-1 font-mono text-[0.62rem] uppercase tracking-[0.12em] text-stone-500">
             {{ $t('account.renews', { date: fmt(sub.nextInvoiceAt) }) }}
           </p>
         </div>
         <span
-          class="rounded-lg px-2.5 py-1 font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.12em]"
+          class="rounded-lg px-2.5 py-1 font-mono text-[0.58rem] uppercase tracking-[0.12em]"
           :class="statusBadge[sub.status]"
         >
           {{ $t(`status.${sub.status}`) }}
@@ -137,7 +137,7 @@ useSeoMeta({ title: () => t('account.title'), robots: 'noindex' })
       </div>
 
       <!-- Orders -->
-      <h2 class="mt-12 border-b border-sand-600/20 pb-3 font-[family:var(--font-serif)] text-2xl text-stone-900">
+      <h2 class="mt-12 border-b border-sand-600/20 pb-3 font-serif text-2xl text-stone-900">
         {{ $t('account.orders') }}
       </h2>
       <div class="mt-4 overflow-x-auto rounded-3xl bg-white ring-1 ring-sand-200">
@@ -148,7 +148,7 @@ useSeoMeta({ title: () => t('account.title'), robots: 'noindex' })
             >
               <td
                 colspan="4"
-                class="px-5 py-6 text-center font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.14em] text-stone-400"
+                class="px-5 py-6 text-center font-mono text-[0.66rem] uppercase tracking-[0.14em] text-stone-400"
               >
                 {{ $t('account.noOrders') }}
               </td>
@@ -158,14 +158,14 @@ useSeoMeta({ title: () => t('account.title'), robots: 'noindex' })
               :key="o.id"
               class="border-b border-sand-600/10 last:border-0"
             >
-              <td class="px-5 py-3 font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.1em] text-stone-500">
+              <td class="px-5 py-3 font-mono text-[0.66rem] uppercase tracking-[0.1em] text-stone-500">
                 {{ fmt(o.createdAt) }}
               </td>
               <td class="px-5 py-3">
                 <p class="text-sm font-semibold text-stone-900">
                   <NuxtLinkLocale
                     :to="`/orders/${o.id}`"
-                    class="hover:text-olive-700 hover:underline"
+                    class="hover:text-terra-700 hover:underline"
                   >
                     {{ orderLabel(o) }}
                   </NuxtLinkLocale>
@@ -176,7 +176,7 @@ useSeoMeta({ title: () => t('account.title'), robots: 'noindex' })
               </td>
               <td class="px-5 py-3">
                 <span
-                  class="rounded-lg px-2 py-0.5 font-[family:var(--font-mono)] text-[0.56rem] uppercase tracking-[0.1em]"
+                  class="rounded-lg px-2 py-0.5 font-mono text-[0.56rem] uppercase tracking-[0.1em]"
                   :class="statusBadge[o.status]"
                 >
                   {{ $t(`status.${o.status}`) }}
@@ -186,7 +186,7 @@ useSeoMeta({ title: () => t('account.title'), robots: 'noindex' })
                 <NuxtLink
                   v-if="o.status === 'pending'"
                   :to="payLink(o)"
-                  class="font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.14em] text-saffron-700 transition hover:text-saffron-800"
+                  class="font-mono text-[0.6rem] uppercase tracking-[0.14em] text-sage-700 transition hover:text-sage-800"
                 >
                   {{ $t('account.pay') }} <span class="flip-rtl inline-block">→</span>
                 </NuxtLink>

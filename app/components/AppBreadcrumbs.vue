@@ -11,7 +11,7 @@ defineProps<{ items: Crumb[] }>()
 <template>
   <nav
     :aria-label="$t('product.breadcrumb')"
-    class="flex flex-wrap items-center gap-2 font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.16em]"
+    class="flex flex-wrap items-center gap-2 font-mono text-[0.62rem] uppercase tracking-[0.16em]"
   >
     <template
       v-for="(item, i) in items"
@@ -20,7 +20,7 @@ defineProps<{ items: Crumb[] }>()
       <NuxtLinkLocale
         v-if="item.to"
         :to="item.to"
-        class="text-stone-500 transition hover:text-saffron-700"
+        class="text-stone-500 transition hover:text-sage-700"
       >
         {{ item.label }}
       </NuxtLinkLocale>

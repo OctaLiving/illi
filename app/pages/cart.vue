@@ -33,7 +33,7 @@ useSeoMeta({ title: () => t('checkout.title'), robots: 'noindex' })
         </p>
         <NuxtLinkLocale
           to="/catalog"
-          class="mt-6 inline-flex rounded-full bg-olive-700 px-6 py-3 text-sm font-semibold text-sand-50 transition hover:bg-olive-800"
+          class="mt-6 inline-flex rounded-full bg-terra-700 px-6 py-3 text-sm font-semibold text-sand-50 transition hover:bg-terra-800"
         >
           {{ $t('cart.shop') }}
         </NuxtLinkLocale>
@@ -51,7 +51,7 @@ useSeoMeta({ title: () => t('checkout.title'), robots: 'noindex' })
             </h2>
             <NuxtLinkLocale
               to="/catalog"
-              class="text-sm font-semibold text-olive-700 hover:underline"
+              class="text-sm font-semibold text-terra-700 hover:underline"
             >
               {{ $t('checkout.addMore') }}
             </NuxtLinkLocale>
@@ -85,13 +85,13 @@ useSeoMeta({ title: () => t('checkout.title'), robots: 'noindex' })
             <div class="flex flex-wrap justify-center gap-3">
               <NuxtLinkLocale
                 to="/join?next=/cart"
-                class="rounded-full bg-olive-700 px-6 py-3 font-semibold text-sand-50 transition hover:bg-olive-800"
+                class="rounded-full bg-terra-700 px-6 py-3 font-semibold text-sand-50 transition hover:bg-terra-800"
               >
                 {{ $t('checkout.createAccount') }}
               </NuxtLinkLocale>
               <NuxtLinkLocale
                 to="/login?next=/cart"
-                class="rounded-full bg-white px-6 py-3 font-semibold text-olive-800 ring-1 ring-sand-300 transition hover:ring-olive-600"
+                class="rounded-full bg-white px-6 py-3 font-semibold text-terra-800 ring-1 ring-sand-300 transition hover:ring-terra-600"
               >
                 {{ $t('checkout.signIn') }}
               </NuxtLinkLocale>

@@ -3,8 +3,18 @@ import { PrismaPg } from '@prisma/adapter-pg'
 import { PrismaClient } from './generated/client'
 import { catalogProducts, productCategories, subscriptionPlans } from '../app/data/catalog'
 import { arabicCatalog } from '../app/data/catalog-ar'
+import { frenchCatalog } from '../app/data/catalog-fr'
 
-const ar = <T>(value: T | undefined) => (value ? { ar: value } : undefined)
+type Texts = Record<string, Record<string, unknown>>
+// Collects the French and Arabic text for one catalog row ({ fr: …, ar: … }).
+function translations(group: keyof typeof arabicCatalog, key: string) {
+  const out: Texts = {}
+  const fr = (frenchCatalog[group] as Record<string, Record<string, unknown>>)[key]
+  const ar = (arabicCatalog[group] as Record<string, Record<string, unknown>>)[key]
+  if (fr) out.fr = fr
+  if (ar) out.ar = ar
+  return Object.keys(out).length ? out : undefined
+}
 
 // Seeds the catalog from the generated baseline (app/data/catalog.ts, produced by
 // `pnpm import:catalog`). Idempotent — upserts by id/slug, so re-running restores
@@ -17,8 +27,8 @@ async function main() {
     const c = productCategories[i]!
     await prisma.category.upsert({
       where: { slug: c.slug },
-      create: { slug: c.slug, name: c.name, blurb: c.blurb, sortOrder: i, translations: ar(arabicCatalog.categories[c.slug]) },
-      update: { name: c.name, blurb: c.blurb, sortOrder: i, translations: ar(arabicCatalog.categories[c.slug]) }
+      create: { slug: c.slug, name: c.name, blurb: c.blurb, sortOrder: i, translations: translations('categories', c.slug) },
+      update: { name: c.name, blurb: c.blurb, sortOrder: i, translations: translations('categories', c.slug) }
     })
   }
 
@@ -44,7 +54,7 @@ async function main() {
       isAvailable: p.isAvailable,
       eligibleSlotTypes: p.eligibleSlotTypes,
       priceAmount: p.price.amount,
-      translations: ar(arabicCatalog.products[p.id]),
+      translations: translations('products', p.id),
       sortOrder: i
     }
     await prisma.product.upsert({ where: { id: p.id }, create: { id: p.id, ...data }, update: data })
@@ -60,7 +70,7 @@ async function main() {
       minQuantity: s.minQuantity,
       maxQuantity: s.maxQuantity,
       required: s.required,
-      translations: ar(arabicCatalog.slots[s.id]),
+      translations: translations('slots', s.id),
       sortOrder: j
     }))
     const base = {
@@ -70,7 +80,7 @@ async function main() {
       summary: pl.summary,
       priceAmount: pl.price.amount,
       priceCurrency: pl.price.currency,
-      translations: ar(arabicCatalog.plans[pl.id]),
+      translations: translations('plans', pl.id),
       sortOrder: i
     }
     // Clear existing slots first so re-seeding replaces them rather than colliding on ids.

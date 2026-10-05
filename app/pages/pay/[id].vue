@@ -44,10 +44,10 @@ useSeoMeta({ title: () => t('pay.title'), robots: 'noindex' })
         :items="[{ label: $t('pay.crumbHome'), to: '/' }, { label: $t('pay.crumbAccount'), to: '/account' }, { label: $t('pay.crumbInvoice') }]"
       />
       <div class="w-full rounded-3xl bg-white ring-1 ring-sand-200 p-7 text-center">
-        <p class="font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.2em] text-saffron-600">
+        <p class="font-mono text-[0.6rem] uppercase tracking-[0.2em] text-sage-600">
           {{ $t('pay.simulated') }}
         </p>
-        <h1 class="mt-3 font-[family:var(--font-serif)] text-4xl text-stone-900">
+        <h1 class="mt-3 font-serif text-4xl text-stone-900">
           {{ order ? price(order.amount) : $t('pay.order') }}
         </h1>
         <p class="mt-3 text-sm leading-7 text-stone-600">
@@ -56,14 +56,14 @@ useSeoMeta({ title: () => t('pay.title'), robots: 'noindex' })
 
         <p
           v-if="error"
-          class="mt-4 rounded-lg bg-saffron-600/10 px-3 py-2 text-sm text-saffron-700"
+          class="mt-4 rounded-lg bg-sage-600/10 px-3 py-2 text-sm text-sage-700"
         >
           {{ error }}
         </p>
 
         <button
           type="button"
-          class="mt-6 w-full rounded-lg bg-saffron-600 py-3 text-sm font-semibold text-sand-50 transition hover:bg-saffron-700 disabled:opacity-50"
+          class="mt-6 w-full rounded-lg bg-sage-600 py-3 text-sm font-semibold text-sand-50 transition hover:bg-sage-700 disabled:opacity-50"
           :disabled="paying || !order"
           @click="confirm"
         >
@@ -71,7 +71,7 @@ useSeoMeta({ title: () => t('pay.title'), robots: 'noindex' })
         </button>
         <NuxtLinkLocale
           to="/subscribe"
-          class="mt-3 inline-block font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.14em] text-stone-500 hover:text-stone-800"
+          class="mt-3 inline-block font-mono text-[0.6rem] uppercase tracking-[0.14em] text-stone-500 hover:text-stone-800"
         >
           {{ $t('pay.cancel') }}
         </NuxtLinkLocale>

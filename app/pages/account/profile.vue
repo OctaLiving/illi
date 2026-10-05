@@ -35,8 +35,8 @@ const saving = ref(false)
 const saved = ref(false)
 const error = ref('')
 
-const field = 'w-full rounded-lg border border-sand-600/30 bg-sand-50/60 px-3.5 py-2.5 text-sm text-stone-900 transition focus:border-olive-600 focus:outline-none focus:ring-1 focus:ring-olive-600/30'
-const labelText = 'mb-1 block font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.16em] text-stone-500'
+const field = 'w-full rounded-lg border border-sand-600/30 bg-sand-50/60 px-3.5 py-2.5 text-sm text-stone-900 transition focus:border-terra-600 focus:outline-none focus:ring-1 focus:ring-terra-600/30'
+const labelText = 'mb-1 block font-mono text-[0.58rem] uppercase tracking-[0.16em] text-stone-500'
 
 async function save() {
   saving.value = true
@@ -65,10 +65,10 @@ useSeoMeta({ title: () => t('profile.title'), robots: 'noindex' })
         :items="[{ label: $t('profile.crumbHome'), to: '/' }, { label: $t('profile.crumbAccount'), to: '/account' }, { label: $t('profile.crumbInfo') }]"
       />
 
-      <p class="font-[family:var(--font-mono)] text-[0.66rem] uppercase tracking-[0.3em] text-saffron-600">
+      <p class="font-mono text-[0.66rem] uppercase tracking-[0.3em] text-sage-600">
         {{ $t('profile.title') }}
       </p>
-      <h1 class="mt-2 font-[family:var(--font-serif)] text-4xl text-stone-900 sm:text-5xl">
+      <h1 class="mt-2 font-serif text-4xl text-stone-900 sm:text-5xl">
         {{ $t('profile.heading') }}
       </h1>
       <p class="mt-3 max-w-lg text-sm leading-7 text-stone-600">
@@ -163,7 +163,7 @@ useSeoMeta({ title: () => t('profile.title'), robots: 'noindex' })
 
         <p
           v-if="error"
-          class="rounded-lg bg-saffron-600/10 px-3 py-2 text-sm text-saffron-700"
+          class="rounded-lg bg-sage-600/10 px-3 py-2 text-sm text-sage-700"
         >
           {{ error }}
         </p>
@@ -171,14 +171,14 @@ useSeoMeta({ title: () => t('profile.title'), robots: 'noindex' })
         <div class="flex items-center gap-4">
           <button
             type="submit"
-            class="rounded-full bg-olive-700 px-6 py-3 text-sm font-semibold text-sand-50 transition hover:bg-olive-800 disabled:opacity-50"
+            class="rounded-full bg-terra-700 px-6 py-3 text-sm font-semibold text-sand-50 transition hover:bg-terra-800 disabled:opacity-50"
             :disabled="saving"
           >
             {{ saving ? $t('profile.saving') : $t('profile.save') }}
           </button>
           <span
             v-if="saved"
-            class="inline-flex items-center gap-1.5 font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.14em] text-olive-700"
+            class="inline-flex items-center gap-1.5 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-terra-700"
           >
             <UIcon
               name="i-lucide-check"

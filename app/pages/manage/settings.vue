@@ -75,10 +75,10 @@ useSeoMeta({ title: 'Settings · illi ops', robots: 'noindex, nofollow' })
   <section>
     <div class="flex flex-wrap items-end justify-between gap-3 border-b border-sand-600/20 pb-4">
       <div>
-        <p class="font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.24em] text-saffron-600">
+        <p class="font-mono text-[0.62rem] uppercase tracking-[0.24em] text-sage-600">
           {{ settings?.paymentMode }} mode · {{ settings?.smtpHost ? 'SMTP configured' : 'SMTP off' }}
         </p>
-        <h1 class="mt-1 font-[family:var(--font-serif)] text-3xl text-stone-900">
+        <h1 class="mt-1 font-serif text-3xl text-stone-900">
           Settings
         </h1>
       </div>
@@ -91,12 +91,12 @@ useSeoMeta({ title: 'Settings · illi ops', robots: 'noindex, nofollow' })
         @submit.prevent="saveSettings('payment')"
       >
         <div class="flex items-center justify-between">
-          <h2 class="font-[family:var(--font-serif)] text-2xl text-stone-900">
+          <h2 class="font-serif text-2xl text-stone-900">
             Checkout · NOWPayments
           </h2>
           <span
             v-if="settingsSaved === 'payment'"
-            class="inline-flex items-center gap-1.5 font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.14em] text-olive-700"
+            class="inline-flex items-center gap-1.5 font-mono text-[0.6rem] uppercase tracking-[0.14em] text-terra-700"
           >
             <UIcon
               name="i-lucide-check"
@@ -128,7 +128,7 @@ useSeoMeta({ title: 'Settings · illi ops', robots: 'noindex, nofollow' })
             <input
               v-model="paymentForm.codEnabled"
               type="checkbox"
-              class="size-4 accent-olive-700"
+              class="size-4 accent-terra-700"
             >
             Offer cash on delivery at checkout (Morocco)
           </label>
@@ -183,7 +183,7 @@ useSeoMeta({ title: 'Settings · illi ops', robots: 'noindex, nofollow' })
         </div>
         <button
           type="submit"
-          class="rounded-sm bg-olive-600 px-5 py-2.5 font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.14em] text-sand-50 transition hover:bg-olive-700 disabled:opacity-50"
+          class="rounded-sm bg-terra-600 px-5 py-2.5 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-sand-50 transition hover:bg-terra-700 disabled:opacity-50"
           :disabled="savingSettings"
         >
           Save payment settings
@@ -196,12 +196,12 @@ useSeoMeta({ title: 'Settings · illi ops', robots: 'noindex, nofollow' })
         @submit.prevent="saveSettings('email')"
       >
         <div class="flex items-center justify-between">
-          <h2 class="font-[family:var(--font-serif)] text-2xl text-stone-900">
+          <h2 class="font-serif text-2xl text-stone-900">
             Email · SMTP
           </h2>
           <span
             v-if="settingsSaved === 'email'"
-            class="inline-flex items-center gap-1.5 font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.14em] text-olive-700"
+            class="inline-flex items-center gap-1.5 font-mono text-[0.6rem] uppercase tracking-[0.14em] text-terra-700"
           >
             <UIcon
               name="i-lucide-check"
@@ -231,9 +231,9 @@ useSeoMeta({ title: 'Settings · illi ops', robots: 'noindex, nofollow' })
             <input
               v-model="emailForm.smtpSecure"
               type="checkbox"
-              class="size-4 accent-olive-600"
+              class="size-4 accent-terra-600"
             >
-            <span class="font-[family:var(--font-mono)] text-[0.6rem] uppercase tracking-[0.12em] text-stone-600">Secure (TLS)</span>
+            <span class="font-mono text-[0.6rem] uppercase tracking-[0.12em] text-stone-600">Secure (TLS)</span>
           </label>
         </div>
         <div>
@@ -264,7 +264,7 @@ useSeoMeta({ title: 'Settings · illi ops', robots: 'noindex, nofollow' })
         </div>
         <button
           type="submit"
-          class="rounded-sm bg-olive-600 px-5 py-2.5 font-[family:var(--font-mono)] text-[0.62rem] uppercase tracking-[0.14em] text-sand-50 transition hover:bg-olive-700 disabled:opacity-50"
+          class="rounded-sm bg-terra-600 px-5 py-2.5 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-sand-50 transition hover:bg-terra-700 disabled:opacity-50"
           :disabled="savingSettings"
         >
           Save email settings
@@ -272,7 +272,7 @@ useSeoMeta({ title: 'Settings · illi ops', robots: 'noindex, nofollow' })
       </form>
     </div>
 
-    <p class="mt-4 font-[family:var(--font-mono)] text-[0.58rem] uppercase tracking-[0.12em] text-stone-400">
+    <p class="mt-4 font-mono text-[0.58rem] uppercase tracking-[0.12em] text-stone-400">
       Secrets are stored server-side and never shown here once saved — leave a field blank to keep its current value.
     </p>
   </section>

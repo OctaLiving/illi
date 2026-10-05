@@ -1,0 +1,409 @@
+{
+  "meta": {
+    "title": "Maison Illi — Épicerie marocaine artisanale",
+    "description": "Fermentations, beurres d'oléagineux, poissons marinés et sauces mijotées, préparés en petites séries à Casablanca. Achetez un bocal ou composez une box."
+  },
+  "common": {
+    "price": "{amount} MAD",
+    "madeInCasablanca": "Fait à Casablanca",
+    "listSep": ", "
+  },
+  "nav": {
+    "shop": "Boutique",
+    "boxes": "Box",
+    "story": "Notre histoire",
+    "account": "Compte",
+    "signIn": "Se connecter",
+    "signOut": "Se déconnecter",
+    "console": "Console",
+    "cart": "Panier",
+    "openCart": "Ouvrir le panier",
+    "menu": "Menu",
+    "home": "Maison Illi — accueil",
+    "language": "Langue"
+  },
+  "layout": {
+    "announcement": "Préparé en petites séries à Casablanca · Achetez un bocal à l'unité, ou recevez une box régulièrement"
+  },
+  "footer": {
+    "about": "Une épicerie marocaine artisanale. Fermentations, beurres d'oléagineux, poissons marinés et sauces mijotées — des listes d'ingrédients courtes, faites à Casablanca.",
+    "shop": "Boutique",
+    "boxes": "Box",
+    "account": "Compte",
+    "yourAccount": "Votre compte",
+    "createAccount": "Créer un compte",
+    "yourCart": "Votre panier",
+    "copyright": "© {year} Maison Illi · Fait à Casablanca",
+    "payments": "Prix en dirhams marocains · Paiement à la livraison ou paiement en ligne sécurisé"
+  },
+  "product": {
+    "fresh": "Frais · réfrigéré",
+    "backSoon": "Bientôt de retour",
+    "per": "le {unit}",
+    "add": "Ajouter",
+    "added": "Ajouté",
+    "addAria": "Ajouter {name} au panier",
+    "notFound": "Produit introuvable",
+    "breadcrumb": "Fil d'Ariane",
+    "freshChilled": "Frais · à garder au froid",
+    "addToCart": "Ajouter au panier",
+    "buyNow": "Acheter maintenant",
+    "refrigerated": "Réfrigéré",
+    "roomTemp": "Température ambiante",
+    "storage": "Conservation",
+    "days": "{n} jours",
+    "keepsFor": "Se conserve",
+    "casablanca": "Casablanca",
+    "madeIn": "Fait à",
+    "repeatTitle": "Envie d'en recevoir régulièrement ?",
+    "repeatBody": "Ajoutez-le à la {plan}, livrée {cadence} — {price}.",
+    "ingredients": "Ingrédients",
+    "ingredientsCount": "{n} ingrédients. Rien d'autre.",
+    "nutrition": "Valeurs nutritionnelles",
+    "protein": "Protéines {n} %",
+    "fat": "Lipides {n} %",
+    "carbs": "Glucides {n} %",
+    "storageShelf": "Conservation et durée",
+    "keepRefrigerated": "À conserver au réfrigérateur.",
+    "keepCool": "À conserver dans un endroit frais et sec ; au réfrigérateur après ouverture.",
+    "bestWithin": "À consommer de préférence sous {n} jours. Vendu au {unit}.",
+    "related": "Vous aimerez aussi",
+    "subtitle": "{storage} · se conserve {n} jours"
+  },
+  "units": {
+    "jar": "bocal",
+    "bottle": "bouteille",
+    "portion": "portion",
+    "tin": "boîte"
+  },
+  "qty": {
+    "decrease": "Diminuer la quantité",
+    "increase": "Augmenter la quantité"
+  },
+  "cart": {
+    "title": "Votre panier",
+    "close": "Fermer le panier",
+    "empty": "Votre panier est vide",
+    "emptyBody": "Choisissez un bocal ou deux — chaque produit est préparé en petites séries à Casablanca.",
+    "shop": "Voir la boutique",
+    "subtotal": "Sous-total",
+    "checkout": "Commander",
+    "payNote": "Paiement à la livraison ou en ligne · Prix en MAD",
+    "unitLine": "{price} · {unit}"
+  },
+  "shop": {
+    "metaAll": "La boutique",
+    "metaCategory": "{name} — Boutique",
+    "metaDescription": "Fermentations, fromages, beurres d'oléagineux, confitures, poissons marinés et sauces — préparés en petites séries à Casablanca. Achetez un seul bocal ou composez une box.",
+    "eyebrow": "L'épicerie",
+    "titleAll": "Tout ce que nous préparons",
+    "intro": "Petites séries, listes d'ingrédients courtes, rien de superflu. Ajoutez n'importe quel bocal à votre panier — sans abonnement.",
+    "all": "Tout",
+    "boxesEyebrow": "Box régulières",
+    "boxesTitle": "Choisissez vos favoris une fois — nous les renouvelons à votre rythme.",
+    "boxesFrom": "À partir de {price}",
+    "buildBox": "Composer une box",
+    "empty": "Rien ici pour l'instant — essayez une autre catégorie."
+  },
+  "cadence": {
+    "weekly": "chaque semaine",
+    "biweekly": "toutes les deux semaines",
+    "monthly": "chaque mois"
+  },
+  "cadenceTitle": {
+    "weekly": "Chaque semaine",
+    "biweekly": "Toutes les deux semaines",
+    "monthly": "Chaque mois"
+  },
+  "home": {
+    "eyebrow": "Retour au vivant",
+    "titleA": "Une cuisine marocaine,",
+    "titleB": "mise en bocal.",
+    "intro": "Amlou, fermentations vivantes, sardines marinées, sauces mijotées — préparés en petites séries à Casablanca, sans rien de superflu.",
+    "shop": "Voir la boutique",
+    "buildBox": "Composer une box",
+    "jarsFrom": "Bocaux à partir de {price} · Sans abonnement",
+    "smallBatches": "Petites séries",
+    "shortLists": "Listes d'ingrédients courtes",
+    "sealLine1": "Fait à",
+    "sealLine2": "Casablanca",
+    "byCategory": "Acheter par catégorie",
+    "seeEverything": "Tout voir",
+    "favEyebrow": "Les favoris",
+    "favTitle": "Commencez par ceux-ci",
+    "shopAll": "Voir les {n} produits",
+    "storyAlt": "Bocaux de légumes de saison fermentés sur une étagère",
+    "storyEyebrow": "Notre histoire",
+    "storyTitle": "Des aliments qui se gardent, comme le faisaient nos grands-mères.",
+    "storyBody": "illi est né dans une cuisine de Casablanca avec une règle simple : si on ne peut pas le faire avec une courte liste de vrais ingrédients, on ne le fait pas. Tout est fermenté, mariné ou mijoté en petites séries, puis scellé dans du verre.",
+    "values": {
+      "sourced": {
+        "title": "Produits de proximité",
+        "body": "Des produits de saison issus de fermes locales et régionales, choisis pour leur goût plutôt que leur volume."
+      },
+      "old": {
+        "title": "Conservés à l'ancienne",
+        "body": "Fermentés, marinés, mijotés. Petites séries et listes d'ingrédients courtes."
+      },
+      "nothing": {
+        "title": "Rien de plus",
+        "body": "Sans additifs, sans raccourcis — juste ce que la recette demande, dans du verre réutilisable."
+      }
+    },
+    "boxesEyebrow": "Box régulières",
+    "boxesTitle": "Ne manquez plus jamais de vos favoris",
+    "boxesBody": "Choisissez une box, remplissez-la des produits que vous aimez, et nous la préparons à nouveau à votre rythme. Chaque cycle est payé séparément, sans engagement.",
+    "boxProducts": "{n} produits",
+    "buildThisBox": "Composer cette box",
+    "howTitle": "Comment ça marche",
+    "steps": {
+      "pick": {
+        "title": "Choisissez ce que vous aimez",
+        "body": "Ajoutez des bocaux à l'unité à votre panier, ou composez une box à recevoir régulièrement."
+      },
+      "pay": {
+        "title": "Payez comme vous voulez",
+        "body": "Paiement à la livraison au Maroc, ou en ligne en crypto — le paiement par carte arrive bientôt."
+      },
+      "prep": {
+        "title": "Nous préparons votre commande",
+        "body": "Vos bocaux sont préparés en petites séries à Casablanca, puis emballés pour vous."
+      }
+    },
+    "ctaTitle": "Remplissez votre garde-manger de bonnes choses."
+  },
+  "checkout": {
+    "title": "Commande",
+    "emptyBody": "Parcourez l'épicerie et ajoutez un bocal ou deux.",
+    "yourOrder": "Votre commande",
+    "addMore": "Ajouter d'autres produits",
+    "items": "{n} article | {n} articles",
+    "signInTitle": "Connectez-vous pour commander",
+    "signInBody": "Cela prend une minute, et vous pourrez suivre vos commandes ensuite. Votre panier est conservé.",
+    "createAccount": "Créer un compte",
+    "signIn": "Se connecter",
+    "delivery": "Informations de livraison",
+    "fullName": "Nom complet",
+    "phone": "Téléphone",
+    "country": "Pays",
+    "address": "Adresse",
+    "addressPlaceholder": "Rue, immeuble, appartement",
+    "city": "Ville",
+    "notes": "Instructions pour le livreur",
+    "optional": "(facultatif)",
+    "notesPlaceholder": "Étage, point de repère, meilleur moment pour appeler",
+    "payment": "Paiement",
+    "methods": {
+      "cod": {
+        "title": "Paiement à la livraison",
+        "body": "Payez le livreur en espèces à la réception de votre commande."
+      },
+      "card": {
+        "title": "Carte",
+        "body": "Visa, Mastercard, Apple Pay et Google Pay."
+      },
+      "crypto": {
+        "title": "Crypto",
+        "body": "USDT, Bitcoin et plus via un paiement crypto sécurisé."
+      }
+    },
+    "reasons": {
+      "card": "Le paiement par carte arrive bientôt.",
+      "cod": "Le paiement à la livraison est suspendu pour le moment.",
+      "codCountry": "Disponible uniquement pour une livraison au Maroc."
+    },
+    "placing": "Commande en cours…",
+    "startingPayment": "Ouverture du paiement…",
+    "placeOrder": "Commander · {price}",
+    "continueToPayment": "Passer au paiement · {price}",
+    "pricesNote": "Prix en dirhams marocains (MAD).",
+    "codNote": "Vous payez le livreur à la réception de votre commande.",
+    "onlineNote": "Vous serez redirigé vers une page de paiement sécurisée.",
+    "errors": {
+      "address": "Veuillez indiquer votre nom, votre adresse et votre ville.",
+      "phone": "Veuillez indiquer un numéro de téléphone joignable par le livreur.",
+      "country": "Nous ne livrons pas encore dans ce pays.",
+      "method": "Choisissez votre mode de paiement.",
+      "cardUnavailable": "Le paiement par carte arrive bientôt.",
+      "cryptoUnavailable": "Le paiement en crypto n'est pas disponible pour le moment.",
+      "codUnavailable": "Le paiement à la livraison est suspendu pour le moment.",
+      "codCountry": "Le paiement à la livraison n'est disponible qu'au Maroc.",
+      "emptyCart": "Votre panier est vide.",
+      "invalidItem": "Votre panier contient un article non valide.",
+      "unavailable": "{product} n'est pas disponible pour le moment.",
+      "maxQuantity": "Vous pouvez commander jusqu'à {max} × {product}.",
+      "incompleteBox": "Il manque des produits dans votre box.",
+      "generic": "Impossible de passer votre commande. Veuillez réessayer."
+    }
+  },
+  "countries": {
+    "MA": "Maroc",
+    "FR": "France",
+    "ES": "Espagne",
+    "BE": "Belgique",
+    "NL": "Pays-Bas",
+    "DE": "Allemagne",
+    "IT": "Italie",
+    "PT": "Portugal",
+    "SK": "Slovaquie",
+    "CZ": "Tchéquie",
+    "GB": "Royaume-Uni",
+    "AE": "Émirats arabes unis"
+  },
+  "order": {
+    "notFound": "Commande introuvable",
+    "title": "Votre commande",
+    "paid": "Merci — votre commande est payée.",
+    "confirmed": "Merci — votre commande est confirmée.",
+    "awaiting": "Presque fini — finalisez votre paiement.",
+    "incomplete": "Cette commande n'a pas été finalisée.",
+    "cashNote": "Nous la préparons dès maintenant. Merci de prévoir {amount} en espèces pour le livreur.",
+    "meta": "Commande {ref} · {date}",
+    "pay": "Payer {amount}",
+    "summary": "Récapitulatif",
+    "box": "Box · {cadence}",
+    "total": "Total",
+    "payment": "Paiement",
+    "status": {
+      "paid": "Payée",
+      "cod": "Paiement à la livraison",
+      "awaiting": "En attente de paiement",
+      "other": "Non finalisée"
+    },
+    "deliveryTo": "Livraison à",
+    "keepShopping": "Continuer mes achats",
+    "yourOrders": "Vos commandes"
+  },
+  "box": {
+    "checkoutTitle": "Commande",
+    "crumbHome": "Accueil",
+    "crumbBuild": "Composer votre box",
+    "youreIn": "C'est parti",
+    "youreInName": "C'est parti, {name}",
+    "ready": "Votre box est prête.",
+    "readyBody": "Vérifiez vos choix, ajoutez vos informations de livraison et choisissez comment payer — à la livraison ou en ligne. Chaque renouvellement est payé de la même façon.",
+    "changePicks": "Modifier vos choix",
+    "incompleteA": "Votre box n'est pas encore complète.",
+    "finish": "Terminez votre sélection",
+    "incompleteB": "pour commander."
+  },
+  "auth": {
+    "signInTitle": "Connexion",
+    "welcome": "Bon retour parmi nous.",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "name": "Nom",
+    "signingIn": "Connexion…",
+    "signIn": "Se connecter",
+    "signInError": "Connexion impossible — vérifiez votre e-mail et votre mot de passe.",
+    "newHere": "Nouveau chez illi ?",
+    "createAccount": "Créer un compte",
+    "joinTitle": "Rejoindre illi",
+    "createYourAccount": "Créez votre compte.",
+    "joining": "Création…",
+    "join": "Rejoindre illi",
+    "joinError": "Impossible de créer votre compte.",
+    "haveAccount": "Déjà membre ?"
+  },
+  "pay": {
+    "title": "Paiement",
+    "crumbHome": "Accueil",
+    "crumbAccount": "Compte",
+    "crumbInvoice": "Payer la facture",
+    "simulated": "Paiement crypto simulé",
+    "order": "Commande",
+    "body": "Cette page remplace la page de paiement NOWPayments. En production, vous seriez redirigé vers NOWPayments pour payer en crypto ; ici, confirmez pour simuler un paiement réussi.",
+    "confirming": "Confirmation…",
+    "simulate": "Simuler un paiement réussi",
+    "cancel": "Annuler",
+    "error": "Impossible de confirmer le paiement."
+  },
+  "account": {
+    "title": "Votre compte",
+    "member": "Membre",
+    "contact": "Coordonnées et livraison",
+    "subscriptions": "Abonnements",
+    "noSubs": "Aucun abonnement pour l'instant.",
+    "buildOne": "En composer un",
+    "renews": "Renouvellement le {date}",
+    "orders": "Commandes",
+    "noOrders": "Aucune commande pour l'instant.",
+    "pay": "Payer",
+    "box": "Box",
+    "order": "Commande"
+  },
+  "status": {
+    "pending": "en attente",
+    "cod_pending": "paiement à la livraison",
+    "paid": "payée",
+    "expired": "expirée",
+    "failed": "échouée",
+    "active": "actif",
+    "past_due": "paiement dû",
+    "paused": "en pause",
+    "canceled": "annulé"
+  },
+  "profile": {
+    "title": "Vos informations",
+    "crumbHome": "Accueil",
+    "crumbAccount": "Compte",
+    "crumbInfo": "Informations",
+    "heading": "Coordonnées et livraison",
+    "intro": "Où vos box sont livrées et comment vous joindre. C'est l'adresse utilisée pour chaque livraison d'abonnement.",
+    "name": "Nom",
+    "email": "E-mail",
+    "phone": "Téléphone",
+    "address1": "Adresse (ligne 1)",
+    "address2": "Adresse (ligne 2)",
+    "city": "Ville",
+    "postal": "Code postal",
+    "country": "Pays",
+    "notes": "Instructions de livraison",
+    "notesPlaceholder": "Code du portail, préférence de dépôt…",
+    "saving": "Enregistrement…",
+    "save": "Enregistrer",
+    "saved": "Enregistré",
+    "error": "Impossible d'enregistrer vos informations."
+  },
+  "builder": {
+    "metaTitle": "Composer votre box",
+    "metaDescription": "Choisissez une box illi — Garde-manger, Vivante ou Côtière — et remplissez-la de vos produits artisanaux préférés, préparés à nouveau à votre rythme.",
+    "eyebrow": "Box régulières",
+    "titleA": "Composez votre",
+    "titleB": "box.",
+    "intro": "Choisissez une box, un produit pour chaque emplacement, et nous la préparons à nouveau à votre rythme. Chaque cycle est payé séparément — sans engagement.",
+    "progress": "Votre progression",
+    "complete": "Votre box est complète. Passez à la commande quand vous voulez.",
+    "spotsLeft": "emplacement à remplir | emplacements à remplir",
+    "step": "Étape {n}",
+    "chooseBox": "Choisissez votre box",
+    "fill": "Remplissez votre {name}",
+    "required": "Obligatoire",
+    "optional": "Facultatif",
+    "clear": "Vider",
+    "inBox": "✓ Dans votre box",
+    "tapToAdd": "Touchez pour ajouter",
+    "summary": "Récapitulatif",
+    "yourBox": "Votre box",
+    "sealed": "prête",
+    "ready": "Prête",
+    "inProgress": "En cours",
+    "filled": "Rempli",
+    "nothingYet": "Aucun produit choisi pour l'instant.",
+    "fillMore": "Encore {n} à remplir pour continuer",
+    "continue": "Passer à la commande",
+    "signIn": "Connectez-vous pour commander",
+    "payNote": "Paiement à la livraison ou en ligne · Prix en MAD",
+    "almost": "Presque fini",
+    "stillToChoose": "Reste à choisir",
+    "chosen": "{a} / {b} choisis",
+    "readyReview": "Prête · vérifier",
+    "left": "{n} restant(s)",
+    "issues": {
+      "missing-required": "{slot} est obligatoire avant de pouvoir commander.",
+      "below-minimum": "{slot} nécessite plus de produits.",
+      "too-many-products": "{slot} contient trop de produits.",
+      "invalid-product": "{slot} contient un produit qui ne convient pas."
+    }
+  }
+}
