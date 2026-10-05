@@ -13,13 +13,13 @@ const { tr, price } = useLocalized()
     >
       <NuxtLinkLocale
         :to="`/catalog/${line.product.slug}`"
-        class="shrink-0 overflow-hidden rounded-2xl bg-white ring-1 ring-sand-200"
+        class="shrink-0 overflow-hidden rounded-2xl bg-sand-50 ring-1 ring-sand-200"
         @click="isOpen = false"
       >
         <img
           :src="line.product.image.src"
           :alt="tr(line.product, 'name')"
-          class="size-20 object-cover"
+          class="ivory-photo size-20 object-cover"
           loading="lazy"
         >
       </NuxtLinkLocale>

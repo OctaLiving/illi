@@ -76,7 +76,7 @@ useSeoMeta({ title: () => t('profile.title'), robots: 'noindex' })
       </p>
 
       <form
-        class="mt-8 space-y-5 rounded-3xl bg-white ring-1 ring-sand-200 p-7"
+        class="mt-8 space-y-5 rounded-3xl bg-sand-50 ring-1 ring-sand-200 p-7"
         @submit.prevent="save"
       >
         <div class="grid gap-4 sm:grid-cols-2">

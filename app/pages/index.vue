@@ -32,10 +32,10 @@ const lowestPrice = computed(() => {
   return prices.length ? Math.min(...prices) : 0
 })
 
-const values = [
-  { icon: 'i-lucide-sprout', key: 'sourced' },
-  { icon: 'i-lucide-flask-conical', key: 'old' },
-  { icon: 'i-lucide-ban', key: 'nothing' }
+const promises = [
+  { icon: 'i-lucide-cooking-pot', key: 'homemade' },
+  { icon: 'i-lucide-sprout', key: 'seasonal' },
+  { icon: 'i-lucide-heart-handshake', key: 'motherDaughter' }
 ]
 
 useSeoMeta({
@@ -60,7 +60,7 @@ useSeoMeta({
             class="reveal mt-5 font-serif text-5xl leading-[1.02] text-stone-900 sm:text-7xl"
             style="animation-delay:.12s"
           >
-            {{ $t('home.titleA') }} <em class="font-script text-[1.5em] leading-[0.7] font-bold not-italic text-terra-700 rtl:text-[1em] rtl:leading-[inherit]">{{ $t('home.titleB') }}</em>
+            {{ $t('home.titleA') }} <em class="font-script text-[1.5em] leading-[0.7] font-bold not-italic text-saffron-600 rtl:text-[1em] rtl:leading-[inherit]">{{ $t('home.titleB') }}</em>
           </h1>
           <p
             class="reveal mt-6 max-w-xl text-lg leading-8 text-stone-600"
@@ -84,7 +84,7 @@ useSeoMeta({
             </NuxtLinkLocale>
             <NuxtLinkLocale
               to="/subscribe"
-              class="inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-white px-6 py-4 text-base font-semibold text-terra-800 ring-1 ring-sand-300 transition hover:ring-terra-600 sm:flex-none sm:px-7"
+              class="inline-flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-sand-50 px-6 py-4 text-base font-semibold text-terra-800 ring-1 ring-sand-300 transition hover:ring-terra-600 sm:flex-none sm:px-7"
             >
               {{ $t('home.buildBox') }}
             </NuxtLinkLocale>
@@ -101,23 +101,15 @@ useSeoMeta({
             class="reveal mt-10 grid max-w-lg grid-cols-3 gap-4 border-t border-sand-300 pt-6 text-xs text-stone-700 sm:text-sm"
             style="animation-delay:.38s"
           >
-            <li class="flex flex-col gap-1.5">
+            <li
+              v-for="item in promises"
+              :key="item.key"
+              class="flex flex-col gap-1.5"
+            >
               <UIcon
-                name="i-lucide-leaf"
+                :name="item.icon"
                 class="size-5 text-terra-600"
-              />{{ $t('home.smallBatches') }}
-            </li>
-            <li class="flex flex-col gap-1.5">
-              <UIcon
-                name="i-lucide-list-checks"
-                class="size-5 text-terra-600"
-              />{{ $t('home.shortLists') }}
-            </li>
-            <li class="flex flex-col gap-1.5">
-              <UIcon
-                name="i-lucide-map-pin"
-                class="size-5 text-terra-600"
-              />{{ $t('common.madeInCasablanca') }}
+              />{{ $t(`home.${item.key}`) }}
             </li>
           </ul>
         </div>
@@ -130,24 +122,24 @@ useSeoMeta({
           <NuxtLinkLocale
             v-if="heroProducts[0]"
             :to="`/catalog/${heroProducts[0].slug}`"
-            class="arch row-span-2 overflow-hidden bg-white shadow-[0_40px_70px_-40px_rgba(46,39,27,0.6)] ring-1 ring-sand-200"
+            class="arch row-span-2 overflow-hidden bg-sand-50 shadow-[0_40px_70px_-40px_rgba(46,39,27,0.6)] ring-1 ring-sand-200"
           >
             <img
               :src="heroProducts[0].image.src"
               :alt="tr(heroProducts[0], 'name')"
-              class="size-full object-cover"
+              class="ivory-photo size-full object-cover"
             >
           </NuxtLinkLocale>
           <NuxtLinkLocale
             v-for="p in heroProducts.slice(1)"
             :key="p.id"
             :to="`/catalog/${p.slug}`"
-            class="overflow-hidden rounded-3xl bg-white shadow-[0_30px_60px_-40px_rgba(46,39,27,0.6)] ring-1 ring-sand-200"
+            class="overflow-hidden rounded-3xl bg-sand-50 shadow-[0_30px_60px_-40px_rgba(46,39,27,0.6)] ring-1 ring-sand-200"
           >
             <img
               :src="p.image.src"
               :alt="tr(p, 'name')"
-              class="aspect-square size-full object-cover"
+              class="ivory-photo aspect-square size-full object-cover"
             >
           </NuxtLinkLocale>
           <div class="wax-seal stamp-in absolute -end-3 -top-6 [--seal-size:5.5rem] sm:-end-8 sm:[--seal-size:6.5rem]">
@@ -177,12 +169,12 @@ useSeoMeta({
           :to="`/catalog?category=${tile.category.slug}`"
           class="group w-32 shrink-0 text-center sm:w-auto"
         >
-          <div class="aspect-square overflow-hidden rounded-full bg-white ring-1 ring-sand-200 transition group-hover:ring-2 group-hover:ring-terra-600">
+          <div class="aspect-square overflow-hidden rounded-full bg-sand-50 ring-1 ring-sand-200 transition group-hover:ring-2 group-hover:ring-terra-600">
             <img
               v-if="tile.image"
               :src="tile.image.src"
               :alt="tr(tile.category, 'name')"
-              class="size-full object-cover transition duration-500 group-hover:scale-105"
+              class="ivory-photo size-full object-cover transition duration-500 group-hover:scale-105"
               loading="lazy"
             >
           </div>
@@ -220,56 +212,51 @@ useSeoMeta({
       </div>
     </section>
 
-    <!-- Story -->
+    <!-- Story (excerpt), values and mission, after the brand guideline -->
     <section
       id="story"
       class="mx-auto mt-24 max-w-6xl scroll-mt-24 px-5 sm:px-8"
     >
-      <div class="grid overflow-hidden rounded-[2rem] bg-white ring-1 ring-sand-200 lg:grid-cols-2">
-        <div class="relative min-h-72 bg-sand-200">
+      <div class="grid overflow-hidden rounded-[2rem] bg-sand-50 ring-1 ring-sand-200 lg:grid-cols-2">
+        <div class="relative min-h-80 bg-sand-200">
           <img
-            v-if="bySlug('seasonal-fermented-vegetables')"
-            :src="bySlug('seasonal-fermented-vegetables')!.image.src"
+            v-if="bySlug('water-kefir')"
+            :src="bySlug('water-kefir')!.image.src"
             :alt="$t('home.storyAlt')"
-            class="absolute inset-0 size-full object-cover"
+            class="ivory-photo absolute inset-0 size-full object-cover"
             loading="lazy"
           >
         </div>
         <div class="p-8 sm:p-12">
-          <p class="eyebrow">
-            {{ $t('home.storyEyebrow') }}
-          </p>
-          <h2 class="mt-3 font-serif text-3xl leading-tight text-stone-900 sm:text-4xl">
-            {{ $t('home.storyTitle') }}
+          <h2 class="brand-block bg-terra-700 text-sand-50">
+            {{ $t('nav.story') }}
           </h2>
-          <p class="mt-4 leading-8 text-stone-600">
-            {{ $t('home.storyBody') }}
+          <p class="mt-8 font-serif text-3xl leading-tight text-terra-800 sm:text-4xl">
+            {{ $t('home.storyLead') }}
           </p>
-          <ul class="mt-8 space-y-6">
-            <li
-              v-for="v in values"
-              :key="v.key"
-              class="flex gap-4"
-            >
-              <span class="grid size-11 shrink-0 place-items-center rounded-full bg-terra-50 text-terra-700">
-                <UIcon
-                  :name="v.icon"
-                  class="size-5"
-                />
-              </span>
-              <div>
-                <p class="font-semibold text-stone-900">
-                  {{ $t(`home.values.${v.key}.title`) }}
-                </p>
-                <p class="text-sm leading-6 text-stone-600">
-                  {{ $t(`home.values.${v.key}.body`) }}
-                </p>
-              </div>
-            </li>
-          </ul>
+          <p class="mt-4 text-lg leading-8 text-stone-700">
+            {{ $t('home.storyExcerpt') }}
+          </p>
+          <NuxtLinkLocale
+            to="/story"
+            class="mt-6 inline-flex items-center gap-2 font-semibold text-terra-700 hover:underline"
+          >
+            {{ $t('home.readStory') }}
+            <UIcon
+              name="i-lucide-arrow-right"
+              class="flip-rtl size-4"
+            />
+          </NuxtLinkLocale>
+          <p class="mt-8 font-script text-4xl font-bold text-saffron-600 rtl:text-2xl">
+            {{ $t('home.ctaSignature') }}
+          </p>
         </div>
       </div>
     </section>
+
+    <BrandValues class="mt-20" />
+
+    <BrandMission class="mt-20" />
 
     <!-- Boxes -->
     <section
@@ -293,11 +280,11 @@ useSeoMeta({
           :key="plan.id"
           to="/subscribe"
           class="group flex flex-col rounded-3xl p-7 ring-1 transition hover:-translate-y-0.5"
-          :class="i === 0 ? 'bg-terra-800 text-sand-100 ring-terra-800' : 'bg-white ring-sand-200 hover:ring-terra-600'"
+          :class="i === 0 ? 'bg-terra-800 text-sand-100 ring-terra-800' : 'bg-sand-50 ring-sand-200 hover:ring-terra-600'"
         >
           <p
             class="text-xs font-bold uppercase tracking-[0.16em]"
-            :class="i === 0 ? 'text-sage-300' : 'text-sage-700'"
+            :class="i === 0 ? 'text-terra-200' : 'text-sage-700'"
           >
             {{ $t(`cadenceTitle.${plan.cadence}`) }}
           </p>
@@ -325,7 +312,7 @@ useSeoMeta({
           </p>
           <span
             class="mt-5 inline-flex items-center justify-center gap-2 rounded-full py-3 text-sm font-semibold transition"
-            :class="i === 0 ? 'bg-sage-400 text-terra-950 group-hover:bg-sage-300' : 'bg-terra-700 text-sand-50 group-hover:bg-terra-800'"
+            :class="i === 0 ? 'bg-sand-100 text-terra-800 group-hover:bg-sand-50' : 'bg-terra-700 text-sand-50 group-hover:bg-terra-800'"
           >
             {{ $t('home.buildThisBox') }}
             <UIcon
@@ -348,9 +335,9 @@ useSeoMeta({
             'pick', 'pay', 'prep'
           ]"
           :key="step"
-          class="rounded-3xl bg-white p-7 ring-1 ring-sand-200"
+          class="rounded-3xl bg-sand-50 p-7 ring-1 ring-sand-200"
         >
-          <span class="grid size-10 place-items-center rounded-full bg-sage-300 font-bold text-terra-950">{{ i + 1 }}</span>
+          <span class="grid size-10 place-items-center rounded-full bg-sage-200 font-bold text-sage-800">{{ i + 1 }}</span>
           <p class="mt-5 text-lg font-semibold text-stone-900">
             {{ $t(`home.steps.${step}.title`) }}
           </p>
@@ -372,10 +359,13 @@ useSeoMeta({
         <h2 class="mx-auto max-w-2xl font-serif text-4xl leading-tight text-sand-50 sm:text-5xl">
           {{ $t('home.ctaTitle') }}
         </h2>
+        <p class="mt-4 font-script text-4xl font-bold text-terra-200 rtl:text-2xl">
+          {{ $t('home.ctaSignature') }}
+        </p>
         <div class="mt-8 flex flex-wrap justify-center gap-3">
           <NuxtLinkLocale
             to="/catalog"
-            class="inline-flex items-center gap-2 rounded-full bg-sage-400 px-7 py-4 font-semibold text-terra-950 transition hover:bg-sage-300"
+            class="inline-flex items-center gap-2 rounded-full bg-sand-100 px-7 py-4 font-semibold text-terra-800 transition hover:bg-sand-50"
           >
             {{ $t('home.shop') }}
             <UIcon
@@ -385,7 +375,7 @@ useSeoMeta({
           </NuxtLinkLocale>
           <NuxtLinkLocale
             to="/subscribe"
-            class="inline-flex items-center rounded-full px-7 py-4 font-semibold text-sand-50 ring-1 ring-sand-50/40 transition hover:bg-white/10"
+            class="inline-flex items-center rounded-full px-7 py-4 font-semibold text-sand-50 ring-1 ring-sand-50/40 transition hover:bg-sand-50/10"
           >
             {{ $t('home.buildBox') }}
           </NuxtLinkLocale>

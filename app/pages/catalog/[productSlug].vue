@@ -88,15 +88,15 @@ useSeoMeta({
       <section class="mt-6 grid gap-8 lg:grid-cols-2 lg:gap-14">
         <!-- Photo -->
         <div class="lg:sticky lg:top-28 lg:self-start">
-          <div class="relative overflow-hidden rounded-[2rem] bg-white ring-1 ring-sand-200">
+          <div class="relative overflow-hidden rounded-[2rem] bg-sand-50 ring-1 ring-sand-200">
             <img
               :src="product.image.src"
               :alt="tr(product, 'name')"
-              class="aspect-square w-full object-cover"
+              class="ivory-photo aspect-square w-full object-cover"
             >
             <span
               v-if="product.storage === 'Refrigerated'"
-              class="absolute start-4 top-4 rounded-full bg-white/90 px-3 py-1.5 text-xs font-semibold text-terra-800 shadow-sm"
+              class="absolute start-4 top-4 rounded-full bg-sand-50/90 px-3 py-1.5 text-xs font-semibold text-terra-800 shadow-sm"
             >{{ $t('product.freshChilled') }}</span>
           </div>
         </div>
@@ -141,14 +141,14 @@ useSeoMeta({
           <button
             v-if="canBuy"
             type="button"
-            class="mt-3 w-full rounded-full bg-white px-7 py-3.5 text-base font-semibold text-terra-800 ring-1 ring-sand-300 transition hover:ring-terra-600 disabled:opacity-60 sm:w-auto"
+            class="mt-3 w-full rounded-full bg-sand-50 px-7 py-3.5 text-base font-semibold text-terra-800 ring-1 ring-sand-300 transition hover:ring-terra-600 disabled:opacity-60 sm:w-auto"
             @click="buyNow"
           >
             {{ $t('product.buyNow') }}
           </button>
 
           <ul class="mt-8 grid grid-cols-3 gap-3 text-sm">
-            <li class="rounded-2xl bg-white p-4 ring-1 ring-sand-200">
+            <li class="rounded-2xl bg-sand-50 p-4 ring-1 ring-sand-200">
               <UIcon
                 :name="product.storage === 'Refrigerated' ? 'i-lucide-snowflake' : 'i-lucide-sun'"
                 class="size-5 text-terra-600"
@@ -160,7 +160,7 @@ useSeoMeta({
                 {{ $t('product.storage') }}
               </p>
             </li>
-            <li class="rounded-2xl bg-white p-4 ring-1 ring-sand-200">
+            <li class="rounded-2xl bg-sand-50 p-4 ring-1 ring-sand-200">
               <UIcon
                 name="i-lucide-calendar-check"
                 class="size-5 text-terra-600"
@@ -172,7 +172,7 @@ useSeoMeta({
                 {{ $t('product.keepsFor') }}
               </p>
             </li>
-            <li class="rounded-2xl bg-white p-4 ring-1 ring-sand-200">
+            <li class="rounded-2xl bg-sand-50 p-4 ring-1 ring-sand-200">
               <UIcon
                 name="i-lucide-map-pin"
                 class="size-5 text-terra-600"
@@ -224,7 +224,7 @@ useSeoMeta({
                 <li
                   v-for="ingredient in tr(product, 'ingredients')"
                   :key="ingredient"
-                  class="rounded-full bg-white px-3 py-1.5 text-sm text-stone-700 ring-1 ring-sand-200"
+                  class="rounded-full bg-sand-50 px-3 py-1.5 text-sm text-stone-700 ring-1 ring-sand-200"
                 >
                   {{ ingredient }}
                 </li>
@@ -308,7 +308,7 @@ useSeoMeta({
     <!-- Mobile buy bar -->
     <div
       v-if="canBuy"
-      class="fixed inset-x-0 bottom-0 z-30 border-t border-sand-200 bg-white/95 px-4 py-3 backdrop-blur md:hidden"
+      class="fixed inset-x-0 bottom-0 z-30 border-t border-sand-200 bg-sand-50/95 px-4 py-3 backdrop-blur md:hidden"
     >
       <div class="flex items-center gap-3">
         <div class="min-w-0 flex-1 leading-tight">

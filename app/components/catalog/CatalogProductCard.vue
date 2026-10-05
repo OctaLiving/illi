@@ -17,20 +17,20 @@ function addToCart() {
 </script>
 
 <template>
-  <article class="group relative flex flex-col overflow-hidden rounded-3xl bg-white ring-1 ring-sand-200 transition hover:-translate-y-0.5 hover:shadow-[0_24px_48px_-28px_rgba(46,39,27,0.45)] hover:ring-sand-300">
+  <article class="group relative flex flex-col overflow-hidden rounded-3xl bg-sand-50 ring-1 ring-sand-200 transition hover:-translate-y-0.5 hover:shadow-[0_24px_48px_-28px_rgba(46,39,27,0.45)] hover:ring-sand-300">
     <NuxtLinkLocale
       :to="`/catalog/${product.slug}`"
-      class="relative block aspect-square overflow-hidden bg-white"
+      class="relative block aspect-square overflow-hidden bg-sand-50"
     >
       <img
         :src="product.image.src"
         :alt="tr(product, 'name')"
-        class="size-full object-cover transition duration-500 group-hover:scale-[1.04]"
+        class="ivory-photo size-full object-cover transition duration-500 group-hover:scale-[1.04]"
         loading="lazy"
       >
       <span
         v-if="product.storage === 'Refrigerated'"
-        class="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[0.7rem] font-semibold text-terra-800 shadow-sm backdrop-blur"
+        class="absolute left-3 top-3 rounded-full bg-sand-50/90 px-2.5 py-1 text-[0.7rem] font-semibold text-terra-800 shadow-sm backdrop-blur"
       >{{ $t('product.fresh') }}</span>
       <span
         v-if="!product.isAvailable"
@@ -64,7 +64,7 @@ function addToCart() {
         <button
           type="button"
           class="relative z-10 inline-flex size-10 shrink-0 items-center justify-center gap-1.5 rounded-full text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-40 sm:size-auto sm:px-4 sm:py-2.5"
-          :class="justAdded ? 'bg-sage-400 text-terra-950' : 'bg-terra-700 text-sand-50 hover:bg-terra-800'"
+          :class="justAdded ? 'bg-sage-700 text-sand-50' : 'bg-terra-700 text-sand-50 hover:bg-terra-800'"
           :disabled="!product.isAvailable || product.price.amount <= 0"
           :aria-label="$t('product.addAria', { name: tr(product, 'name') })"
           @click="addToCart"

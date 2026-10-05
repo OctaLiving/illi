@@ -1,10 +1,10 @@
 // Transactional email templates. Inline styles only — email clients have no web
 // fonts and strip <style>, so we use system serif + the Maison Illi palette (terra, sage, sand) inline.
 
-const BONE = '#f5f0e9'
+const BONE = '#f3e9de'
 const INK = '#221e1a'
-const SAGE = '#4e663b' // sage, dark enough for small text
-const TERRA = '#864a2b' // terra — buttons
+const SAGE = '#505f35' // olive, dark enough for small text
+const TERRA = '#8d5026' // terracotta — buttons
 
 function shell(heading: string, bodyHtml: string): string {
   return `<div style="margin:0;padding:32px 0;background:${BONE};font-family:Georgia,'Times New Roman',serif;color:${INK};">
