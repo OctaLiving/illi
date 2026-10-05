@@ -2,27 +2,31 @@
 @import "@nuxt/ui";
 
 @theme static {
-  /* Maison Illi type, taken from the logo: Gilda Display for headings (the
-     "Maison" serif), Corinthia for the script "Illi", Questrial for small
-     labels and taglines. Body text stays Calibri, or Carlito (its free,
-     metric-compatible twin) where the device doesn't have it. */
+  /* Type, per the ILLI guideline ("Typographies"): a script for the logo and
+     brand signatures only (Corinthia), a refined serif for titles and product
+     names (Gilda Display), a sober sans-serif for running text (Calibri, or its
+     free metric twin Carlito), and Questrial for small capital labels. */
   --font-sans: 'Calibri', 'Carlito', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-serif: 'Gilda Display', Georgia, 'Times New Roman', serif;
   --font-script: 'Corinthia', 'Gilda Display', cursive;
   --font-mono: 'Questrial', 'Calibri', 'Carlito', system-ui, sans-serif; /* labels and taglines */
 
-  /* Sand — the cream of the logo's milk-foam background, for surfaces and hairlines. */
-  --color-sand-50: #fdfbf8;
-  --color-sand-100: #f5f0e9;
-  --color-sand-200: #ebe3d8;
-  --color-sand-300: #ddd1c1;
-  --color-sand-400: #c6b49d;
-  --color-sand-500: #a9967d;
-  --color-sand-600: #8a7861;
-  --color-sand-700: #6b5c49;
-  --color-sand-800: #4b4033;
-  --color-sand-900: #2f2820;
-  --color-sand-950: #1a1612;
+  /* Colours follow the ILLI brand guideline ("Palette de couleurs"). Swatches
+     taken straight from it are marked with *; the rest fill out each scale. */
+
+  /* Sand — Ivoire: the purity of natural ingredients. Page and card surfaces,
+     hairlines. The guideline asks for natural ivory, never sterile white. */
+  --color-sand-50: #fbf7f2;
+  --color-sand-100: #f3e9de; /* * */
+  --color-sand-200: #eadccc; /* * */
+  --color-sand-300: #e0cfbc; /* * */
+  --color-sand-400: #d6c2aa; /* * */
+  --color-sand-500: #cbb396; /* * */
+  --color-sand-600: #aa957a; /* * */
+  --color-sand-700: #86745c;
+  --color-sand-800: #5e5141;
+  --color-sand-900: #3c3329;
+  --color-sand-950: #211c16;
 
   /* Stone — warm ink greys for text. */
   --color-stone-50: #faf8f5;
@@ -37,31 +41,44 @@
   --color-stone-900: #221e1a;
   --color-stone-950: #13110e;
 
-  /* Terra — the logo's rust brown: buttons, links, the wordmark. Nuxt UI `primary`. */
-  --color-terra-50: #fbf5f1;
-  --color-terra-100: #f5e7de;
-  --color-terra-200: #eacdbb;
-  --color-terra-300: #dbab8e;
-  --color-terra-400: #c6835e;
-  --color-terra-500: #ae6640;
-  --color-terra-600: #985534;
-  --color-terra-700: #864a2b;
-  --color-terra-800: #6c3b22;
-  --color-terra-900: #532e1b;
-  --color-terra-950: #30190e;
+  /* Terra — Terracotta and Cacao: the warmth of fermentation and of the earth.
+     Buttons, links, the wordmark. Nuxt UI `primary`. */
+  --color-terra-50: #fcf4ec;
+  --color-terra-100: #f9e6d4;
+  --color-terra-200: #f6d4b5; /* * */
+  --color-terra-300: #e4b38e;
+  --color-terra-400: #d19770; /* * */
+  --color-terra-500: #b97c53;
+  --color-terra-600: #a2643b; /* * */
+  --color-terra-700: #8d5026; /* * terracotta */
+  --color-terra-800: #753a13; /* * cacao */
+  --color-terra-900: #5a2c0e;
+  --color-terra-950: #351907;
 
-  /* Sage — the ginkgo leaf and "Retour au vivant": labels, badges, highlights. */
-  --color-sage-50: #f3f6ef;
-  --color-sage-100: #e5ecdc;
-  --color-sage-200: #cdd9bf;
-  --color-sage-300: #afc29b;
-  --color-sage-400: #91a77a;
-  --color-sage-500: #768d5e;
-  --color-sage-600: #5f7849;
-  --color-sage-700: #4e663b;
-  --color-sage-800: #3f5231;
-  --color-sage-900: #324128;
-  --color-sage-950: #1b2416;
+  /* Sage — Olive: balance and nature. Labels, badges, the ginkgo leaf. */
+  --color-sage-50: #f3f5f0;
+  --color-sage-100: #e4e9de;
+  --color-sage-200: #cad2c2; /* * */
+  --color-sage-300: #aeaa8a; /* * */
+  --color-sage-400: #9fa174; /* * */
+  --color-sage-500: #7f8852;
+  --color-sage-600: #5f6d3c;
+  --color-sage-700: #505f35; /* * */
+  --color-sage-800: #4e532f; /* * */
+  --color-sage-900: #363a20;
+  --color-sage-950: #1f2212;
+
+  /* Saffron — the accent: the care put into each creation. Used sparingly, for
+     brand signatures and small highlights. */
+  --color-saffron-50: #fbf4e8;
+  --color-saffron-100: #f5e3c4;
+  --color-saffron-200: #ebc88d;
+  --color-saffron-300: #dcaa5c;
+  --color-saffron-400: #c38a35;
+  --color-saffron-500: #ae731f;
+  --color-saffron-600: #9a5f14; /* * */
+  --color-saffron-700: #7c4c10;
+  --color-saffron-800: #5f3a0d;
 }
 
 :root {
@@ -119,6 +136,16 @@ body {
     radial-gradient(80% 60% at 0% 100%, rgba(118, 141, 94, 0.12), transparent 55%);
 }
 
+/* Product photos: the guideline asks for natural ivory rather than sterile
+   white backgrounds, so photos are multiplied onto an ivory frame — white
+   studio backdrops turn ivory and the whole image warms slightly. */
+.ivory-photo {
+  mix-blend-mode: multiply;
+}
+:has(> .ivory-photo) {
+  background-color: var(--color-sand-100);
+}
+
 /* Arch — a soft nod to Moroccan doorways, used for feature images. */
 .arch {
   border-radius: 999px 999px 1.25rem 1.25rem;
@@ -157,14 +184,60 @@ body {
   line-height: 1.5;
 }
 
-/* Eyebrow label above headings. */
+/* The guideline's eight-petal asterisk, used as a bullet before labels. It is
+   a mask, so it takes the colour of the text around it (or --star-color). */
+.brand-star {
+  display: inline-block;
+  width: 1.15em;
+  height: 1.15em;
+  flex-shrink: 0;
+  background-color: var(--star-color, currentColor);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(45 12 12)'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(90 12 12)'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(135 12 12)'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(180 12 12)'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(225 12 12)'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(270 12 12)'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(315 12 12)'/%3E%3C/g%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(45 12 12)'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(90 12 12)'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(135 12 12)'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(180 12 12)'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(225 12 12)'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(270 12 12)'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(315 12 12)'/%3E%3C/g%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+/* Eyebrow label above headings: Questrial capitals led by the asterisk. */
 .eyebrow {
-  font-family: var(--font-sans);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--color-sage-700);
+  color: var(--color-terra-700);
+}
+.eyebrow::before {
+  content: "";
+  width: 1.15em;
+  height: 1.15em;
+  flex-shrink: 0;
+  background-color: var(--color-saffron-600);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(45 12 12)'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(90 12 12)'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(135 12 12)'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(180 12 12)'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(225 12 12)'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(270 12 12)'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(315 12 12)'/%3E%3C/g%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(45 12 12)'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(90 12 12)'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(135 12 12)'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(180 12 12)'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(225 12 12)'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(270 12 12)'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(315 12 12)'/%3E%3C/g%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+/* Section label block from the guideline ("✳ NOTRE HISTOIRE"): a flat colour
+   panel with the asterisk and Questrial capitals. */
+.brand-block {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7em;
+  padding: 0.85em 1.4em;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.brand-block::before {
+  content: "";
+  width: 1.35em;
+  height: 1.35em;
+  flex-shrink: 0;
+  background-color: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(45 12 12)'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(90 12 12)'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(135 12 12)'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(180 12 12)'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(225 12 12)'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(270 12 12)'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(315 12 12)'/%3E%3C/g%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(45 12 12)'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(90 12 12)'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(135 12 12)'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(180 12 12)'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(225 12 12)'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(270 12 12)'/%3E%3Cellipse cx='12' cy='5.6' rx='2.1' ry='4.6' transform='rotate(315 12 12)'/%3E%3C/g%3E%3C/svg%3E") center / contain no-repeat;
 }
 
 /* Hide scrollbars on horizontal chip rows while keeping them scrollable. */

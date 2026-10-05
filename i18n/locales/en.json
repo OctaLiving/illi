@@ -1,7 +1,7 @@
 {
   "meta": {
-    "title": "Maison Illi — Small-batch Moroccan pantry",
-    "description": "Ferments, nut butters, marinated fish and slow-cooked sauces, made in small batches in Casablanca. Buy a jar or build a box."
+    "title": "Maison Illi — From our kitchen to yours",
+    "description": "Fruit kefirs, natural ferments and living foods, made at home with care to nourish body and soul. Buy a single jar or get a box on your schedule."
   },
   "common": {
     "price": "{amount} MAD",
@@ -23,18 +23,20 @@
     "language": "Language"
   },
   "layout": {
-    "announcement": "Made in small batches in Casablanca · Buy any jar on its own, or get a box on repeat"
+    "announcement": "Made at home with care, from mother to daughter · Buy a single jar or get a box on your schedule"
   },
   "footer": {
-    "about": "A small-batch Moroccan pantry. Ferments, nut butters, marinated fish and slow-cooked sauces — short ingredient lists, made in Casablanca.",
+    "about": "Illi is an artisanal brand born from a love of homemade food. Fruit kefir, natural ferments and living foods, made with care to nourish body and soul.",
     "shop": "Shop",
     "boxes": "Boxes",
     "account": "Account",
     "yourAccount": "Your account",
     "createAccount": "Create an account",
     "yourCart": "Your cart",
-    "copyright": "© {year} Maison Illi · Made in Casablanca",
-    "payments": "Prices in Moroccan dirhams · Cash on delivery or secure online payment"
+    "copyright": "© {year} Maison Illi · From our kitchen to yours",
+    "payments": "Prices in Moroccan dirhams · Cash on delivery or secure online payment",
+    "story": "Our story",
+    "follow": "Follow us"
   },
   "product": {
     "fresh": "Fresh · chilled",
@@ -84,7 +86,7 @@
     "title": "Your cart",
     "close": "Close cart",
     "empty": "Your cart is empty",
-    "emptyBody": "Pick a jar or two — every product is made in small batches in Casablanca.",
+    "emptyBody": "Pick a jar or two — everything is made at home, with care.",
     "shop": "Shop the pantry",
     "subtotal": "Subtotal",
     "checkout": "Checkout",
@@ -97,7 +99,7 @@
     "metaDescription": "Ferments, cheeses, nut butters, jams, marinated fish and sauces — made in small batches in Casablanca. Buy a single jar or build a box.",
     "eyebrow": "The pantry",
     "titleAll": "Everything we make",
-    "intro": "Small batches, short ingredient lists, nothing added that shouldn't be. Add any jar to your cart — no subscription needed.",
+    "intro": "Living foods, made at home in small batches with good seasonal ingredients. Add any jar to your cart — no subscription needed.",
     "all": "All",
     "boxesEyebrow": "Boxes on repeat",
     "boxesTitle": "Choose your favourites once — we refill them on your schedule.",
@@ -117,60 +119,48 @@
   },
   "home": {
     "eyebrow": "Back to living food",
-    "titleA": "A Moroccan kitchen,",
-    "titleB": "kept in a jar.",
-    "intro": "Amlou, live ferments, marinated sardines, slow-cooked sauces — made in small batches in Casablanca with nothing added that shouldn't be.",
-    "shop": "Shop the pantry",
+    "titleA": "From our kitchen",
+    "titleB": "to yours.",
+    "intro": "Fruit kefirs, natural ferments and living foods — recipes born in a mother's kitchen, passed on to her daughter, and made with patience and good ingredients.",
+    "shop": "Discover our products",
     "buildBox": "Build a box",
-    "jarsFrom": "Jars from {price} · No subscription needed",
-    "smallBatches": "Small batches",
-    "shortLists": "Short ingredient lists",
+    "jarsFrom": "From {price} · No subscription needed",
     "sealLine1": "Made in",
     "sealLine2": "Casablanca",
     "byCategory": "Shop by category",
     "seeEverything": "See everything",
-    "favEyebrow": "Pantry favourites",
-    "favTitle": "Start with these",
+    "favEyebrow": "Our favourites",
+    "favTitle": "What we truly love",
     "shopAll": "Shop all {n} products",
-    "storyAlt": "Jars of seasonal fermented vegetables on a shelf",
-    "storyEyebrow": "Our story",
-    "storyTitle": "Food that keeps, the way our grandmothers kept it.",
-    "storyBody": "illi started in a Casablanca kitchen with a simple rule: if it can't be made with a short list of real ingredients, we don't make it. Everything is fermented, marinated or slow-cooked in small batches, then sealed in glass.",
-    "values": {
-      "sourced": {
-        "title": "Sourced close",
-        "body": "Seasonal produce from local and regional farms, chosen for flavour over volume."
-      },
-      "old": {
-        "title": "Kept the old way",
-        "body": "Fermented, marinated, slow-cooked. Small batches and short ingredient lists."
-      },
-      "nothing": {
-        "title": "Nothing extra",
-        "body": "No additives, no shortcuts — just what the recipe needs, in reusable glass."
-      }
-    },
+    "storyAlt": "Bottles of fruit kefir",
     "boxesEyebrow": "Boxes on repeat",
-    "boxesTitle": "Never run out of your favourites",
-    "boxesBody": "Choose a box, fill it with the products you love, and we prepare it again on your schedule. Each cycle is paid separately, so there's no lock-in.",
+    "boxesTitle": "Your favourites, at your own pace",
+    "boxesBody": "Choose a box, fill it with the products you love, and we'll prepare it again on your schedule. Each cycle is paid separately, so you stay free.",
     "boxProducts": "{n} products",
     "buildThisBox": "Build this box",
     "howTitle": "How it works",
     "steps": {
       "pick": {
-        "title": "Pick what you love",
-        "body": "Add single jars to your cart, or build a box you can repeat."
+        "title": "Choose what does you good",
+        "body": "A single jar to discover, or a box that comes back at your pace."
       },
       "pay": {
         "title": "Pay your way",
         "body": "Cash on delivery in Morocco, or pay online with crypto — card payments are coming soon."
       },
       "prep": {
-        "title": "We prepare your order",
-        "body": "Your jars are made in small batches in Casablanca, then packed for you."
+        "title": "We prepare it with care",
+        "body": "Your products are made by hand in small batches, then packed for you."
       }
     },
-    "ctaTitle": "Fill your pantry with something worth keeping."
+    "ctaTitle": "Simple things, made at home, with a lot of care.",
+    "homemade": "Homemade",
+    "seasonal": "Seasonal ingredients",
+    "motherDaughter": "Mother to daughter",
+    "storyLead": "Illi was born in my mother's kitchen.",
+    "storyExcerpt": "A few years ago, she felt the need to take care of herself differently: living foods, fermentation, the simple things you make yourself with patience. I tasted, I adopted — and one day we asked ourselves: why keep all this to ourselves?",
+    "readStory": "Read our story",
+    "ctaSignature": "Illi, from our kitchen to yours."
   },
   "checkout": {
     "title": "Checkout",
@@ -405,5 +395,64 @@
       "too-many-products": "{slot} has too many products.",
       "invalid-product": "{slot} contains a product that does not fit."
     }
+  },
+  "values": {
+    "title": "Our values",
+    "items": {
+      "transmission": {
+        "title": "Passing it on",
+        "body": "Keeping a mother-to-daughter know-how alive, and sharing it with others."
+      },
+      "simplicity": {
+        "title": "Simplicity",
+        "body": "Back to the essentials, without artifice."
+      },
+      "living": {
+        "title": "Respect for living food",
+        "body": "Favouring organic, seasonal, good ingredients, and giving each preparation the time it needs."
+      },
+      "authenticity": {
+        "title": "Authenticity",
+        "body": "Sharing only what we truly make and eat ourselves."
+      },
+      "kindness": {
+        "title": "Kindness",
+        "body": "Supporting everyday wellbeing, without guilt or pressure."
+      }
+    },
+    "intro": "What guides every recipe, from my mother's kitchen to yours."
+  },
+  "mission": {
+    "title": "Our mission",
+    "quote1": "At Illi, our mission is to share products we truly love, made with quality ingredients, in step with the seasons and with respect for living food, while passing on a simple, authentic way of taking care of yourself.",
+    "quote2": "To nourish everyday life with simple, living foods made with care, while passing on our know-how from mother to daughter."
+  },
+  "story": {
+    "metaTitle": "Our story",
+    "metaDescription": "Illi was born in a mother's kitchen: a story of fermentation, homemade food and know-how passed from mother to daughter.",
+    "lead": "Illi was born in my mother's kitchen.",
+    "part1": [
+      "A few years ago, she felt the need to take care of herself differently. She became interested in living foods, in fermentation, and in the simple preparations you make yourself, with patience and good ingredients.",
+      "Little by little, she created her own recipes, her own habits and, above all, a new way of eating — simpler and more mindful.",
+      "Then I started tasting everything she made.",
+      "And without really noticing, I made these foods part of my everyday life. Simply because I loved them: for their taste, their simplicity, that feeling of coming back to the essentials, and for the good they do.",
+      "One day we asked ourselves: why keep all this to ourselves?"
+    ],
+    "part2": [
+      "And so Illi was born: an idea imagined by my mother, which I discovered and adopted, and which today we want to build together."
+    ],
+    "heading2": "With Illi, we want to share much more than products.",
+    "part3": [
+      "We want to pass on a way of making things, and also a way of taking care of yourself: choosing quality ingredients, favouring organic and seasonal produce, taking the time to do things, and rediscovering the pleasure of homemade food.",
+      "Because behind every recipe there is know-how.",
+      "And behind that know-how, a story, gestures, habits and a way of living that we want to share."
+    ],
+    "heading3": "Illi is our story, from mother to daughter.",
+    "part4": [
+      "Recipes passed down, tastes shared, and the wish to introduce you to what we truly love.",
+      "Simple things, made at home, with a lot of care.",
+      "And above all, the wish to bring something good, real and positive into the daily lives of those who trust us."
+    ],
+    "signature": "Illi, from our kitchen to yours."
   }
 }

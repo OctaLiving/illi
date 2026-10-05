@@ -23,7 +23,7 @@ useSeoMeta({ title: () => t('checkout.title'), robots: 'noindex' })
     <ClientOnly>
       <div
         v-if="lines.length === 0"
-        class="mt-10 rounded-3xl bg-white p-10 text-center ring-1 ring-sand-200"
+        class="mt-10 rounded-3xl bg-sand-50 p-10 text-center ring-1 ring-sand-200"
       >
         <p class="font-serif text-2xl text-stone-900">
           {{ $t('cart.empty') }}
@@ -44,7 +44,7 @@ useSeoMeta({ title: () => t('checkout.title'), robots: 'noindex' })
         class="mt-8 grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:items-start"
       >
         <!-- Order summary -->
-        <section class="rounded-3xl bg-white px-6 pb-2 pt-5 ring-1 ring-sand-200 lg:sticky lg:top-28">
+        <section class="rounded-3xl bg-sand-50 px-6 pb-2 pt-5 ring-1 ring-sand-200 lg:sticky lg:top-28">
           <div class="flex items-baseline justify-between">
             <h2 class="font-serif text-2xl text-stone-900">
               {{ $t('checkout.yourOrder') }}
@@ -91,7 +91,7 @@ useSeoMeta({ title: () => t('checkout.title'), robots: 'noindex' })
               </NuxtLinkLocale>
               <NuxtLinkLocale
                 to="/login?next=/cart"
-                class="rounded-full bg-white px-6 py-3 font-semibold text-terra-800 ring-1 ring-sand-300 transition hover:ring-terra-600"
+                class="rounded-full bg-sand-50 px-6 py-3 font-semibold text-terra-800 ring-1 ring-sand-300 transition hover:ring-terra-600"
               >
                 {{ $t('checkout.signIn') }}
               </NuxtLinkLocale>
